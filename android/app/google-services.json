@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "883364976365",
+    "project_id": "sharebuy-fb990",
+    "storage_bucket": "sharebuy-fb990.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883364976365:android:a3fdf4537cdd35a1379ee4",
+        "android_client_info": {
+          "package_name": "com.example.source_tms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "883364976365-vjns5mlt20knj1e7j0b186o0gpalb93e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMSnFv4QknuXinhio0LXZZV0llvO0jNN4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "883364976365-vjns5mlt20knj1e7j0b186o0gpalb93e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
