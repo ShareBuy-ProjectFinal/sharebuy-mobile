@@ -5,8 +5,8 @@ import 'dart:io';
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:source_tms/helper/constant/app_constant.dart';
-import 'package:source_tms/utils/help_function.dart';
+import 'package:share_buy/helper/constant/app_constant.dart';
+import 'package:share_buy/utils/help_function.dart';
 
 class FetchClient {
   String get domain {

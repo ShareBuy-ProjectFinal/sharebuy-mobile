@@ -1,4 +1,4 @@
-name: source_tms
+name: share_buy
 description: "A new Flutter project."
 
 publish_to: 'none' 
@@ -28,6 +28,10 @@ dependencies:
   flutter_screenutil: ^5.9.3
   money_formatter: ^0.0.5
   firebase_core: ^3.5.0
+  google_fonts: ^6.2.1
+  text_divider: ^1.0.0
+  badges: ^3.1.2
+  carousel_slider: ^5.0.0
 
 dev_dependencies:
   flutter_test:
