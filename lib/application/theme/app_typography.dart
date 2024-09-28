@@ -27,6 +27,13 @@ class AppTypography {
       fontWeight: FontWeight.w700,
       color: AppColors.buttonBlue,
       fontSize: 12.sp);
+  static final largeBlueBold = TextStyle(
+      fontWeight: FontWeight.w700,
+      color: AppColors.buttonBlue,
+      fontSize: 16.sp);
   static final primaryWhiteBold = TextStyle(
       fontWeight: FontWeight.w700, color: AppColors.white, fontSize: 12.sp);
+
+  static final primaryRedBold = TextStyle(
+      fontWeight: FontWeight.w700, color: AppColors.redLight, fontSize: 12.sp);
 }

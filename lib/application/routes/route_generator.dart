@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:share_buy/application/routes/navigator_name.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
+import 'package:share_buy/widgets/favourite/favourite_screen.dart';
 import 'package:share_buy/widgets/home/home_screen.dart';
+import 'package:share_buy/widgets/product_detail/product_detail_screen.dart';
+import 'package:share_buy/widgets/rate/rate_screen.dart';
+import 'package:share_buy/widgets/rate_comment_form/rate_comment_form_screen.dart';
+import 'package:share_buy/widgets/sale_program_detail/sale_program_detail_screen.dart';
 import 'package:share_buy/widgets/sign_up/sign_up_screen.dart';
 
 class RouteGenerator {
@@ -15,6 +20,30 @@ class RouteGenerator {
       case NavigatorName.HOME_SCREEN:
         return MaterialPageRoute(
           builder: (_) => const HomeScreen(),
+        );
+      case NavigatorName.SALE_PROGRAM_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => SaleProgramDetailScreen(
+            title: args!['title'],
+          ),
+        );
+      case NavigatorName.FAVOURITE_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => const FavouriteScreen(),
+        );
+      case NavigatorName.RATE_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => const RateScreen(),
+        );
+      case NavigatorName.RATE_COMMENT_FORM_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => const RateCommentFormScreen(),
+        );
+      case NavigatorName.PRODUCT_DETAIL_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => ProductDetailScreen(
+            product: args!['product'],
+          ),
         );
       default:
         return MaterialPageRoute(

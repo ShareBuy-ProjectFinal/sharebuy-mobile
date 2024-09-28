@@ -82,7 +82,6 @@ class _ProductCategoryState extends State<ProductCategory> {
                   ],
                 ),
               );
-              ;
             }).toList(),
           ),
         ),

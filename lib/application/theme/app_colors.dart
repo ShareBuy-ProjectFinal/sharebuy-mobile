@@ -13,4 +13,6 @@ class AppColors {
   static const borderTextfieldColor = Color(0xffEBF0FF);
 
   static const redLight = Color(0xffFB7181);
+  static const yellow = Color(0xffFFC833);
+  static const lightBlue = Color.fromARGB(255, 203, 235, 252);
 }

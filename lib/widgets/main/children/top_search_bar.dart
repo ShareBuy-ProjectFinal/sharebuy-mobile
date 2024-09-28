@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:share_buy/application/routes/navigator_name.dart';
 import 'package:share_buy/widgets/component/custom_textfield.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
@@ -28,7 +29,11 @@ class _TopSearchBarState extends State<TopSearchBar> {
           width: 8.w,
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamed(
+              NavigatorName.FAVOURITE_SCREEN,
+            );
+          },
           icon: Image.asset(
             'assets/icons/icon_favourite.png',
             width: 24.w,
