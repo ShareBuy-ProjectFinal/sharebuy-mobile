@@ -68,12 +68,13 @@ class _SuggestProductState extends State<SuggestProduct> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: products.asMap().entries.map((element) {
-              return ProductItem(
-                product: products[element.key],
-                isShowIconRemove: false,
-                haveMargin: true,
-                isOnHorizontalList: true,
-              );
+              return SizedBox();
+              // return ProductItem(
+              //   product: products[element.key],
+              //   isShowIconRemove: false,
+              //   haveMargin: true,
+              //   isOnHorizontalList: true,
+              // );
             }).toList(),
           ),
         ),

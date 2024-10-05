@@ -104,10 +104,11 @@ class _SaleProgramDetailScreenState extends State<SaleProgramDetailScreen> {
                   physics: const BouncingScrollPhysics(),
                   shrinkWrap: true,
                   builder: (context, index) {
-                    return ProductItem(
-                        product: products[index],
-                        isShowIconRemove: false,
-                        haveMargin: false);
+                    return SizedBox();
+                    // return ProductItem(
+                    //     product: products[index],
+                    //     isShowIconRemove: false,
+                    //     haveMargin: false);
                   },
                 ),
               ),

@@ -76,10 +76,11 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
             physics: const BouncingScrollPhysics(),
             shrinkWrap: true,
             builder: (context, index) {
-              return ProductItem(
-                  product: products[index],
-                  isShowIconRemove: true,
-                  haveMargin: false);
+              return SizedBox();
+              // return ProductItem(
+              //     product: products[index],
+              //     isShowIconRemove: true,
+              //     haveMargin: false);
             },
           ),
         ),

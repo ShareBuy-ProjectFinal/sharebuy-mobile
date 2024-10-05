@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
@@ -32,8 +33,8 @@ class FetchClient {
   Options options() {
     var option = Options(
         headers: {
-          'x-application-name': 'PMS-APP', // config sau khi  sử dụng
-          'Authorization': token.isEmpty ? '' : ('Bearer $token')
+          // 'x-application-name': 'PMS-APP', // config sau khi  sử dụng
+          // 'Authorization': token.isEmpty ? '' : ('Bearer $token')
         },
         followRedirects: false,
         validateStatus: (status) {
@@ -49,6 +50,7 @@ class FetchClient {
     if (await HelpFunction.hasInternet()) {
       try {
         logRequest();
+        log((domainApp ?? domain) + path);
         Response<dynamic> result = await dio.get((domainApp ?? domain) + path,
             queryParameters: queryParameters, options: options());
         return result;

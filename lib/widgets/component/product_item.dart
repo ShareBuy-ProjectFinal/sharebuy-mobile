@@ -1,10 +1,11 @@
 import 'package:animated_rating_stars/animated_rating_stars.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_buy/application/routes/navigator_name.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
-import 'package:share_buy/models/product_model.dart';
+import 'package:share_buy/models/product/product_model.dart';
 
 class ProductItem extends StatefulWidget {
   final ProductModel product;
@@ -43,8 +44,8 @@ class _ProductItemState extends State<ProductItem> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(
-              widget.product.imageUrl!,
+            CachedNetworkImage(
+              imageUrl: widget.product.payload?.image ?? "",
               width: widget.isOnHorizontalList ? 133.w : double.infinity,
               height: 133.h,
             ),
@@ -52,7 +53,7 @@ class _ProductItemState extends State<ProductItem> {
               height: 12.h,
             ),
             Text(
-              widget.product.name!,
+              widget.product.payload?.productName ?? '',
               style: AppTypography.primaryDarkBlueBold,
             ),
             AnimatedRatingStars(
@@ -75,7 +76,7 @@ class _ProductItemState extends State<ProductItem> {
               height: 12.h,
             ),
             Text(
-              "\$" "${widget.product.price!}",
+              "\$" "${widget.product.payload?.price ?? 0}",
               style: AppTypography.primaryBlueBold,
             ),
             SizedBox(
@@ -87,14 +88,14 @@ class _ProductItemState extends State<ProductItem> {
                 Row(
                   children: [
                     Text(
-                      "\$" "${widget.product.salePrice!}",
+                      "\$" "${widget.product.payload?.price ?? 0}",
                       style: AppTypography.hintTextStyle,
                     ),
                     SizedBox(
                       width: 12.w,
                     ),
                     Text(
-                      "${widget.product.saleOffPercent!}% Off",
+                      "${widget.product.payload?.price ?? 0}% Off",
                       style: AppTypography.primaryRedBold,
                     ),
                   ],
