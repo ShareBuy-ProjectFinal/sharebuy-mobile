@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:source_tms/application/theme/app_colors.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:share_buy/application/theme/app_colors.dart';
+import 'package:share_buy/application/theme/app_typography.dart';
 
 ThemeData appTheme = ThemeData(
-    primaryColor: AppColors.primary,
-    indicatorColor: AppColors.primary,
+    textTheme: GoogleFonts.poppinsTextTheme(),
+    scaffoldBackgroundColor: AppColors.white,
+    primaryColor: AppColors.white,
+    indicatorColor: AppColors.white,
     scrollbarTheme: ScrollbarThemeData(
       thickness: WidgetStateProperty.resolveWith((value) => 0.0),
     ),
-    appBarTheme: const AppBarTheme(
-      iconTheme: IconThemeData(color: AppColors.textBlack),
-      backgroundColor: AppColors.primary,
-      titleTextStyle: TextStyle(
-        color: AppColors.textBlack,
-        fontSize: 18,
-        fontWeight: FontWeight.w800,
-      ),
-    ),
-    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap
-    );
+    // appBarTheme: AppBarTheme(
+
+    //   iconTheme: IconThemeData(color: AppColors.textBlack),
+    //   backgroundColor: AppColors.white,
+    //   titleTextStyle: AppTypography.headerAppbarStyle,
+    // ),
+    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap);

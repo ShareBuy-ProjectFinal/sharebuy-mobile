@@ -1,12 +1,13 @@
 // ignore_for_file: avoid_print
 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:curl_logger_dio_interceptor/curl_logger_dio_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:source_tms/helper/constant/app_constant.dart';
-import 'package:source_tms/utils/help_function.dart';
+import 'package:share_buy/helper/constant/app_constant.dart';
+import 'package:share_buy/utils/help_function.dart';
 
 class FetchClient {
   String get domain {
@@ -32,8 +33,8 @@ class FetchClient {
   Options options() {
     var option = Options(
         headers: {
-          'x-application-name': 'PMS-APP', // config sau khi  sử dụng
-          'Authorization': token.isEmpty ? '' : ('Bearer $token')
+          // 'x-application-name': 'PMS-APP', // config sau khi  sử dụng
+          // 'Authorization': token.isEmpty ? '' : ('Bearer $token')
         },
         followRedirects: false,
         validateStatus: (status) {
@@ -49,6 +50,7 @@ class FetchClient {
     if (await HelpFunction.hasInternet()) {
       try {
         logRequest();
+        log((domainApp ?? domain) + path);
         Response<dynamic> result = await dio.get((domainApp ?? domain) + path,
             queryParameters: queryParameters, options: options());
         return result;

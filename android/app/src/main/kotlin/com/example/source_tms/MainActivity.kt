@@ -1,4 +1,4 @@
-package com.example.source_tms
+package com.example.share_buy
 
 import io.flutter.embedding.android.FlutterActivity
 

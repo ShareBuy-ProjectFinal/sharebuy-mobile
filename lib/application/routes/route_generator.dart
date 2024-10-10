@@ -1,14 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:source_tms/application/theme/app_colors.dart';
+import 'package:share_buy/application/routes/navigator_name.dart';
+import 'package:share_buy/application/theme/app_colors.dart';
+import 'package:share_buy/widgets/favourite/favourite_screen.dart';
+import 'package:share_buy/widgets/home/home_screen.dart';
+import 'package:share_buy/widgets/notification/notification_screen.dart';
+import 'package:share_buy/widgets/product_detail/product_detail_screen.dart';
+import 'package:share_buy/widgets/rate/rate_screen.dart';
+import 'package:share_buy/widgets/rate_comment_form/rate_comment_form_screen.dart';
+import 'package:share_buy/widgets/sale_program_detail/sale_program_detail_screen.dart';
+import 'package:share_buy/widgets/search_result/search_result_screen.dart';
+import 'package:share_buy/widgets/sign_up/sign_up_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments as Map?;
     switch (settings.name) {
-      // case NavigatorNames.LOGIN_WEB:
-      //   return MaterialPageRoute(
-      //       builder: (_) => const LoginWeb(), fullscreenDialog: true);
-
+      case NavigatorName.SIGN_UP_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => const SignUpScreen(),
+        );
+      case NavigatorName.HOME_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => const HomeScreen(),
+        );
+      case NavigatorName.SALE_PROGRAM_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => SaleProgramDetailScreen(
+            title: args!['title'],
+          ),
+        );
+      case NavigatorName.FAVOURITE_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => const FavouriteScreen(),
+        );
+      case NavigatorName.RATE_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => const RateScreen(),
+        );
+      case NavigatorName.RATE_COMMENT_FORM_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => const RateCommentFormScreen(),
+        );
+      case NavigatorName.PRODUCT_DETAIL_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => ProductDetailScreen(
+            product: args!['product'],
+          ),
+        );
+      case NavigatorName.NOTIFICATION_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => const NotificationScreen(),
+        );
+      case NavigatorName.SEARCH_RESULT_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => const SearchResultScreen(),
+        );
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
