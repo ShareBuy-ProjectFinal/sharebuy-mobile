@@ -9,7 +9,7 @@ class ProductRepository extends FetchClient {
       {required String userId}) async {
     try {
       final Response<dynamic> response = await super.getData(
-        domainApp: 'http://103.209.32.148:8000',
+        // domainApp: 'http://103.209.32.148:8000',
         path: "/api/recommends/recommends/$userId",
       );
       if (response.statusCode == 200) {

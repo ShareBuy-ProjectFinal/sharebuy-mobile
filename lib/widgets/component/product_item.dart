@@ -52,9 +52,12 @@ class _ProductItemState extends State<ProductItem> {
             SizedBox(
               height: 12.h,
             ),
-            Text(
-              widget.product.payload?.productName ?? '',
-              style: AppTypography.primaryDarkBlueBold,
+            SizedBox(
+              width: widget.isOnHorizontalList ? 133.w : double.infinity,
+              child: Text(
+                widget.product.payload?.productName ?? '',
+                style: AppTypography.primaryDarkBlueBold,
+              ),
             ),
             AnimatedRatingStars(
               initialRating: 4,
@@ -88,14 +91,14 @@ class _ProductItemState extends State<ProductItem> {
                 Row(
                   children: [
                     Text(
-                      "\$" "${widget.product.payload?.price ?? 0}",
+                      "\$" "${widget.product.payload?.oldPrice ?? 0}",
                       style: AppTypography.hintTextStyle,
                     ),
                     SizedBox(
                       width: 12.w,
                     ),
                     Text(
-                      "${widget.product.payload?.price ?? 0}% Off",
+                      "${((widget.product.payload?.price ?? 0) / (widget.product.payload?.oldPrice ?? 0)).round() * 100}% Off",
                       style: AppTypography.primaryRedBold,
                     ),
                   ],

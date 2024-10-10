@@ -8,4 +8,6 @@ class NavigatorName {
   static const String PRODUCT_DETAIL_SCREEN = '/product_detail';
   static const String RATE_SCREEN = '/rate';
   static const String RATE_COMMENT_FORM_SCREEN = '/rate_comment_form';
+  static const String NOTIFICATION_SCREEN = '/notification';
+  static const String SEARCH_RESULT_SCREEN = '/search_result';
 }

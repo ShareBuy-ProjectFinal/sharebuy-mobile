@@ -1,7 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:share_buy/models/product_model.dart';
+import 'package:share_buy/models/product/product_model.dart';
 
 class ImageSlider extends StatefulWidget {
   final ProductModel product;
@@ -17,15 +18,15 @@ class _ImageSliderState extends State<ImageSlider> {
   @override
   Widget build(BuildContext context) {
     List<Widget> imageSliders = [
-      Image.asset(
-        widget.product.imageUrl!,
+      CachedNetworkImage(
+        imageUrl: widget.product.payload?.image ?? '',
       ),
-      Image.asset(
-        widget.product.imageUrl!,
+      CachedNetworkImage(
+        imageUrl: widget.product.payload?.image ?? '',
       ),
-      Image.asset(
-        widget.product.imageUrl!,
-      )
+      CachedNetworkImage(
+        imageUrl: widget.product.payload?.image ?? '',
+      ),
     ];
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,

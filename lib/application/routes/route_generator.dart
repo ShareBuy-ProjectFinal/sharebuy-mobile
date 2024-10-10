@@ -3,10 +3,12 @@ import 'package:share_buy/application/routes/navigator_name.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/widgets/favourite/favourite_screen.dart';
 import 'package:share_buy/widgets/home/home_screen.dart';
+import 'package:share_buy/widgets/notification/notification_screen.dart';
 import 'package:share_buy/widgets/product_detail/product_detail_screen.dart';
 import 'package:share_buy/widgets/rate/rate_screen.dart';
 import 'package:share_buy/widgets/rate_comment_form/rate_comment_form_screen.dart';
 import 'package:share_buy/widgets/sale_program_detail/sale_program_detail_screen.dart';
+import 'package:share_buy/widgets/search_result/search_result_screen.dart';
 import 'package:share_buy/widgets/sign_up/sign_up_screen.dart';
 
 class RouteGenerator {
@@ -44,6 +46,14 @@ class RouteGenerator {
           builder: (_) => ProductDetailScreen(
             product: args!['product'],
           ),
+        );
+      case NavigatorName.NOTIFICATION_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => const NotificationScreen(),
+        );
+      case NavigatorName.SEARCH_RESULT_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => const SearchResultScreen(),
         );
       default:
         return MaterialPageRoute(

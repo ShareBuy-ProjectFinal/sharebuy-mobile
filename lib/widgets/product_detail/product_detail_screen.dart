@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
-import 'package:share_buy/models/product_model.dart';
+import 'package:share_buy/models/product/product_model.dart';
 import 'package:share_buy/widgets/component/custom_button.dart';
 import 'package:share_buy/widgets/product_detail/children/color_selection.dart';
 import 'package:share_buy/widgets/product_detail/children/image_slider.dart';
@@ -38,7 +38,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ),
         ),
         title: Text(
-          widget.product.name!,
+          widget.product.payload?.productName ?? '',
           style: AppTypography.headerAppbarStyle,
         ),
         centerTitle: false,
@@ -80,9 +80,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            widget.product.name!,
-                            style: AppTypography.headerAppbarStyle,
+                          Flexible(
+                            child: Text(
+                              widget.product.payload?.productName ?? '',
+                              style: AppTypography.headerAppbarStyle,
+                            ),
                           ),
                           IconButton(
                               onPressed: () {},
@@ -113,7 +115,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         height: 12.h,
                       ),
                       Text(
-                        "\$" "${widget.product.salePrice!}",
+                        "\$" "${widget.product.payload?.price ?? ''}",
                         style: AppTypography.largeBlueBold,
                       ),
                       SizedBox(
