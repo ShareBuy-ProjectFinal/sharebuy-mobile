@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share_buy/widgets/cart/cart_sreen.dart';
 import 'package:share_buy/widgets/home/children/bottom_nav_bar.dart';
 import 'package:share_buy/widgets/main/main_screen.dart';
 
@@ -19,6 +20,10 @@ class _HomeScreenState extends State<HomeScreen> {
         child: PageView(
           controller: _pageController,
           children: const [
+            MainScreen(),
+            MainScreen(),
+            CartSreen(),
+            MainScreen(),
             MainScreen(),
           ],
         ),
