@@ -1,101 +1,103 @@
+import 'package:share_buy/models/attribute/attribute_custom_model.dart';
+import 'package:share_buy/models/product/product_detail_model.dart';
+
 class ProductModel {
   String? id;
-  num? version;
-  num? score;
-  Payload? payload;
-  dynamic vector;
-  dynamic shardKey;
-  dynamic orderValue;
+  List<String>? images;
+  List<CustomAttribute>? customAttributes;
+  String? productName;
+  num? oldPrice;
+  num? price;
+  String? description;
+  String? image;
+  num? categoryId;
+  String? shopId;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  String? categoryName;
+  num? quantity;
+  num? totalReviews;
+  num? averageRating;
+  num? totalPurchases;
+  List<ProductDetailModel>? productDetails;
 
   ProductModel({
     this.id = '',
-    this.version = 0,
-    this.score = 0,
-    this.payload,
-    this.vector = '',
-    this.shardKey = '',
-    this.orderValue = '',
+    this.images = const [],
+    this.customAttributes = const [],
+    this.productName = '',
+    this.oldPrice = 0,
+    this.price = 0,
+    this.description = '',
+    this.image = '',
+    this.categoryId = 0,
+    this.shopId = '',
+    this.createdAt,
+    this.updatedAt,
+    this.categoryName = '',
+    this.quantity = 0,
+    this.totalReviews = 0,
+    this.averageRating = 0,
+    this.totalPurchases = 0,
+    this.productDetails = const [],
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
-        id: json["id"] ?? '',
-        version: json["version"] ?? 0,
-        score: json["score"] ?? 0,
-        payload: json["payload"] == null
-            ? Payload()
-            : Payload.fromJson(json["payload"]),
-        vector: json["vector"] ?? '',
-        shardKey: json["shard_key"] ?? '',
-        orderValue: json["order_value"] ?? '',
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "version": version,
-        "score": score,
-        "payload": payload?.toJson(),
-        "vector": vector,
-        "shard_key": shardKey,
-        "order_value": orderValue,
-      };
-}
-
-class Payload {
-  num? averageRating;
-  num? categoryId;
-  String? description;
-  String? image;
-  num? oldPrice;
-  num? price;
-  String? productId;
-  String? productName;
-  String? productNameEn;
-  String? shopId;
-  num? totalPurchases;
-  num? totalReviews;
-
-  Payload({
-    this.averageRating = 0,
-    this.categoryId = 0,
-    this.description = '',
-    this.image = '',
-    this.oldPrice = 0,
-    this.price = 0,
-    this.productId = '',
-    this.productName = '',
-    this.productNameEn = '',
-    this.shopId = '',
-    this.totalPurchases = 0,
-    this.totalReviews = 0,
-  });
-
-  factory Payload.fromJson(Map<String, dynamic> json) => Payload(
-        averageRating: json["average_rating"] ?? 0,
-        categoryId: json["category_id"] ?? 0,
-        description: json["description"] ?? '',
-        image: json["image"] ?? '',
+        id: json["_id"] ?? '',
+        images: json["images"] == null
+            ? []
+            : List<String>.from(json["images"].map((x) => x)),
+        customAttributes: json["custom_attributes"] == null
+            ? []
+            : List<CustomAttribute>.from(json["custom_attributes"]
+                .map((x) => CustomAttribute.fromJson(x))),
+        productName: json["product_name"] ?? '',
         oldPrice: json["old_price"] ?? 0,
         price: json["price"] ?? 0,
-        productId: json["product_id"] ?? '',
-        productName: json["product_name"] ?? '',
-        productNameEn: json["product_name_en"] ?? '',
+        description: json["description"] ?? '',
+        image: json["image"] ?? '',
+        categoryId: json["category_id"] ?? 0,
         shopId: json["shop_id"] ?? '',
-        totalPurchases: json["total_purchases"] ?? 0,
+        createdAt: json["createdAt"] == null
+            ? DateTime.now()
+            : DateTime.parse(json["createdAt"]),
+        updatedAt: json["updatedAt"] == null
+            ? DateTime.now()
+            : DateTime.parse(json["updatedAt"]),
+        categoryName: json["category_name"] ?? '',
+        quantity: json["quantity"] ?? 0,
         totalReviews: json["total_reviews"] ?? 0,
+        averageRating: json["average_rating"] ?? 0,
+        totalPurchases: json["total_purchases"] ?? 0,
+        productDetails: json["product_details"] == null
+            ? []
+            : List<ProductDetailModel>.from(json["product_details"]
+                .map((x) => ProductDetailModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "average_rating": averageRating,
-        "category_id": categoryId,
-        "description": description,
-        "image": image,
+        "_id": id,
+        "images":
+            images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
+        "custom_attributes": customAttributes == null
+            ? []
+            : List<dynamic>.from(customAttributes!.map((x) => x.toJson())),
+        "product_name": productName,
         "old_price": oldPrice,
         "price": price,
-        "product_id": productId,
-        "product_name": productName,
-        "product_name_en": productNameEn,
+        "description": description,
+        "image": image,
+        "category_id": categoryId,
         "shop_id": shopId,
-        "total_purchases": totalPurchases,
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
+        "category_name": categoryName,
+        "quantity": quantity,
         "total_reviews": totalReviews,
+        "average_rating": averageRating,
+        "total_purchases": totalPurchases,
+        "product_details": productDetails == null
+            ? []
+            : List<dynamic>.from(productDetails!.map((x) => x.toJson())),
       };
 }

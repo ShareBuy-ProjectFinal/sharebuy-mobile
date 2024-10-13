@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:share_buy/models/product_model.dart';
+import 'package:share_buy/models/product/product_model.dart';
+import 'package:share_buy/models/product/product_recommend_model.dart';
 
 class ImageSlider extends StatefulWidget {
   final ProductModel product;
@@ -16,17 +18,25 @@ class _ImageSliderState extends State<ImageSlider> {
   final CarouselSliderController _controller = CarouselSliderController();
   @override
   Widget build(BuildContext context) {
-    List<Widget> imageSliders = [
-      Image.asset(
-        widget.product.imageUrl!,
-      ),
-      Image.asset(
-        widget.product.imageUrl!,
-      ),
-      Image.asset(
-        widget.product.imageUrl!,
-      )
-    ];
+    // List<Widget> imageSliders = [
+    //   CachedNetworkImage(
+    //     imageUrl: widget.product.payload?.image ?? '',
+    //   ),
+    //   CachedNetworkImage(
+    //     imageUrl: widget.product.payload?.image ?? '',
+    //   ),
+    //   CachedNetworkImage(
+    //     imageUrl: widget.product.payload?.image ?? '',
+    //   ),
+    // ];
+
+    List<Widget> imageSliders = widget.product.images!
+        .map((e) => CachedNetworkImage(imageUrl: e))
+        .toList();
+
+    imageSliders.insert(
+        0, CachedNetworkImage(imageUrl: widget.product.image ?? ''));
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [

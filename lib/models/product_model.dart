@@ -1,11 +1,11 @@
-class ProductModel {
+class ProductTestModel {
   String? name;
   dynamic price;
   dynamic saleOffPercent;
   dynamic salePrice;
   String? imageUrl;
 
-  ProductModel(
+  ProductTestModel(
       {this.name,
       this.price,
       this.saleOffPercent,

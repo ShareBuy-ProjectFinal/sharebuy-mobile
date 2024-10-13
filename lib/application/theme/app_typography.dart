@@ -35,5 +35,11 @@ class AppTypography {
       fontWeight: FontWeight.w700, color: AppColors.white, fontSize: 12.sp);
 
   static final primaryRedBold = TextStyle(
-      fontWeight: FontWeight.w700, color: AppColors.redLight, fontSize: 12.sp);
+      fontWeight: FontWeight.w700, color: AppColors.redLight, fontSize: 14.sp);
+
+  static final primaryLineThrough = TextStyle(
+      fontWeight: FontWeight.w400,
+      color: AppColors.hintTextColor,
+      fontSize: 16.sp,
+      decoration: TextDecoration.lineThrough);
 }

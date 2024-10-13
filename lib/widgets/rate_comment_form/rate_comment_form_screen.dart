@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
 import 'package:share_buy/widgets/component/custom_button.dart';
+import 'package:share_buy/widgets/component/custom_textfield.dart';
 
 class RateCommentFormScreen extends StatefulWidget {
   const RateCommentFormScreen({super.key});
@@ -86,6 +87,32 @@ class _RateCommentFormScreenState extends State<RateCommentFormScreen> {
                   SizedBox(
                     height: 12.h,
                   ),
+                  CustomTextfield(
+                      hintText: 'Viết tại đây',
+                      maxLines: 5,
+                      controller: TextEditingController()),
+                  SizedBox(
+                    height: 12.h,
+                  ),
+                  Text('Thêm hình ảnh',
+                      style: AppTypography.primaryDarkBlueBold),
+                  SizedBox(
+                    height: 12.h,
+                  ),
+                  Container(
+                    width: 72.w,
+                    height: 72.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.r),
+                      shape: BoxShape.rectangle,
+                      border: Border.all(color: AppColors.borderTextfieldColor),
+                    ),
+                    child: Icon(
+                      Icons.add,
+                      color: AppColors.hintTextColor,
+                      size: 30.sp,
+                    ),
+                  )
                 ],
               ),
               CustomButton(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -8,6 +9,7 @@ import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:share_buy/blocs/home_bloc/home_bloc.dart';
+import 'package:share_buy/blocs/product_bloc/product_bloc.dart';
 import 'package:share_buy/widgets/login/login_screen.dart';
 import 'firebase_options.dart';
 
@@ -16,6 +18,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
@@ -29,6 +32,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<HomeBloc>(
           create: (context) => HomeBloc(),
         ),
+        BlocProvider<ProductBloc>(create: (context) => ProductBloc()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),

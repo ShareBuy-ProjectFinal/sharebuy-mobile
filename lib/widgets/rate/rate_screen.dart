@@ -22,7 +22,7 @@ class _RateScreenState extends State<RateScreen> {
       avatarUrl: '',
       name: '',
       comment: '',
-      productModel: ProductModel(
+      productModel: ProductTestModel(
           name: 'Giày',
           imageUrl: 'assets/images/shose_1.png',
           price: 299.43,
@@ -39,7 +39,7 @@ class _RateScreenState extends State<RateScreen> {
       avatarUrl: '',
       name: '',
       comment: '',
-      productModel: ProductModel(
+      productModel: ProductTestModel(
           name: 'Giày',
           imageUrl: 'assets/images/shose_1.png',
           price: 299.43,
@@ -56,7 +56,7 @@ class _RateScreenState extends State<RateScreen> {
       avatarUrl: '',
       name: '',
       comment: '',
-      productModel: ProductModel(
+      productModel: ProductTestModel(
           name: 'Giày',
           imageUrl: 'assets/images/shose_1.png',
           price: 299.43,
@@ -73,7 +73,7 @@ class _RateScreenState extends State<RateScreen> {
       avatarUrl: '',
       name: '',
       comment: '',
-      productModel: ProductModel(
+      productModel: ProductTestModel(
           name: 'Giày',
           imageUrl: 'assets/images/shose_1.png',
           price: 299.43,

@@ -58,7 +58,7 @@ class _CartItemState extends State<CartItem> {
                       children: [
                         Text(
                           '10.000 vnđ',
-                          style: AppTypography.primaryBlueBold,
+                          style: AppTypography.primaryRedBold,
                         ),
                         SizedBox(
                           width: 10.w,

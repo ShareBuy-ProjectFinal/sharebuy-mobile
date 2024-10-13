@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
+import 'package:share_buy/models/attribute/attribute_custom_model.dart';
+import 'package:share_buy/models/product/product_model.dart';
 
 class ProductDescription extends StatefulWidget {
-  const ProductDescription({super.key});
+  final ProductModel product;
+  const ProductDescription({super.key, required this.product});
 
   @override
   State<ProductDescription> createState() => _ProductDescriptionState();
@@ -16,50 +19,38 @@ class _ProductDescriptionState extends State<ProductDescription> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Mô tả',
+          'Thông tin sản phẩm',
           style: AppTypography.primaryDarkBlueBold,
         ),
         SizedBox(
-          height: 12.h,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Shown:',
-              style: AppTypography.hintTextStyle,
-            ),
-            Text(
-              'Laser \nBlue/Anthracite/Watermelon\n/White',
-              style: AppTypography.hintTextStyle,
-              textAlign: TextAlign.end,
-            )
-          ],
-        ),
-        SizedBox(
-          height: 12.h,
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              'Style:',
-              style: AppTypography.hintTextStyle,
-            ),
-            Text(
-              'CD0113-400',
-              style: AppTypography.hintTextStyle,
-              textAlign: TextAlign.end,
-            )
-          ],
-        ),
-        SizedBox(
-          height: 12.h,
+          height: 5.h,
         ),
         Text(
-          'The Nike Air Max 270 React ENG combines a full-length React foam midsole with a 270 Max Air unit for unrivaled comfort and a striking visual experience.',
+          'Thuộc tính:',
+          style: AppTypography.hintTextStyle,
+        ),
+        SizedBox(
+          height: 3.h,
+        ),
+        ...List.generate(widget.product.customAttributes?.length ?? 0, (index) {
+          CustomAttribute attribute = widget.product.customAttributes![index];
+          return Text(
+            '${attribute.attributeName}: ${attribute.customAttributeValues?.map((item) => item.value).join(', ') ?? ''}',
+            style: AppTypography.hintTextStyle,
+          );
+        }),
+        SizedBox(
+          height: 10.h,
+        ),
+        Text(
+          'Mô tả:',
+          style: AppTypography.hintTextStyle,
+        ),
+        SizedBox(
+          height: 3.h,
+        ),
+        Text(
+          widget.product.description ?? '',
           style: AppTypography.hintTextStyle,
         )
       ],

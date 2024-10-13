@@ -44,7 +44,9 @@ class _TopSearchBarState extends State<TopSearchBar> {
           width: 8.w,
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pushNamed(NavigatorName.NOTIFICATION_SCREEN);
+          },
           icon: badges.Badge(
             badgeStyle: const badges.BadgeStyle(badgeColor: AppColors.redLight),
             badgeContent: Text(

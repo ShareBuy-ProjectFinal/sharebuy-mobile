@@ -1,12 +1,13 @@
 import 'package:animated_rating_stars/animated_rating_stars.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_buy/application/routes/navigator_name.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
-import 'package:share_buy/models/product_model.dart';
+import 'package:share_buy/models/product/product_recommend_model.dart';
 
 class RateComment extends StatefulWidget {
-  final ProductModel product;
+  final ProductRecommendModel product;
   const RateComment({super.key, required this.product});
 
   @override
@@ -17,9 +18,9 @@ class _RateCommentState extends State<RateComment> {
   @override
   Widget build(BuildContext context) {
     List<String> urlImages = [
-      widget.product.imageUrl!,
-      widget.product.imageUrl!,
-      widget.product.imageUrl!
+      widget.product.payload?.image ?? '',
+      widget.product.payload?.image ?? '',
+      widget.product.payload?.image ?? '',
     ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,8 +138,8 @@ class _RateCommentState extends State<RateComment> {
             children: urlImages.asMap().entries.map((element) {
               return Container(
                 margin: EdgeInsets.only(right: 20.w),
-                child: Image.asset(
-                  element.value,
+                child: CachedNetworkImage(
+                  imageUrl: element.value,
                   width: 72.w,
                   height: 72.h,
                 ),

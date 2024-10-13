@@ -12,38 +12,38 @@ class SuggestProduct extends StatefulWidget {
 }
 
 class _SuggestProductState extends State<SuggestProduct> {
-  List<ProductModel> products = [
-    ProductModel(
+  List<ProductTestModel> products = [
+    ProductTestModel(
         name: 'Giày',
         imageUrl: 'assets/images/shose_1.png',
         price: 299.43,
         salePrice: 534.33,
         saleOffPercent: 24),
-    ProductModel(
+    ProductTestModel(
         name: 'Giày',
         imageUrl: 'assets/images/shose_2.png',
         price: 299.43,
         salePrice: 534.33,
         saleOffPercent: 24),
-    ProductModel(
+    ProductTestModel(
         name: 'Túi xách',
         imageUrl: 'assets/images/bag_1.png',
         price: 299.43,
         salePrice: 534.33,
         saleOffPercent: 24),
-    ProductModel(
+    ProductTestModel(
         name: 'Túi xách',
         imageUrl: 'assets/images/bag_2.png',
         price: 299.43,
         salePrice: 534.33,
         saleOffPercent: 24),
-    ProductModel(
+    ProductTestModel(
         name: 'Giày',
         imageUrl: 'assets/images/shose_1.png',
         price: 299.43,
         salePrice: 534.33,
         saleOffPercent: 24),
-    ProductModel(
+    ProductTestModel(
         name: 'Giày',
         imageUrl: 'assets/images/shose_2.png',
         price: 299.43,

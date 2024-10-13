@@ -103,6 +103,7 @@ class _SaleProgramState extends State<SaleProgram> {
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: state.products.asMap().entries.map((element) {
                   return ProductItem(

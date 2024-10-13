@@ -52,7 +52,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   height: 24.h,
                   color: AppColors.buttonBlue,
                 ),
-                label: 'Home'),
+                label: 'Trang chủ'),
             BottomNavigationBarItem(
                 icon: Image.asset(
                   'assets/icons/icon_search.png',
@@ -66,7 +66,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   height: 24.h,
                   color: AppColors.buttonBlue,
                 ),
-                label: 'Explore'),
+                label: 'Tìm kiếm'),
             BottomNavigationBarItem(
                 icon: badges.Badge(
                   badgeStyle: badges.BadgeStyle(badgeColor: AppColors.redLight),
@@ -93,7 +93,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     color: AppColors.buttonBlue,
                   ),
                 ),
-                label: 'Cart'),
+                label: 'Giỏ hàng'),
             BottomNavigationBarItem(
                 icon: Image.asset(
                   'assets/icons/icon_offer.png',
@@ -107,7 +107,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   height: 24.h,
                   color: AppColors.buttonBlue,
                 ),
-                label: 'Offer'),
+                label: 'Flash sale'),
             BottomNavigationBarItem(
                 icon: Image.asset(
                   'assets/icons/icon_account.png',
@@ -121,7 +121,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   height: 24.h,
                   color: AppColors.buttonBlue,
                 ),
-                label: 'Account')
+                label: 'Tài khoản')
           ]),
     );
   }

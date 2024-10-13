@@ -1,14 +1,21 @@
+import 'dart:developer';
+
 import 'package:animated_rating_stars/animated_rating_stars.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:share_buy/application/routes/navigator_name.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
-import 'package:share_buy/models/product/product_model.dart';
+import 'package:share_buy/blocs/product_bloc/product_bloc.dart';
+import 'package:share_buy/blocs/product_bloc/product_event.dart';
+import 'package:share_buy/blocs/product_bloc/product_state.dart';
+import 'package:share_buy/models/product/product_recommend_model.dart';
 
 class ProductItem extends StatefulWidget {
-  final ProductModel product;
+  final ProductRecommendModel product;
   final bool isShowIconRemove;
   final bool haveMargin;
   final bool isOnHorizontalList;
@@ -52,9 +59,12 @@ class _ProductItemState extends State<ProductItem> {
             SizedBox(
               height: 12.h,
             ),
-            Text(
-              widget.product.payload?.productName ?? '',
-              style: AppTypography.primaryDarkBlueBold,
+            SizedBox(
+              width: widget.isOnHorizontalList ? 133.w : double.infinity,
+              child: Text(
+                widget.product.payload?.productName ?? '',
+                style: AppTypography.primaryDarkBlueBold,
+              ),
             ),
             AnimatedRatingStars(
               initialRating: 4,
@@ -88,14 +98,14 @@ class _ProductItemState extends State<ProductItem> {
                 Row(
                   children: [
                     Text(
-                      "\$" "${widget.product.payload?.price ?? 0}",
+                      "\$" "${widget.product.payload?.oldPrice ?? 0}",
                       style: AppTypography.hintTextStyle,
                     ),
                     SizedBox(
                       width: 12.w,
                     ),
                     Text(
-                      "${widget.product.payload?.price ?? 0}% Off",
+                      "${((widget.product.payload?.price ?? 0) / (widget.product.payload?.oldPrice ?? 0)).round() * 100}% Off",
                       style: AppTypography.primaryRedBold,
                     ),
                   ],

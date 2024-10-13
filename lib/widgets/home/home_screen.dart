@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:share_buy/widgets/explore/explore_screen.dart';
 import 'package:share_buy/widgets/cart/cart_sreen.dart';
 import 'package:share_buy/widgets/home/children/bottom_nav_bar.dart';
 import 'package:share_buy/widgets/main/main_screen.dart';
+import 'package:share_buy/widgets/profile/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,10 +23,10 @@ class _HomeScreenState extends State<HomeScreen> {
           controller: _pageController,
           children: const [
             MainScreen(),
-            MainScreen(),
+            ExploreScreen(),
             CartSreen(),
-            MainScreen(),
-            MainScreen(),
+            ExploreScreen(),
+            ProfileScreen()
           ],
         ),
       ),

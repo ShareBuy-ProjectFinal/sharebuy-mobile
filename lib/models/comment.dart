@@ -5,7 +5,7 @@ class Comment {
   String? name;
   String? comment;
   List<String> imageUrls = [];
-  ProductModel? productModel;
+  ProductTestModel? productModel;
   DateTime? commentTime;
 
   Comment(

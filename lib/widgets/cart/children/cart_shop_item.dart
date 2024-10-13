@@ -4,6 +4,7 @@ import 'package:share_buy/application/theme/app_typography.dart';
 import 'package:share_buy/widgets/cart/children/cart_item.dart';
 
 class CartShopItem extends StatefulWidget {
+  
   const CartShopItem({super.key});
 
   @override
