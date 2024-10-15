@@ -1,11 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
+import 'package:share_buy/blocs/product_bloc/product_bloc.dart';
+import 'package:share_buy/blocs/product_bloc/product_event.dart';
 import 'package:share_buy/widgets/main/children/event_slider.dart';
 import 'package:share_buy/widgets/main/children/recommend_products.dart';
 import 'package:share_buy/widgets/main/children/sale_program.dart';
 import 'package:share_buy/widgets/main/children/product_category.dart';
 import 'package:share_buy/widgets/main/children/top_search_bar.dart';
+import 'package:share_buy/widgets/product_detail/product_detail_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

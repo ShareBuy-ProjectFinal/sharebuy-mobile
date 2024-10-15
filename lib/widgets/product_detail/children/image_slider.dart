@@ -1,9 +1,10 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_buy/models/product/product_model.dart';
-import 'package:share_buy/models/product/product_recommend_model.dart';
 
 class ImageSlider extends StatefulWidget {
   final ProductModel product;
@@ -18,24 +19,26 @@ class _ImageSliderState extends State<ImageSlider> {
   final CarouselSliderController _controller = CarouselSliderController();
   @override
   Widget build(BuildContext context) {
-    // List<Widget> imageSliders = [
-    //   CachedNetworkImage(
-    //     imageUrl: widget.product.payload?.image ?? '',
-    //   ),
-    //   CachedNetworkImage(
-    //     imageUrl: widget.product.payload?.image ?? '',
-    //   ),
-    //   CachedNetworkImage(
-    //     imageUrl: widget.product.payload?.image ?? '',
-    //   ),
-    // ];
-
     List<Widget> imageSliders = widget.product.images!
-        .map((e) => CachedNetworkImage(imageUrl: e))
+        .map((e) => CachedNetworkImage(
+            imageUrl: e,
+            placeholder: (context, url) => CircularProgressIndicator(),
+            fit: BoxFit.cover,
+            errorWidget: (context, url, error) =>
+                Image.asset('assets/images/image_error.png')))
         .toList();
 
     imageSliders.insert(
-        0, CachedNetworkImage(imageUrl: widget.product.image ?? ''));
+        0,
+        CachedNetworkImage(
+          imageUrl: widget.product.image ?? '',
+          placeholder: (context, url) => CircularProgressIndicator(),
+          fit: BoxFit.cover,
+          errorWidget: (context, url, error) {
+            log("Error: $error");
+            return Icon(Icons.error);
+          },
+        ));
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,

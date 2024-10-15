@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
 import 'package:share_buy/main.dart';
+import 'package:share_buy/models/attribute/attribute_custom_model.dart';
 import 'package:share_buy/widgets/cart/children/cart_item_attribute.dart';
 import 'package:share_buy/widgets/component/custom_button_action.dart';
 
@@ -83,7 +84,9 @@ class _ChangeDetailItemState extends State<ChangeDetailItem> {
                         height: 5,
                       ),
                       itemBuilder: (context, index) {
-                        return CartItemAttribute();
+                        return CartItemAttribute(
+                          attribute: CustomAttribute(),
+                        );
                       },
                     ),
                     SizedBox(

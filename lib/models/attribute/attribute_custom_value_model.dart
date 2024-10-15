@@ -15,6 +15,15 @@ class CustomAttributeValue {
     this.customAttribute,
   });
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CustomAttributeValue &&
+          runtimeType == other.runtimeType &&
+          id == other.id;
+
+  @override
+  int get hashCode => id.hashCode;
   factory CustomAttributeValue.fromJson(Map<String, dynamic> json) =>
       CustomAttributeValue(
         id: json["_id"] ?? '',

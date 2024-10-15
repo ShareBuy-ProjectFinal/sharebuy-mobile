@@ -46,7 +46,7 @@ class ProductModel {
         id: json["_id"] ?? '',
         images: json["images"] == null
             ? []
-            : List<String>.from(json["images"].map((x) => x)),
+            : List<String>.from(json["images"].map((x) => x ?? '')),
         customAttributes: json["custom_attributes"] == null
             ? []
             : List<CustomAttribute>.from(json["custom_attributes"]

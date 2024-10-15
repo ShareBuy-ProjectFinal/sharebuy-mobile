@@ -11,7 +11,9 @@ import 'package:share_buy/blocs/product_bloc/product_state.dart';
 import 'package:share_buy/helper/constant/app_function.dart';
 import 'package:share_buy/models/product/product_recommend_model.dart';
 import 'package:share_buy/widgets/cart/children/cart_item_attribute.dart';
+import 'package:share_buy/widgets/component/bottom_sheet_item.dart';
 import 'package:share_buy/widgets/component/custom_button.dart';
+import 'package:share_buy/widgets/component/custom_button_action.dart';
 import 'package:share_buy/widgets/product_detail/children/image_slider.dart';
 import 'package:share_buy/widgets/product_detail/children/product_description.dart';
 import 'package:share_buy/widgets/product_detail/children/rate_comment.dart';
@@ -32,7 +34,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     super.initState();
     context
         .read<ProductBloc>()
-        .add(ProductLoadingEvent(id: widget.product.payload!.productId!));
+        // .add(ProductLoadingEvent(id: widget.product.payload!.productId!));
+        .add(ProductLoadingEvent(id: '66fe1a4e473e570012e3caab'));
   }
 
   @override
@@ -52,6 +55,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           leading: IconButton(
             onPressed: () {
               Navigator.of(context).pop();
+              context.read<ProductBloc>().add(ResetProductEvent());
             },
             icon: Image.asset(
               'assets/icons/icon_back.png',
@@ -185,35 +189,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         CustomButton(
                             buttonColor: AppColors.buttonBlue,
                             buttonText: 'Thêm vào giỏ',
-                            onTap: () async {
-                              await showBottomSheet(
+                            onTap: () {
+                              showModalBottomSheet(
                                   context: context,
                                   builder: (context) {
-                                    return Container(
-                                      height: 400,
-                                      width: double.maxFinite,
-                                      color: AppColors.white,
-                                      padding: const EdgeInsets.all(15),
-                                      child: Column(
-                                        children: [
-                                          ListView.separated(
-                                            itemCount: 2,
-                                            shrinkWrap: true,
-                                            separatorBuilder:
-                                                (context, index) =>
-                                                    const SizedBox(
-                                              height: 5,
-                                            ),
-                                            itemBuilder: (context, index) {
-                                              return CartItemAttribute();
-                                            },
-                                          ),
-                                          SizedBox(
-                                            height: 5.h,
-                                          ),
-                                        ],
-                                      ),
-                                    );
+                                    return BottomSheetItem();
                                   });
                             },
                             textColor: AppColors.white)

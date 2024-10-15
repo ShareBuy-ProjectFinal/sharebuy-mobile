@@ -18,10 +18,17 @@ class AppTypography {
       color: AppColors.textDartBlue,
       fontSize: 16.sp);
 
+  static final smallDarkBlueBold = TextStyle(
+      fontWeight: FontWeight.w700,
+      color: AppColors.textDartBlue,
+      fontSize: 10.sp);
   static final primaryDarkBlueBold = TextStyle(
       fontWeight: FontWeight.w700,
       color: AppColors.textDartBlue,
       fontSize: 14.sp);
+
+  static final primaryDarkBlueBoldDisable = TextStyle(
+      fontWeight: FontWeight.w700, color: Colors.grey, fontSize: 14.sp);
 
   static final primaryBlueBold = TextStyle(
       fontWeight: FontWeight.w700,

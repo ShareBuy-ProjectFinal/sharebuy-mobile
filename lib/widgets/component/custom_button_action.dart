@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 class CustomButtonAction extends StatefulWidget {
   final IconData icon;
   final bool isLeftRadius;
+  final bool isDisable;
   VoidCallback onTap;
   CustomButtonAction(
       {super.key,
       required this.icon,
       required this.onTap,
+      this.isDisable = false,
       this.isLeftRadius = false});
 
   @override
@@ -19,12 +21,13 @@ class _CustomButtonActionState extends State<CustomButtonAction> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.onTap,
+      onTap: widget.isDisable ? null : widget.onTap,
       child: Container(
         padding: const EdgeInsets.all(0),
         decoration: BoxDecoration(
           // color: Colors.blue,
-          border: Border.all(color: Colors.black),
+          border:
+              Border.all(color: widget.isDisable ? Colors.grey : Colors.black),
           borderRadius: widget.isLeftRadius
               ? const BorderRadius.only(
                   topLeft: Radius.circular(5),
@@ -38,7 +41,7 @@ class _CustomButtonActionState extends State<CustomButtonAction> {
         child: Center(
           child: Icon(
             widget.icon,
-            color: Colors.black,
+            color: widget.isDisable ? Colors.grey : Colors.black,
             size: 23,
           ),
         ),
