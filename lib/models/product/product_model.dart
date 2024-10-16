@@ -1,5 +1,6 @@
 import 'package:share_buy/models/attribute/attribute_custom_model.dart';
 import 'package:share_buy/models/product/product_detail_model.dart';
+import 'package:share_buy/models/shop/shop_model.dart';
 
 class ProductModel {
   String? id;
@@ -20,6 +21,7 @@ class ProductModel {
   num? averageRating;
   num? totalPurchases;
   List<ProductDetailModel>? productDetails;
+  ShopModel? shop;
 
   ProductModel({
     this.id = '',
@@ -40,6 +42,7 @@ class ProductModel {
     this.averageRating = 0,
     this.totalPurchases = 0,
     this.productDetails = const [],
+    this.shop,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
@@ -73,6 +76,7 @@ class ProductModel {
             ? []
             : List<ProductDetailModel>.from(json["product_details"]
                 .map((x) => ProductDetailModel.fromJson(x))),
+        shop: json["shop"] == null ? null : ShopModel.fromJson(json["shop"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -99,5 +103,6 @@ class ProductModel {
         "product_details": productDetails == null
             ? []
             : List<dynamic>.from(productDetails!.map((x) => x.toJson())),
+        "shop": shop?.toJson(),
       };
 }

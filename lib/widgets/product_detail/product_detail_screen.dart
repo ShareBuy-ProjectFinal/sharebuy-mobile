@@ -10,13 +10,12 @@ import 'package:share_buy/blocs/product_bloc/product_event.dart';
 import 'package:share_buy/blocs/product_bloc/product_state.dart';
 import 'package:share_buy/helper/constant/app_function.dart';
 import 'package:share_buy/models/product/product_recommend_model.dart';
-import 'package:share_buy/widgets/cart/children/cart_item_attribute.dart';
 import 'package:share_buy/widgets/component/bottom_sheet_item.dart';
 import 'package:share_buy/widgets/component/custom_button.dart';
-import 'package:share_buy/widgets/component/custom_button_action.dart';
 import 'package:share_buy/widgets/product_detail/children/image_slider.dart';
 import 'package:share_buy/widgets/product_detail/children/product_description.dart';
 import 'package:share_buy/widgets/product_detail/children/rate_comment.dart';
+import 'package:share_buy/widgets/product_detail/children/shop_info.dart';
 import 'package:share_buy/widgets/product_detail/children/suggest_product.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -34,8 +33,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     super.initState();
     context
         .read<ProductBloc>()
-        // .add(ProductLoadingEvent(id: widget.product.payload!.productId!));
-        .add(ProductLoadingEvent(id: '66fe1a4e473e570012e3caab'));
+        .add(ProductLoadingEvent(id: widget.product.payload!.productId!));
+    // .add(ProductLoadingEvent(id: '66fe1a4e473e570012e3caab'));
   }
 
   @override
@@ -146,7 +145,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   readOnly: true,
                                 ),
                                 SizedBox(
-                                  height: 12.h,
+                                  height: 6.h,
                                 ),
                                 Row(
                                   children: [
@@ -166,11 +165,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   ],
                                 ),
                                 SizedBox(
-                                  height: 15.h,
+                                  height: 12.h,
                                 ),
                                 ProductDescription(product: state.product),
                                 SizedBox(
-                                  height: 24.h,
+                                  height: 5.h,
+                                ),
+                                ShopInfo(shop: state.product.shop!),
+                                SizedBox(
+                                  height: 5.h,
                                 ),
                                 RateComment(
                                   product: widget.product,

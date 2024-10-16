@@ -8,6 +8,7 @@ import 'package:share_buy/application/routes/route_generator.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:share_buy/blocs/cart_bloc/cart_bloc.dart';
 import 'package:share_buy/blocs/home_bloc/home_bloc.dart';
 import 'package:share_buy/blocs/product_bloc/product_bloc.dart';
 import 'package:share_buy/widgets/login/login_screen.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
           create: (context) => HomeBloc(),
         ),
         BlocProvider<ProductBloc>(create: (context) => ProductBloc()),
+        BlocProvider<CartBloc>(create: (context) => CartBloc()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),

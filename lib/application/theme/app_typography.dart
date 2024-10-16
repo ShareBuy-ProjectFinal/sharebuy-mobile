@@ -22,6 +22,15 @@ class AppTypography {
       fontWeight: FontWeight.w700,
       color: AppColors.textDartBlue,
       fontSize: 10.sp);
+
+  static final mediumDarkBlueBold = TextStyle(
+      fontWeight: FontWeight.w700,
+      color: AppColors.textDartBlue,
+      fontSize: 12.sp);
+
+  static final mediumRedBold = TextStyle(
+      fontWeight: FontWeight.w700, color: AppColors.redLight, fontSize: 12.sp);
+
   static final primaryDarkBlueBold = TextStyle(
       fontWeight: FontWeight.w700,
       color: AppColors.textDartBlue,

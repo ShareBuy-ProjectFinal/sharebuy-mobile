@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:share_buy/application/theme/app_colors.dart';
 
 class CustomButton extends StatefulWidget {
   final Color buttonColor;
   final String buttonText;
   final Color textColor;
+  final Color? borderColor;
   final bool isDisable;
   final VoidCallback onTap;
   final EdgeInsets? padding;
@@ -14,6 +16,7 @@ class CustomButton extends StatefulWidget {
       required this.buttonText,
       required this.onTap,
       required this.textColor,
+      this.borderColor,
       bool disable = false,
       this.padding})
       : isDisable = disable, // Gán giá trị cho thuộc tính isDisable
@@ -31,15 +34,22 @@ class _CustomButtonState extends State<CustomButton> {
       child: Container(
         padding: widget.padding ?? EdgeInsets.all(16.0.w),
         decoration: BoxDecoration(
-          color: widget.isDisable ? Colors.grey.shade400 : widget.buttonColor,
+          color: widget.isDisable ? AppColors.colorDisable : widget.buttonColor,
           borderRadius: BorderRadius.circular(5.w),
+          border: Border.all(
+            color: widget.isDisable
+                ? AppColors.colorDisable
+                : widget.borderColor ?? widget.textColor,
+          ),
         ),
         child: Center(
           child: Text(
             widget.buttonText,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: widget.isDisable ? Colors.white : widget.textColor,
+                color: widget.isDisable
+                    ? AppColors.colorDisable
+                    : widget.textColor,
                 fontSize: 12.sp),
           ),
         ),

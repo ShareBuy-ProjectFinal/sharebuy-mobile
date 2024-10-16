@@ -4,13 +4,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
+import 'package:share_buy/blocs/cart_bloc/cart_bloc.dart';
+import 'package:share_buy/blocs/cart_bloc/cart_event.dart';
 import 'package:share_buy/blocs/product_bloc/product_bloc.dart';
 import 'package:share_buy/blocs/product_bloc/product_event.dart';
 import 'package:share_buy/blocs/product_bloc/product_state.dart';
 import 'package:share_buy/models/attribute/attribute_custom_value_model.dart';
 import 'package:share_buy/models/product/product_detail_model.dart';
 import 'package:share_buy/models/product/product_model.dart';
+import 'package:share_buy/repositories/cart_repository.dart';
 import 'package:share_buy/widgets/cart/children/cart_item_attribute.dart';
+import 'package:share_buy/widgets/component/CustomCachedNetworkImage.dart';
 import 'package:share_buy/widgets/component/custom_button.dart';
 import 'package:share_buy/widgets/component/custom_button_action.dart';
 
@@ -23,7 +27,6 @@ class BottomSheetItem extends StatefulWidget {
 }
 
 class _BottomSheetItemState extends State<BottomSheetItem> {
-  int _quantity = 1;
   @override
   void initState() {
     // TODO: implement initState
@@ -44,6 +47,7 @@ class _BottomSheetItemState extends State<BottomSheetItem> {
     return BlocBuilder<ProductBloc, ProductState>(builder: (context, state) {
       List<CustomAttributeValue> selectedAttributeValues =
           state.selectedAttributeValues;
+      int quantity = context.read<ProductBloc>().state.quantity;
       if (selectedAttributeValues.length == product.customAttributes!.length) {
         product.productDetails?.forEach((element) {
           bool allAttributesMatch =
@@ -73,12 +77,12 @@ class _BottomSheetItemState extends State<BottomSheetItem> {
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.black),
                     ),
-                    child: CachedNetworkImage(
+                    child: CustomCachedNetworkImage(
                       imageUrl:
                           isDisable ? product.image! : productDetail.image!,
+                      fallbackImageUrl: product.image,
                       width: 100.w,
                       height: 100.h,
-                      fit: BoxFit.cover,
                     ),
                   ),
                   SizedBox(
@@ -157,10 +161,10 @@ class _BottomSheetItemState extends State<BottomSheetItem> {
                       isDisable: isDisable,
                       icon: Icons.remove,
                       onTap: () {
-                        if (_quantity > 1) {
-                          setState(() {
-                            _quantity--;
-                          });
+                        if (quantity > 1) {
+                          context
+                              .read<ProductBloc>()
+                              .add(ChangeQuantityEvent(quantity: quantity - 1));
                         }
                       },
                       isLeftRadius: true,
@@ -176,7 +180,7 @@ class _BottomSheetItemState extends State<BottomSheetItem> {
                         ),
                         child: Center(
                           child: Text(
-                            _quantity.toString(),
+                            quantity.toString(),
                             style: isDisable
                                 ? AppTypography.primaryDarkBlueBoldDisable
                                 : AppTypography.primaryDarkBlueBold,
@@ -186,10 +190,10 @@ class _BottomSheetItemState extends State<BottomSheetItem> {
                       isDisable: isDisable,
                       icon: Icons.add,
                       onTap: () {
-                        if (_quantity < product.quantity!) {
-                          setState(() {
-                            _quantity++;
-                          });
+                        if (quantity < product.quantity!) {
+                          context
+                              .read<ProductBloc>()
+                              .add(ChangeQuantityEvent(quantity: quantity + 1));
                         }
                       },
                     ),
@@ -205,7 +209,20 @@ class _BottomSheetItemState extends State<BottomSheetItem> {
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
                 buttonColor: AppColors.buttonBlue,
                 buttonText: 'Thêm vào giỏ hàng',
-                onTap: () {},
+                onTap: () {
+                  context.read<CartBloc>().add(AddCartItemEvent(
+                      productDetailId: productDetail.id!, quantity: quantity));
+                  if (true) {
+                    context
+                        .read<ProductBloc>()
+                        .add(ChangeQuantityEvent(quantity: 1));
+                    Navigator.pop(context);
+                  }
+                  context
+                      .read<ProductBloc>()
+                      .add(ChangeQuantityEvent(quantity: 1));
+                  Navigator.pop(context);
+                },
                 textColor: Colors.white),
           ],
         ),

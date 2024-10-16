@@ -5,6 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_buy/models/product/product_model.dart';
+import 'package:share_buy/widgets/component/CustomCachedNetworkImage.dart';
 
 class ImageSlider extends StatefulWidget {
   final ProductModel product;
@@ -28,17 +29,14 @@ class _ImageSliderState extends State<ImageSlider> {
                 Image.asset('assets/images/image_error.png')))
         .toList();
 
-    imageSliders.insert(
-        0,
-        CachedNetworkImage(
-          imageUrl: widget.product.image ?? '',
-          placeholder: (context, url) => CircularProgressIndicator(),
-          fit: BoxFit.cover,
-          errorWidget: (context, url, error) {
-            log("Error: $error");
-            return Icon(Icons.error);
-          },
-        ));
+    // imageSliders.insert(
+    //     0,
+    //     CustomCachedNetworkImage(
+    // imageUrl: widget.product.image ?? '',
+    // placeholder: (context, url) => CircularProgressIndicator(),
+    // fit: BoxFit.cover,
+    // errorWidget: (context, url, error) =>
+    //     Image.asset('assets/images/image_error.png')));
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,

@@ -24,6 +24,7 @@ class CustomAttributeValue {
 
   @override
   int get hashCode => id.hashCode;
+
   factory CustomAttributeValue.fromJson(Map<String, dynamic> json) =>
       CustomAttributeValue(
         id: json["_id"] ?? '',

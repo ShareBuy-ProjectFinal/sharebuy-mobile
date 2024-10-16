@@ -42,7 +42,6 @@ class _CartItemAttributeState extends State<CartItemAttribute> {
                 attributeName: widget.attribute.attributeName);
             if (widget.attributeValueId == customAttributeValue.id) {
               _indexSelected = index;
-              log("indexSelected: $_indexSelected ${widget.attributeValueId}");
             }
             return GestureDetector(
               onTap: () {
