@@ -5,15 +5,19 @@ import 'package:share_buy/blocs/product_bloc/product_event.dart';
 import 'package:share_buy/blocs/product_bloc/product_state.dart';
 import 'package:share_buy/models/attribute/attribute_custom_value_model.dart';
 import 'package:share_buy/models/product/product_model.dart';
+import 'package:share_buy/models/shop/shop_model.dart';
+import 'package:share_buy/repositories/cart_repository.dart';
 import 'package:share_buy/repositories/product_repository.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   // ProductBloc(super.initialState);
-  ProductBloc() : super(ProductState(product: ProductModel())) {
+  ProductBloc()
+      : super(ProductState(product: ProductModel(shop: ShopModel()))) {
     on<ProductLoadingEvent>(_loading);
     on<ResetProductEvent>(_reset);
     on<SelectAttributeValueEvent>(_selectAttributeValue);
     on<ChangeQuantityEvent>(_changeQuantity);
+    on<AddCartItemEvent>(_addProductToCart);
   }
 
   Future<void> _loading(ProductLoadingEvent event, Emitter emit) async {
@@ -30,7 +34,11 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   }
 
   void _reset(ResetProductEvent event, Emitter emit) {
-    emit(ProductState(product: ProductModel()));
+    emit(ProductState(
+        product: ProductModel(shop: ShopModel()),
+        quantity: 1,
+        selectedAttributeValues: [],
+        isLoading: false));
   }
 
   void _selectAttributeValue(SelectAttributeValueEvent event, Emitter emit) {
@@ -67,5 +75,28 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   void _changeQuantity(ChangeQuantityEvent event, Emitter emit) {
     log("Change quantity: ${event.quantity}");
     emit(state.copyWith(quantity: event.quantity));
+  }
+
+  Future<void> _addProductToCart(AddCartItemEvent event, Emitter emit) async {
+    try {
+      emit(state.copyWith(
+        isLoading: true,
+        isAddSuccess: false,
+      ));
+      final bool isSuccues = await CartRepository().addToCart(
+          productDetailId: event.productDetailId, quantity: event.quantity);
+      if (isSuccues) {
+        emit(state.copyWith(
+            isLoading: false,
+            productDetailId: '',
+            quantity: 1,
+            isAddSuccess: true));
+      } else {
+        emit(state.copyWith(isLoading: false));
+      }
+    } catch (e) {
+      emit(state.copyWith(isLoading: false, isAddSuccess: false));
+      log("Error when add product to cart: $e");
+    }
   }
 }

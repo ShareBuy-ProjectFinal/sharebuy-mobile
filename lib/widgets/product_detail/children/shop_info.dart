@@ -42,9 +42,10 @@ class _ShopInfoState extends State<ShopInfo> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${'ABC' ?? widget.shop?.fullName}',
+                      '${widget.shop?.fullName}',
                       style: AppTypography.primaryDarkBlueBold,
                       overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
                     Text(
                       'Online 3 phút trước',

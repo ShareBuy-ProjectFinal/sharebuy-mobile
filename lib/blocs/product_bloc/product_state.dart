@@ -4,25 +4,33 @@ import 'package:share_buy/models/product/product_model.dart';
 class ProductState {
   bool isLoading;
   ProductModel product;
+  String productDetailId;
   int quantity;
+  bool isAddSuccess;
   List<CustomAttributeValue> selectedAttributeValues;
 
   ProductState(
       {this.isLoading = false,
       required this.product,
       this.selectedAttributeValues = const [],
+      this.productDetailId = '',
+      this.isAddSuccess = false,
       this.quantity = 1});
 
   ProductState copyWith(
       {bool? isLoading,
       ProductModel? product,
       List<CustomAttributeValue>? selectedAttributeValues,
+      String? productDetailId,
+      bool? isAddSuccess,
       int? quantity}) {
     return ProductState(
         isLoading: isLoading ?? this.isLoading,
         product: product ?? this.product,
         selectedAttributeValues:
             selectedAttributeValues ?? this.selectedAttributeValues,
+        productDetailId: productDetailId ?? this.productDetailId,
+        isAddSuccess: isAddSuccess ?? this.isAddSuccess,
         quantity: quantity ?? this.quantity);
   }
 }

@@ -7,6 +7,7 @@ import 'package:share_buy/models/attribute/attribute_custom_value_model.dart';
 import 'package:share_buy/models/product/product_detail_model.dart';
 import 'package:share_buy/models/product/product_model.dart';
 import 'package:share_buy/models/product/product_recommend_model.dart';
+import 'package:share_buy/models/shop/shop_model.dart';
 
 class ProductRepository extends FetchClient {
   Future<List<ProductRecommendModel>> getProductRecommend(
@@ -46,11 +47,11 @@ class ProductRepository extends FetchClient {
         product.productDetails = productDetails;
         return product;
       } else {
-        return ProductModel();
+        return ProductModel(shop: ShopModel());
       }
     } catch (e) {
       log('Error when get api product by id: $e');
-      return ProductModel();
+      return ProductModel(shop: ShopModel());
     }
   }
 

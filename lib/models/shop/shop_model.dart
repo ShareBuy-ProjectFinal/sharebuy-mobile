@@ -28,18 +28,18 @@ class ShopModel {
   });
 
   factory ShopModel.fromJson(Map<String, dynamic> json) => ShopModel(
-        id: json["_id"],
-        state: json["state"],
+        id: json["_id"] ?? '',
+        state: json["state"] ?? '',
         categories: json["categories"] == null
             ? []
             : List<int>.from(json["categories"]!.map((x) => x)),
-        userName: json["user_name"],
-        fullName: json["full_name"],
-        email: json["email"],
-        phoneNumber: json["phone_number"],
-        role: json["role"],
-        image: json["image"],
-        firebaseId: json["firebase_id"],
+        userName: json["user_name"] ?? '',
+        fullName: json["full_name"] ?? '',
+        email: json["email"] ?? '',
+        phoneNumber: json["phone_number"] ?? '',
+        role: json["role"] ?? '',
+        image: json["image"] ?? '',
+        firebaseId: json["firebase_id"] ?? '',
         createdAt: json["createdAt"] == null
             ? null
             : DateTime.parse(json["createdAt"]),

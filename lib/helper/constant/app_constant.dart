@@ -8,7 +8,7 @@ class AppConstants {
   static final ssoRedirectUri = dotenv.env['SSO_REDIRECT_URI'] ?? '';
   static const networkMessage = 'Vui lòng kiểm tra lại kết nối mạng';
   static var getMe = UserModel.fromJson({
-    "_id": "66f1014e5bb553001ee42198",
+    "_id": "66e9534da46697001266a095",
     "state": "ACTIVE",
     "categories": [11036132],
     "user_name": "Cửa hàng bán Tai Nghe 🎧",

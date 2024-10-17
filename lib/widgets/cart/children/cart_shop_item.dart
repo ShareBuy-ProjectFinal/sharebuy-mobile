@@ -1,11 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
+import 'package:share_buy/blocs/cart_bloc/cart_bloc.dart';
+import 'package:share_buy/models/cart/cart_item_model.dart';
+import 'package:share_buy/models/cart/cart_model.dart';
 import 'package:share_buy/widgets/cart/children/cart_item.dart';
 
 class CartShopItem extends StatefulWidget {
-  
-  const CartShopItem({super.key});
+  int indexCartShop;
+  CartShopItem({super.key, required this.indexCartShop});
 
   @override
   State<CartShopItem> createState() => _CartShopItemState();
@@ -14,6 +20,8 @@ class CartShopItem extends StatefulWidget {
 class _CartShopItemState extends State<CartShopItem> {
   @override
   Widget build(BuildContext context) {
+    CartModel cart = context.read<CartBloc>().state.carts[widget.indexCartShop];
+
     return GestureDetector(
       onTap: () {},
       child: Container(
@@ -31,14 +39,16 @@ class _CartShopItemState extends State<CartShopItem> {
                     value: false,
                   ),
                   Text(
-                    'Name shop >',
+                    cart.shop?.fullName ?? 'Name shop',
                     style: AppTypography.primaryDarkBlueBold,
                   )
                 ],
               ),
               Column(
-                children: List.generate(2, (index) {
-                  return const CartItem();
+                children: List.generate(cart.cartItems?.length ?? 0, (index) {
+                  return CartItem(
+                    cartItem: cart.cartItems?[index],
+                  );
                 }),
               )
             ],

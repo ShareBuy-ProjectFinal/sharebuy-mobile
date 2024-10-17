@@ -60,10 +60,14 @@ class _ProductItemState extends State<ProductItem> {
               height: 12.h,
             ),
             SizedBox(
+              height: 115.h,
               width: widget.isOnHorizontalList ? 133.w : double.infinity,
               child: Text(
+                // ' widget.product.payload?.productName' ?? '',
                 widget.product.payload?.productName ?? '',
                 style: AppTypography.primaryDarkBlueBold,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 5,
               ),
             ),
             AnimatedRatingStars(

@@ -18,3 +18,10 @@ class ChangeQuantityEvent extends ProductEvent {
   final int quantity;
   ChangeQuantityEvent({required this.quantity});
 }
+
+class AddCartItemEvent extends ProductEvent {
+  final String productDetailId;
+  final int quantity;
+
+  AddCartItemEvent({required this.productDetailId, required this.quantity});
+}

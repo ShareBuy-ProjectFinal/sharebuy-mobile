@@ -18,45 +18,6 @@ class SaleProgram extends StatefulWidget {
 }
 
 class _SaleProgramState extends State<SaleProgram> {
-  // List<ProductModel> products = [
-  //   ProductModel(
-  //       name: 'Giày',
-  //       imageUrl: 'assets/images/shose_1.png',
-  //       price: 299.43,
-  //       salePrice: 534.33,
-  //       saleOffPercent: 24),
-  //   ProductModel(
-  //       name: 'Giày',
-  //       imageUrl: 'assets/images/shose_2.png',
-  //       price: 299.43,
-  //       salePrice: 534.33,
-  //       saleOffPercent: 24),
-  //   ProductModel(
-  //       name: 'Túi xách',
-  //       imageUrl: 'assets/images/bag_1.png',
-  //       price: 299.43,
-  //       salePrice: 534.33,
-  //       saleOffPercent: 24),
-  //   ProductModel(
-  //       name: 'Túi xách',
-  //       imageUrl: 'assets/images/bag_2.png',
-  //       price: 299.43,
-  //       salePrice: 534.33,
-  //       saleOffPercent: 24),
-  //   ProductModel(
-  //       name: 'Giày',
-  //       imageUrl: 'assets/images/shose_1.png',
-  //       price: 299.43,
-  //       salePrice: 534.33,
-  //       saleOffPercent: 24),
-  //   ProductModel(
-  //       name: 'Giày',
-  //       imageUrl: 'assets/images/shose_2.png',
-  //       price: 299.43,
-  //       salePrice: 534.33,
-  //       saleOffPercent: 24),
-  // ];
-
   @override
   void initState() {
     super.initState();

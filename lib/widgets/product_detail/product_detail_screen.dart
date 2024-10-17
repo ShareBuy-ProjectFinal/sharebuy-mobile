@@ -33,8 +33,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     super.initState();
     context
         .read<ProductBloc>()
-        .add(ProductLoadingEvent(id: widget.product.payload!.productId!));
-    // .add(ProductLoadingEvent(id: '66fe1a4e473e570012e3caab'));
+        // .add(ProductLoadingEvent(id: widget.product.payload!.productId!));
+        // .add(ProductLoadingEvent(id: '66fe1a4e473e570012e3caab'));
+        .add(ProductLoadingEvent(id: '66f9a2d6a95a6154c8ed89dd'));
   }
 
   @override
@@ -115,6 +116,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                         widget.product.payload?.productName ??
                                             '',
                                         style: AppTypography.headerAppbarStyle,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 3,
                                       ),
                                     ),
                                     IconButton(
@@ -150,7 +153,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 Row(
                                   children: [
                                     Text(
-                                      "\$"
                                       "${widget.product.payload?.price ?? ''}",
                                       style: AppTypography.largeBlueBold,
                                     ),
@@ -158,7 +160,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                       width: 5.w,
                                     ),
                                     Text(
-                                      "\$"
                                       "${state.product.oldPrice ?? ''}",
                                       style: AppTypography.primaryLineThrough,
                                     ),

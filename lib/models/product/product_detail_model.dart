@@ -6,7 +6,8 @@ class ProductDetailModel {
   List<CustomAttributeValue>? customAttributeValues;
   ProductModel? product;
   String? name;
-  num? price;
+  num price;
+  num? oldPrice;
   String? image;
   DateTime? createdAt;
   DateTime? updatedAt;
@@ -17,7 +18,8 @@ class ProductDetailModel {
     this.customAttributeValues,
     this.product,
     this.name,
-    this.price,
+    this.price = 0,
+    this.oldPrice,
     this.image,
     this.createdAt,
     this.updatedAt,
@@ -36,6 +38,7 @@ class ProductDetailModel {
             : ProductModel.fromJson(json["product"]),
         name: json["name"] ?? '',
         price: json["price"] ?? 0,
+        oldPrice: json["old_price"] ?? 0,
         image: json["image"] ?? '',
         createdAt: json["createdAt"] == null
             ? null
@@ -54,6 +57,7 @@ class ProductDetailModel {
         "product": product?.toJson(),
         "name": name,
         "price": price,
+        "old_price": oldPrice,
         "image": image,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),

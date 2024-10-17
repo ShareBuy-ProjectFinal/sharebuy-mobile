@@ -1,18 +1,14 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
-import 'package:share_buy/blocs/cart_bloc/cart_bloc.dart';
-import 'package:share_buy/blocs/cart_bloc/cart_event.dart';
 import 'package:share_buy/blocs/product_bloc/product_bloc.dart';
 import 'package:share_buy/blocs/product_bloc/product_event.dart';
 import 'package:share_buy/blocs/product_bloc/product_state.dart';
 import 'package:share_buy/models/attribute/attribute_custom_value_model.dart';
 import 'package:share_buy/models/product/product_detail_model.dart';
 import 'package:share_buy/models/product/product_model.dart';
-import 'package:share_buy/repositories/cart_repository.dart';
 import 'package:share_buy/widgets/cart/children/cart_item_attribute.dart';
 import 'package:share_buy/widgets/component/CustomCachedNetworkImage.dart';
 import 'package:share_buy/widgets/component/custom_button.dart';
@@ -210,18 +206,11 @@ class _BottomSheetItemState extends State<BottomSheetItem> {
                 buttonColor: AppColors.buttonBlue,
                 buttonText: 'Thêm vào giỏ hàng',
                 onTap: () {
-                  context.read<CartBloc>().add(AddCartItemEvent(
+                  context.read<ProductBloc>().add(AddCartItemEvent(
                       productDetailId: productDetail.id!, quantity: quantity));
-                  if (true) {
-                    context
-                        .read<ProductBloc>()
-                        .add(ChangeQuantityEvent(quantity: 1));
+                  if (state.isAddSuccess) {
                     Navigator.pop(context);
                   }
-                  context
-                      .read<ProductBloc>()
-                      .add(ChangeQuantityEvent(quantity: 1));
-                  Navigator.pop(context);
                 },
                 textColor: Colors.white),
           ],

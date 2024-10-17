@@ -42,7 +42,7 @@ class ProductModel {
     this.averageRating = 0,
     this.totalPurchases = 0,
     this.productDetails = const [],
-    this.shop,
+    required this.shop,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
@@ -76,7 +76,9 @@ class ProductModel {
             ? []
             : List<ProductDetailModel>.from(json["product_details"]
                 .map((x) => ProductDetailModel.fromJson(x))),
-        shop: json["shop"] == null ? null : ShopModel.fromJson(json["shop"]),
+        shop: json["shop"] == null
+            ? ShopModel()
+            : ShopModel.fromJson(json["shop"]),
       );
 
   Map<String, dynamic> toJson() => {

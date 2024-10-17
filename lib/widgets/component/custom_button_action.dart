@@ -42,7 +42,7 @@ class _CustomButtonActionState extends State<CustomButtonAction> {
           child: Icon(
             widget.icon,
             color: widget.isDisable ? Colors.grey : Colors.black,
-            size: 23,
+            size: 20,
           ),
         ),
       ),
