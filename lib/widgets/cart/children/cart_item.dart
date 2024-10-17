@@ -1,8 +1,11 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
+import 'package:share_buy/blocs/cart_bloc/cart_bloc.dart';
+import 'package:share_buy/blocs/cart_bloc/cart_event.dart';
 import 'package:share_buy/models/cart/cart_item_model.dart';
 import 'package:share_buy/models/product/product_detail_model.dart';
 import 'package:share_buy/widgets/cart/children/change_detail_item.dart';
@@ -21,16 +24,9 @@ class CartItem extends StatefulWidget {
 
 class _CartItemState extends State<CartItem> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    log("cartItem: ${widget.cartItem?.toJson()}");
-  }
-
-  @override
   Widget build(BuildContext context) {
     String nameAttributeValue = widget
-            .cartItem?.productDetail?.customAttributeValues
+            .cartItem?.productDetail.customAttributeValues
             ?.map((e) => e.value)
             .join(', ') ??
         '';
@@ -99,11 +95,15 @@ class _CartItemState extends State<CartItem> {
                             CustomButtonAction(
                               icon: Icons.remove,
                               onTap: () {
-                                // if (_quantity > 1) {
-                                //   setState(() {
-                                //     _quantity--;
-                                //   });
-                                // }
+                                if ((widget.cartItem?.quantity ?? 1) > 1) {
+                                  context.read<CartBloc>().add(
+                                      UpdateQuantityCartItemEvent(
+                                          cartItemId: widget.cartItem?.id ?? '',
+                                          quantity: (widget.cartItem?.quantity
+                                                      ?.toInt() ??
+                                                  1) -
+                                              1));
+                                }
                               },
                               isLeftRadius: true,
                             ),
@@ -123,9 +123,13 @@ class _CartItemState extends State<CartItem> {
                             CustomButtonAction(
                                 icon: Icons.add,
                                 onTap: () {
-                                  // setState(() {
-                                  //   _quantity++;
-                                  // });
+                                  context.read<CartBloc>().add(
+                                      UpdateQuantityCartItemEvent(
+                                          cartItemId: widget.cartItem?.id ?? '',
+                                          quantity: (widget.cartItem?.quantity
+                                                      ?.toInt() ??
+                                                  1) +
+                                              1));
                                 }),
                             SizedBox(
                               width: 8.w,

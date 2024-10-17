@@ -8,23 +8,35 @@ import 'package:share_buy/repositories/cart_repository.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc() : super(CartState()) {
-    // on<AddCartItemEvent>(_addProductToCart);
+    on<UpdateQuantityCartItemEvent>(_updateQuantityProductToCart);
     on<CartLoadingEvent>(_loading);
     on<ChangeAttributeCartItemEvent>(_changeAttributeCartItem);
   }
 
-  // Future<bool> _addProductToCart(AddCartItemEvent event, Emitter emit) async {
-  //   try {
-  //     emit(state.copyWith(isLoading: true));
-  //     final bool isSuccues = await CartRepository().addToCart(
-  //         productDetailId: event.productDetailId, quantity: event.quantity);
-  //     emit(state.copyWith(isLoading: false));
-  //     return isSuccues;
-  //   } catch (e) {
-  //     emit(state.copyWith(isLoading: false));
-  //     return false;
-  //   }
-  // }
+  Future<void> _updateQuantityProductToCart(
+      UpdateQuantityCartItemEvent event, Emitter emit) async {
+    try {
+      emit(state.copyWith(isLoading: true));
+      final bool isSuccues = await CartRepository().updateToCartById(
+          cartItemId: event.cartItemId, quantity: event.quantity);
+      if (isSuccues) {
+        int indexFind = state.carts.indexWhere((e) =>
+            e.cartItems
+                ?.indexWhere((element) => element.id == event.cartItemId) !=
+            -1);
+        if (indexFind != -1) {
+          int indexItem = state.carts[indexFind].cartItems!
+              .indexWhere((element) => element.id == event.cartItemId);
+          state.carts[indexFind].cartItems![indexItem].quantity =
+              event.quantity;
+        }
+      }
+      emit(state.copyWith(isLoading: false));
+    } catch (e) {
+      emit(state.copyWith(isLoading: false));
+      log("Error when update quantity product to cart: $e");
+    }
+  }
 
   Future<void> _loading(CartLoadingEvent event, Emitter emit) async {
     try {

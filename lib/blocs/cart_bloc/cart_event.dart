@@ -7,9 +7,10 @@ class ChangeAttributeCartItemEvent extends CartEvent {
   ChangeAttributeCartItemEvent({required this.productDetailId});
 }
 
-// class AddCartItemEvent extends CartEvent {
-//   final String productDetailId;
-//   final int quantity;
+class UpdateQuantityCartItemEvent extends CartEvent {
+  final String cartItemId;
+  final int quantity;
 
-//   AddCartItemEvent({required this.productDetailId, required this.quantity});
-// }
+  UpdateQuantityCartItemEvent(
+      {required this.cartItemId, required this.quantity});
+}

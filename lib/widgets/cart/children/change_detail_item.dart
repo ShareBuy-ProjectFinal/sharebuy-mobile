@@ -24,8 +24,8 @@ class _ChangeDetailItemState extends State<ChangeDetailItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.read<CartBloc>().add(ChangeAttributeCartItemEvent(
-            productDetailId: widget.productDetailId));
+        // context.read<CartBloc>().add(ChangeAttributeCartItemEvent(
+        //     productDetailId: widget.productDetailId));
       },
       child: Container(
         width: 75.w,
