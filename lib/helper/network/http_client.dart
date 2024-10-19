@@ -32,10 +32,7 @@ class FetchClient {
 
   Options options() {
     var option = Options(
-        headers: {
-          // 'x-application-name': 'PMS-APP', // config sau khi  sử dụng
-          // 'Authorization': token.isEmpty ? '' : ('Bearer $token')
-        },
+        headers: {'Authorization': token.isEmpty ? '' : ('Bearer $token')},
         followRedirects: false,
         validateStatus: (status) {
           return true;

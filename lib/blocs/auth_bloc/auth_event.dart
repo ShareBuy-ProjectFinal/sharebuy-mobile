@@ -14,9 +14,11 @@ class EventLogout extends AuthEvent {}
 class EventCreateUser extends AuthEvent {
   final String email;
   final String password;
+  final String fullName;
   EventCreateUser({
     required this.email,
     required this.password,
+    required this.fullName,
   });
 }
 

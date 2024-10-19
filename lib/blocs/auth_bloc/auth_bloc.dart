@@ -34,9 +34,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _createUser(EventCreateUser event, Emitter emit) async {
     try {
       emit(state.copyWith(isLoading: true));
-      bool isCreateUserSuccess = await AuthRepository()
-          .createUser(email: event.email, password: event.password);
-      if (isCreateUserSuccess) {
+      String firebaseId = await AuthRepository().createUser(
+          email: event.email,
+          password: event.password,
+          fullName: event.fullName);
+      if (firebaseId.isNotEmpty) {
+        add(EventGetCurrentUser(firebaseId: firebaseId));
         emit(state.copyWith(isLoading: false, isSuccess: true));
       } else {
         emit(state.copyWith(isLoading: false, isSuccess: false));

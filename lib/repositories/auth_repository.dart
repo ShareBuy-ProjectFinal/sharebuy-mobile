@@ -7,21 +7,49 @@ import 'package:share_buy/models/user/user_model.dart';
 
 class AuthRepository extends FetchClient {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  Future<bool> createUser(
-      {required String email, required String password}) async {
+  Future<String> createUser(
+      {required String email,
+      required String password,
+      required String fullName}) async {
     try {
       final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
       if (userCredential.user != null) {
-        // call api lưu user
+        String? token = await userCredential.user!.getIdToken();
+        FetchClient.token = token!;
+        await saveUser(fullName: fullName, email: email, token: token);
       }
-      return true;
+      return userCredential.user!.uid;
     } catch (e) {
       log('Error when create user: $e');
     }
-    return false;
+    return '';
+  }
+
+  Future<bool> saveUser(
+      {required String fullName,
+      required String email,
+      required String token}) async {
+    try {
+      final Response<dynamic> response = await super.postData(
+        path: '/api/users/users',
+        params: {
+          "user_name": fullName,
+          "full_name": fullName,
+          "email": email,
+          "role": "SHOP"
+        },
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      log('Error when save user: $e');
+      return false;
+    }
   }
 
   Future<String> login(
