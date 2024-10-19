@@ -10,4 +10,5 @@ class NavigatorName {
   static const String RATE_COMMENT_FORM_SCREEN = '/rate_comment_form';
   static const String NOTIFICATION_SCREEN = '/notification';
   static const String SEARCH_RESULT_SCREEN = '/search_result';
+  static const String PURCHASE_SCREEN = '/purchase';
 }

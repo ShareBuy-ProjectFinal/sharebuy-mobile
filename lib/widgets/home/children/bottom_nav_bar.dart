@@ -55,18 +55,18 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 label: 'Trang chủ'),
             BottomNavigationBarItem(
                 icon: Image.asset(
-                  'assets/icons/icon_search.png',
+                  'assets/icons/icon_offer.png',
                   width: 24.w,
                   height: 24.h,
                   color: AppColors.hintTextColor,
                 ),
                 activeIcon: Image.asset(
-                  'assets/icons/icon_search.png',
+                  'assets/icons/icon_offer.png',
                   width: 24.w,
                   height: 24.h,
                   color: AppColors.buttonBlue,
                 ),
-                label: 'Tìm kiếm'),
+                label: 'Flash sale'),
             BottomNavigationBarItem(
                 icon: badges.Badge(
                   badgeStyle: badges.BadgeStyle(badgeColor: AppColors.redLight),

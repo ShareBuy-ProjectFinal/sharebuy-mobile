@@ -174,12 +174,19 @@ class _BottomSheetItemState extends State<BottomSheetItem> {
                           border: Border.all(
                               color: isDisable ? Colors.grey : Colors.black),
                         ),
-                        child: Center(
-                          child: Text(
-                            quantity.toString(),
-                            style: isDisable
-                                ? AppTypography.primaryDarkBlueBoldDisable
-                                : AppTypography.primaryDarkBlueBold,
+                        child: Container(
+                          height: 18.h,
+                          // width: 15.w,
+                          constraints: BoxConstraints(
+                            minWidth: 18.w,
+                          ),
+                          child: Center(
+                            child: Text(
+                              (quantity).toString(),
+                              style: isDisable
+                                  ? AppTypography.primaryDarkBlueBoldDisable
+                                  : AppTypography.primaryDarkBlueBold,
+                            ),
                           ),
                         )),
                     CustomButtonAction(

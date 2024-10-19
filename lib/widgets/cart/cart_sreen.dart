@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:share_buy/application/routes/navigator_name.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_bloc.dart';
@@ -83,7 +84,10 @@ class _CartSreenState extends State<CartSreen> {
                             CustomButton(
                               buttonColor: AppColors.buttonBlue,
                               buttonText: 'Mua hàng',
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, NavigatorName.PURCHASE_SCREEN);
+                              },
                               textColor: AppColors.white,
                             ),
                           ],
