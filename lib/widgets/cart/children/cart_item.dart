@@ -40,8 +40,11 @@ class _CartItemState extends State<CartItem> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Checkbox(
-                value: true,
-                onChanged: (v) {},
+                value: widget.cartItem?.isSelected ?? false,
+                onChanged: (v) {
+                  context.read<CartBloc>().add(EventSelectItemCartCheckbox(
+                      itemCartId: widget.cartItem?.id ?? '', value: v!));
+                },
               ),
               CustomCachedNetworkImage(
                 imageUrl: widget.cartItem?.productDetail.image ??
