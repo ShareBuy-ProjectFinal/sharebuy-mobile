@@ -8,7 +8,6 @@ import 'package:share_buy/application/theme/app_typography.dart';
 import 'package:share_buy/blocs/auth_bloc/auth_bloc.dart';
 import 'package:share_buy/blocs/auth_bloc/auth_event.dart';
 import 'package:share_buy/blocs/auth_bloc/auth_state.dart';
-import 'package:share_buy/blocs/cart_bloc/cart_bloc.dart';
 import 'package:share_buy/widgets/component/custom_button.dart';
 import 'package:share_buy/widgets/profile/children/profile_item.dart';
 
@@ -19,16 +18,31 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
-  List<String> titles = ['Hồ sơ', 'Đặt hàng', 'Địa chỉ', 'Thanh toán'];
-  List<String> iconUrls = [
-    'assets/icons/icon_user.png',
-    'assets/icons/icon_bag.png',
-    'assets/icons/icon_maker.png',
-    'assets/icons/icon_pay.png'
-  ];
+class _ProfileScreenState extends State<ProfileScreen>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+    List<ProfileItemModel> profileItems = [
+      ProfileItemModel(
+          title: 'Hồ sơ',
+          iconUrl: 'assets/icons/icon_user_blue.png',
+          onTap: () {}),
+      ProfileItemModel(
+          title: 'Đặt hàng',
+          iconUrl: 'assets/icons/icon_bag.png',
+          onTap: () {
+            Navigator.of(context).pushNamed(NavigatorName.PURCHASE_SCREEN);
+          }),
+      ProfileItemModel(
+          title: 'Địa chỉ',
+          iconUrl: 'assets/icons/icon_maker.png',
+          onTap: () {}),
+      ProfileItemModel(
+          title: 'Thanh toán',
+          iconUrl: 'assets/icons/icon_pay.png',
+          onTap: () {})
+    ];
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state.isLoading) {
@@ -100,9 +114,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return ProfileItem(
-                        title: titles[index], iconUrl: iconUrls[index]);
+                      title: profileItems[index].title,
+                      iconUrl: profileItems[index].iconUrl,
+                      onTap: profileItems[index].onTap,
+                    );
                   },
-                  itemCount: titles.length,
+                  itemCount: profileItems.length,
                 ),
               ),
               CustomButton(
@@ -118,4 +135,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
       }),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
+}
+
+class ProfileItemModel {
+  final String title;
+  final String iconUrl;
+  VoidCallback onTap;
+
+  ProfileItemModel({
+    required this.title,
+    required this.iconUrl,
+    required this.onTap,
+  });
 }
