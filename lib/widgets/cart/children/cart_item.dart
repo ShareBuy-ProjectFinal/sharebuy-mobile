@@ -24,13 +24,6 @@ class CartItem extends StatefulWidget {
 
 class _CartItemState extends State<CartItem> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    log("cartItem: ${widget.cartItem?.toJson()}");
-  }
-
-  @override
   Widget build(BuildContext context) {
     String nameAttributeValue = widget
             .cartItem?.productDetail.customAttributeValues
@@ -105,11 +98,15 @@ class _CartItemState extends State<CartItem> {
                             CustomButtonAction(
                               icon: Icons.remove,
                               onTap: () {
-                                // if (_quantity > 1) {
-                                //   setState(() {
-                                //     _quantity--;
-                                //   });
-                                // }
+                                if ((widget.cartItem?.quantity ?? 1) > 1) {
+                                  context.read<CartBloc>().add(
+                                      UpdateQuantityCartItemEvent(
+                                          cartItemId: widget.cartItem?.id ?? '',
+                                          quantity: (widget.cartItem?.quantity
+                                                      ?.toInt() ??
+                                                  1) -
+                                              1));
+                                }
                               },
                               isLeftRadius: true,
                             ),
@@ -129,9 +126,13 @@ class _CartItemState extends State<CartItem> {
                             CustomButtonAction(
                                 icon: Icons.add,
                                 onTap: () {
-                                  // setState(() {
-                                  //   _quantity++;
-                                  // });
+                                  context.read<CartBloc>().add(
+                                      UpdateQuantityCartItemEvent(
+                                          cartItemId: widget.cartItem?.id ?? '',
+                                          quantity: (widget.cartItem?.quantity
+                                                      ?.toInt() ??
+                                                  1) +
+                                              1));
                                 }),
                             SizedBox(
                               width: 8.w,

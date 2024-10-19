@@ -26,6 +26,22 @@ class CartRepository extends FetchClient {
     }
   }
 
+  Future<bool> updateToCartById(
+      {required String cartItemId, required int quantity}) async {
+    try {
+      final Response<dynamic> response = await super.putData(
+          path: '/api/carts/$cartItemId', params: {'quantity': quantity});
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      log('Error when update to cart by id: $e');
+      return false;
+    }
+  }
+
   Future<List<CartModel>> getByUserId() async {
     try {
       final Response<dynamic> response = await super
