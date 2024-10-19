@@ -14,41 +14,41 @@ class UserModel {
   int? v;
 
   UserModel({
-    this.id,
-    this.state,
-    this.categories,
-    this.userName,
-    this.fullName,
-    this.email,
-    this.phoneNumber,
-    this.role,
-    this.image,
-    this.firebaseId,
+    this.id = '',
+    this.state = '',
+    this.categories = const [],
+    this.userName = '',
+    this.fullName = '',
+    this.email = '',
+    this.phoneNumber = '',
+    this.role = '',
+    this.image = '',
+    this.firebaseId = '',
     this.createdAt,
     this.updatedAt,
-    this.v,
+    this.v = 0,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        id: json["_id"],
-        state: json["state"],
+        id: json["_id"] ?? '',
+        state: json["state"] ?? '',
         categories: json["categories"] == null
             ? []
             : List<int>.from(json["categories"]!.map((x) => x)),
-        userName: json["user_name"],
-        fullName: json["full_name"],
-        email: json["email"],
-        phoneNumber: json["phone_number"],
-        role: json["role"],
-        image: json["image"],
-        firebaseId: json["firebase_id"],
+        userName: json["user_name"] ?? '',
+        fullName: json["full_name"] ?? '',
+        email: json["email"] ?? '',
+        phoneNumber: json["phone_number"] ?? '',
+        role: json["role"] ?? '',
+        image: json["image"] ?? '',
+        firebaseId: json["firebase_id"] ?? '',
         createdAt: json["createdAt"] == null
-            ? null
+            ? DateTime.now()
             : DateTime.parse(json["createdAt"]),
         updatedAt: json["updatedAt"] == null
-            ? null
+            ? DateTime.now()
             : DateTime.parse(json["updatedAt"]),
-        v: json["__v"],
+        v: json["__v"] ?? 0,
       );
 
   Map<String, dynamic> toJson() => {

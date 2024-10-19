@@ -28,24 +28,24 @@ class _ChangeDetailItemState extends State<ChangeDetailItem> {
         //     productDetailId: widget.productDetailId));
       },
       child: Container(
-        width: 75.w,
+        width: 100.w,
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
         decoration: BoxDecoration(
             color: AppColors.borderTextfieldColor,
             borderRadius: BorderRadius.circular(5)),
-        child: IntrinsicWidth(
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              child: Text(
                 widget.nameAttributeValue,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
-              Icon(Icons.expand_more),
-            ],
-          ),
+            ),
+            Icon(Icons.expand_more),
+          ],
         ),
       ),
     );

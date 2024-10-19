@@ -16,6 +16,23 @@ class Format {
     return fmf.symbolOnRight;
   }
 
+  static String formatNumber(num? money,
+      {String? symbol = '', int? fractionDigits = 3}) {
+    MoneyFormatterOutput fmf = MoneyFormatter(
+        amount: (money ?? 0).toDouble(),
+        settings: MoneyFormatterSettings(
+          symbol: symbol,
+          thousandSeparator: '.',
+          decimalSeparator: ',',
+          symbolAndNumberSeparator: '',
+          fractionDigits: fractionDigits,
+        )).output;
+    final num fractionDigitsOnly = num.tryParse(fmf.fractionDigitsOnly) ?? 0;
+    return fractionDigitsOnly == 0
+        ? fmf.symbolOnRight.split(',').first
+        : fmf.symbolOnRight;
+  }
+
   static String formatMoneyVer2(String money) {
     MoneyFormatterOutput fmf = MoneyFormatter(
         amount: double.parse(money),
@@ -62,7 +79,7 @@ class Validation {
     return emailRegex.hasMatch(email);
   }
 
-  static bool isValidPriceNumber(String price){
+  static bool isValidPriceNumber(String price) {
     final regex = RegExp(r'^[1-9]\d{6,}$');
     return regex.hasMatch(price);
   }

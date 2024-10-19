@@ -3,6 +3,7 @@ import 'package:share_buy/application/routes/navigator_name.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/widgets/favourite/favourite_screen.dart';
 import 'package:share_buy/widgets/home/home_screen.dart';
+import 'package:share_buy/widgets/login/login_screen.dart';
 import 'package:share_buy/widgets/notification/notification_screen.dart';
 import 'package:share_buy/widgets/product_detail/product_detail_screen.dart';
 import 'package:share_buy/widgets/purchase/purchase_screen.dart';
@@ -57,8 +58,10 @@ class RouteGenerator {
           builder: (_) => const SearchResultScreen(),
         );
       case NavigatorName.PURCHASE_SCREEN:
+        return MaterialPageRoute(builder: (_) => const PurchaseScreen());
+      case NavigatorName.LOGIN_SCREEN:
         return MaterialPageRoute(
-          builder: (_) => const PurchaseScreen(),
+          builder: (_) => const LoginScreen(),
         );
       default:
         return MaterialPageRoute(

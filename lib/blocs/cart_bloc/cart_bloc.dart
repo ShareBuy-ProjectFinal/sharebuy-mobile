@@ -11,6 +11,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<UpdateQuantityCartItemEvent>(_updateQuantityProductToCart);
     on<CartLoadingEvent>(_loading);
     on<ChangeAttributeCartItemEvent>(_changeAttributeCartItem);
+    on<EventSelectItemCartCheckbox>(_selectCartItem);
   }
 
   Future<void> _updateQuantityProductToCart(
@@ -55,6 +56,31 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       emit(state.copyWith(productDetailId: ''));
     } else {
       emit(state.copyWith(productDetailId: event.productDetailId));
+    }
+  }
+
+  void _selectCartItem(EventSelectItemCartCheckbox event, Emitter emit) {
+    try {
+      if (!event.value) {
+        state.carts.forEach((cart) {
+          cart.cartItems!.forEach((cartItem) {
+            if (cartItem.id == event.itemCartId) {
+              cartItem.isSelected = false;
+            }
+          });
+        });
+      } else {
+        state.carts.forEach((cart) {
+          cart.cartItems!.forEach((cartItem) {
+            if (cartItem.id == event.itemCartId) {
+              cartItem.isSelected = true;
+            }
+          });
+        });
+      }
+      emit(state.copyWith(carts: state.carts));
+    } catch (e) {
+      log('Error when select cart item: $e');
     }
   }
 }

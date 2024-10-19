@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 class NavigatorName {
+  static const String LOGIN_SCREEN = '/login';
   static const String SIGN_UP_SCREEN = '/sign_up';
   static const String HOME_SCREEN = '/home';
   static const String SALE_PROGRAM_SCREEN = '/sale_program';

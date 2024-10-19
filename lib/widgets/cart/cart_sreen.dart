@@ -8,6 +8,7 @@ import 'package:share_buy/application/theme/app_typography.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_bloc.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_event.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_state.dart';
+import 'package:share_buy/utils/format.dart';
 import 'package:share_buy/widgets/cart/children/cart_shop_item.dart';
 import 'package:share_buy/widgets/component/custom_button.dart';
 
@@ -79,7 +80,7 @@ class _CartSreenState extends State<CartSreen> {
                         Checkbox(value: false, onChanged: (value) {}),
                         Row(
                           children: [
-                            Text('Tổng cộng: 100.000đ'),
+                            Text('Tổng cộng: ${Format.formatNumber(0)}'),
                             SizedBox(width: 10.w),
                             CustomButton(
                               buttonColor: AppColors.buttonBlue,

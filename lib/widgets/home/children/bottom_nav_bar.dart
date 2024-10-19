@@ -107,7 +107,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   height: 24.h,
                   color: AppColors.buttonBlue,
                 ),
-                label: 'Flash sale'),
+                label: 'Đơn hàng'),
             BottomNavigationBarItem(
                 icon: Image.asset(
                   'assets/icons/icon_account.png',
