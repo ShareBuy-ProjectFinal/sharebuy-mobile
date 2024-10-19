@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -8,9 +9,12 @@ import 'package:share_buy/application/routes/route_generator.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:share_buy/blocs/auth_bloc/auth_bloc.dart';
+import 'package:share_buy/blocs/auth_bloc/auth_event.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_bloc.dart';
 import 'package:share_buy/blocs/home_bloc/home_bloc.dart';
 import 'package:share_buy/blocs/product_bloc/product_bloc.dart';
+import 'package:share_buy/widgets/home/home_screen.dart';
 import 'package:share_buy/widgets/login/login_screen.dart';
 import 'firebase_options.dart';
 
@@ -35,6 +39,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<ProductBloc>(create: (context) => ProductBloc()),
         BlocProvider<CartBloc>(create: (context) => CartBloc()),
+        BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
@@ -59,7 +64,18 @@ class MyApp extends StatelessWidget {
             ),
           );
         },
-        child: const LoginScreen(),
+        child: StreamBuilder<User?>(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              if (snapshot.data == null) {
+                return const LoginScreen();
+              } else {
+                context
+                    .read<AuthBloc>()
+                    .add(EventGetCurrentUser(firebaseId: snapshot.data!.uid));
+                return const HomeScreen();
+              }
+            }),
       ),
     );
   }

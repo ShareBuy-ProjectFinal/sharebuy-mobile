@@ -9,6 +9,7 @@ class CartItemModel {
   DateTime? createdAt;
   DateTime? updatedAt;
   ProductDetailModel productDetail;
+  bool? isSelected;
 
   CartItemModel({
     this.id,
@@ -19,6 +20,7 @@ class CartItemModel {
     this.createdAt,
     this.updatedAt,
     required this.productDetail,
+    this.isSelected = false,
   });
 
   factory CartItemModel.fromJson(Map<String, dynamic> json) => CartItemModel(
@@ -36,6 +38,7 @@ class CartItemModel {
         productDetail: json["product_detail"] == null
             ? ProductDetailModel()
             : ProductDetailModel.fromJson(json["product_detail"]),
+        isSelected: false,
       );
 
   Map<String, dynamic> toJson() => {
