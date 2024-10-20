@@ -4,9 +4,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_bloc.dart';
+import 'package:share_buy/blocs/cart_bloc/cart_event.dart';
 import 'package:share_buy/models/cart/cart_item_model.dart';
 import 'package:share_buy/models/cart/cart_model.dart';
 import 'package:share_buy/widgets/cart/children/cart_item.dart';
@@ -37,12 +39,30 @@ class _CartShopItemState extends State<CartShopItem> {
               Row(
                 children: [
                   Checkbox(
-                    onChanged: (value) {},
-                    value: false,
+                    onChanged: (v) {
+                      context.read<CartBloc>().add(EventSelectItemCartCheckbox(
+                          itemId: cart.shop?.id ?? '',
+                          value: v!,
+                          isShop: true));
+                    },
+                    value: cart.shop?.isSelected ?? false,
                   ),
-                  Text(
-                    cart.shop?.fullName ?? 'Name shop',
-                    style: AppTypography.primaryDarkBlueBold,
+                  Expanded(
+                    child: Text(
+                      // 'Name shop  Name shop  Name shop Name shop  Name shop Name shop  Name shop  ' ??
+                      cart.shop?.fullName ?? 'Name shop',
+                      style: AppTypography.primaryDarkBlueBold,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  const Center(
+                    child: Icon(
+                      Icons.arrow_forward_ios,
+                      size: 14,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 5.w,
                   )
                 ],
               ),

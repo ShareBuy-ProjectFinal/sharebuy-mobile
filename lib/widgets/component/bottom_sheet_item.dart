@@ -92,7 +92,7 @@ class _BottomSheetItemState extends State<BottomSheetItem> {
                         children: [
                           Text(
                             product.oldPrice.toString(),
-                            style: AppTypography.primaryLineThrough,
+                            style: AppTypography.largeLineThrough,
                           ),
                           SizedBox(
                             width: 5.w,

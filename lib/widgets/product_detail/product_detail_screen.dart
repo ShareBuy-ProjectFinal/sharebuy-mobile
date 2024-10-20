@@ -161,7 +161,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     ),
                                     Text(
                                       "${state.product.oldPrice ?? ''}",
-                                      style: AppTypography.primaryLineThrough,
+                                      style: AppTypography.largeLineThrough,
                                     ),
                                   ],
                                 ),

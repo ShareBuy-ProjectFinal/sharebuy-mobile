@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,6 +30,13 @@ class _CartSreenState extends State<CartSreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    log("didChangeDependencies");
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocListener<CartBloc, CartState>(
       listener: (BuildContext context, state) {
@@ -52,27 +61,36 @@ class _CartSreenState extends State<CartSreen> {
         ),
         body: SafeArea(
             child: BlocBuilder<CartBloc, CartState>(builder: (context, state) {
+          num total = 0;
+          state.carts.forEach((cart) {
+            cart.cartItems?.forEach((cartItem) {
+              if (cartItem.isSelected ?? false) {
+                total +=
+                    cartItem.productDetail.price * (cartItem.quantity ?? 1);
+              }
+            });
+          });
           return state.isLoading
               ? const SizedBox()
               : Column(
                   children: [
                     Expanded(
                       child: Container(
-                        padding: EdgeInsets.only(top: 10, left: 10, right: 10),
-                        decoration:
-                            const BoxDecoration(color: AppColors.hintTextColor),
-                        child: ListView.separated(
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(height: 10),
-                          shrinkWrap: true,
-                          itemCount: state.carts.length,
-                          itemBuilder: (context, index) {
-                            return CartShopItem(
-                              indexCartShop: index,
-                            );
-                          },
-                        ),
-                      ),
+                          padding: EdgeInsets.only(left: 5.w, right: 5.w),
+                          decoration: const BoxDecoration(
+                              color: AppColors.hintTextColor),
+                          child: ListView.separated(
+                            padding: EdgeInsets.symmetric(vertical: 5.h),
+                            separatorBuilder: (context, index) =>
+                                SizedBox(height: 5.h),
+                            shrinkWrap: true,
+                            itemCount: state.carts.length,
+                            itemBuilder: (context, index) {
+                              return CartShopItem(
+                                indexCartShop: index,
+                              );
+                            },
+                          )),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,7 +98,7 @@ class _CartSreenState extends State<CartSreen> {
                         Checkbox(value: false, onChanged: (value) {}),
                         Row(
                           children: [
-                            Text('Tổng cộng: ${Format.formatNumber(0)}'),
+                            Text('Tổng cộng: ${Format.formatNumber(total)}'),
                             SizedBox(width: 10.w),
                             CustomButton(
                               buttonColor: AppColors.buttonBlue,

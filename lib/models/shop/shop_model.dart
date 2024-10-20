@@ -11,6 +11,7 @@ class ShopModel {
   String? firebaseId;
   DateTime? createdAt;
   DateTime? updatedAt;
+  bool? isSelected;
 
   ShopModel({
     this.id = '',
@@ -25,6 +26,7 @@ class ShopModel {
     this.firebaseId = '',
     this.createdAt,
     this.updatedAt,
+    this.isSelected = false,
   });
 
   factory ShopModel.fromJson(Map<String, dynamic> json) => ShopModel(
@@ -46,6 +48,7 @@ class ShopModel {
         updatedAt: json["updatedAt"] == null
             ? null
             : DateTime.parse(json["updatedAt"]),
+        isSelected: false,
       );
 
   Map<String, dynamic> toJson() => {
@@ -63,5 +66,6 @@ class ShopModel {
         "firebase_id": firebaseId,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
+        'isSelected': isSelected,
       };
 }

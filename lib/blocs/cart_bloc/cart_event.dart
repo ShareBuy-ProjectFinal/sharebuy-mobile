@@ -10,9 +10,11 @@ class ChangeAttributeCartItemEvent extends CartEvent {
 }
 
 class EventSelectItemCartCheckbox extends CartEvent {
-  final String itemCartId;
+  final String itemId;
   final bool value;
-  EventSelectItemCartCheckbox({required this.itemCartId, required this.value});
+  final bool isShop;
+  EventSelectItemCartCheckbox(
+      {required this.itemId, required this.value, this.isShop = false});
 }
 
 class UpdateQuantityCartItemEvent extends CartEvent {

@@ -17,22 +17,21 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   Future<void> _updateQuantityProductToCart(
       UpdateQuantityCartItemEvent event, Emitter emit) async {
     try {
-      emit(state.copyWith(isLoading: true));
       final bool isSuccues = await CartRepository().updateToCartById(
           cartItemId: event.cartItemId, quantity: event.quantity);
       if (isSuccues) {
-        int indexFind = state.carts.indexWhere((e) =>
-            e.cartItems
-                ?.indexWhere((element) => element.id == event.cartItemId) !=
+        int indexCart = state.carts.indexWhere((cart) =>
+            cart.cartItems
+                ?.indexWhere((cartItem) => cartItem.id == event.cartItemId) !=
             -1);
-        if (indexFind != -1) {
-          int indexItem = state.carts[indexFind].cartItems!
+        if (indexCart != -1) {
+          int indexItem = state.carts[indexCart].cartItems!
               .indexWhere((element) => element.id == event.cartItemId);
-          state.carts[indexFind].cartItems![indexItem].quantity =
+          state.carts[indexCart].cartItems![indexItem].quantity =
               event.quantity;
+          emit(state.copyWith(carts: state.carts));
         }
       }
-      emit(state.copyWith(isLoading: false));
     } catch (e) {
       emit(state.copyWith(isLoading: false));
       log("Error when update quantity product to cart: $e");
@@ -61,20 +60,30 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   void _selectCartItem(EventSelectItemCartCheckbox event, Emitter emit) {
     try {
-      if (!event.value) {
-        state.carts.forEach((cart) {
-          cart.cartItems!.forEach((cartItem) {
-            if (cartItem.id == event.itemCartId) {
-              cartItem.isSelected = false;
-            }
-          });
+      if (event.isShop) {
+        state.carts.every((cart) {
+          if (cart.shop?.id == event.itemId) {
+            cart.shop!.isSelected = event.value;
+            cart.cartItems!.forEach((cartItem) {
+              cartItem.isSelected = event.value;
+            });
+            log("Select shop: ${event.itemId}");
+            return false;
+          }
+          return true;
         });
       } else {
-        state.carts.forEach((cart) {
-          cart.cartItems!.forEach((cartItem) {
-            if (cartItem.id == event.itemCartId) {
-              cartItem.isSelected = true;
+        state.carts.every((cart) {
+          return cart.cartItems!.every((cartItem) {
+            if (cartItem.id == event.itemId) {
+              cartItem.isSelected = event.value;
+              //check all shop is selected
+              cart.shop?.isSelected = cart.cartItems?.every((item) {
+                return item.isSelected ?? false;
+              });
+              return false;
             }
+            return true;
           });
         });
       }

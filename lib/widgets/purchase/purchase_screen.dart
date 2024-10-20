@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
+import 'package:share_buy/widgets/component/custom_button.dart';
 
 class PurchaseScreen extends StatefulWidget {
   const PurchaseScreen({super.key});
@@ -21,30 +23,60 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
           'Thanh toán',
           style: AppTypography.headerAppbarStyle,
         ),
-        // centerTitle: false,
       ),
-      body: Column(
-        children: [
-          Container(
-            decoration: BoxDecoration(color: AppColors.hintTextColor),
-            child: Column(
-              children: [
-                Row(
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                decoration: const BoxDecoration(color: AppColors.hintTextColor),
+                child: Column(
                   children: [
-                    Text(
-                      'Địa chỉ nhận hàng',
-                      style: AppTypography.headerAppbarStyle,
-                    ),
-                    Text(
-                      'Thay đổi',
-                      style: AppTypography.headerAppbarStyle,
+                    Row(
+                      children: [
+                        Text(
+                          'Địa chỉ nhận hàng',
+                          style: AppTypography.headerAppbarStyle,
+                        ),
+                        Text(
+                          'Thay đổi',
+                          style: AppTypography.headerAppbarStyle,
+                        )
+                      ],
                     )
                   ],
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                  Text(
+                    'Tổng cộng',
+                    style: AppTypography.hintTextStyleBold,
+                  ),
+                  Text(
+                    '1.000.000đ',
+                    style: AppTypography.largeRedBold,
+                  )
+                ]),
+                SizedBox(
+                  width: 5.w,
+                ),
+                CustomButton(
+                  buttonColor: Colors.orange.shade900,
+                  buttonText: "Đặt hàng",
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 18.w, vertical: 15.h),
+                  onTap: () {},
+                  textColor: Colors.white,
+                  fontSize: 18.sp,
                 )
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
