@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
-import 'package:share_buy/widgets/purchase/children/tab_purchase.dart';
+import 'package:share_buy/widgets/order/children/tab_order.dart';
 
 class PurchaseScreen extends StatefulWidget {
   const PurchaseScreen({super.key});
@@ -88,18 +88,18 @@ class _PurchaseScreenState extends State<PurchaseScreen>
               child: TabBarView(
                 controller: controller,
                 children: [
-                  TabPurchase(),
+                  TabOrder(),
                   Container(
-                    child: Text('Loc'),
+                    child: Text('Hiep'),
                   ),
                   Container(
-                    child: Text('Loc'),
+                    child: Text('Hiep'),
                   ),
                   Container(
-                    child: Text('Loc'),
+                    child: Text('Hiep'),
                   ),
                   Container(
-                    child: Text('Loc'),
+                    child: Text('Hiep'),
                   ),
                 ],
               ),

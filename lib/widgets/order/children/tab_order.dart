@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:share_buy/widgets/purchase/children/shop_order.dart';
+import 'package:share_buy/widgets/order/children/shop_order.dart';
 
-class TabPurchase extends StatefulWidget {
-  const TabPurchase({super.key});
+class TabOrder extends StatefulWidget {
+  const TabOrder({super.key});
 
   @override
-  State<TabPurchase> createState() => _TabPurchaseState();
+  State<TabOrder> createState() => _TabOrderState();
 }
 
-class _TabPurchaseState extends State<TabPurchase> {
+class _TabOrderState extends State<TabOrder> {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
