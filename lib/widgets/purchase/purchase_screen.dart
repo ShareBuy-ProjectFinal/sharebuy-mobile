@@ -1,9 +1,10 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
-import 'package:share_buy/widgets/order/children/tab_order.dart';
+import 'package:share_buy/widgets/component/custom_button.dart';
 
 class PurchaseScreen extends StatefulWidget {
   const PurchaseScreen({super.key});
@@ -40,70 +41,57 @@ class _PurchaseScreenState extends State<PurchaseScreen>
           style: AppTypography.headerAppbarStyle,
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 14.h),
+      body: SafeArea(
         child: Column(
           children: [
-            ButtonsTabBar(
-              duration: 300,
-              labelStyle: TextStyle(
-                  color: AppColors.white,
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w400),
-              unselectedLabelStyle: TextStyle(
-                  color: AppColors.hintTextColor,
-                  fontSize: 15.sp,
-                  fontWeight: FontWeight.w400),
-              unselectedDecoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8.w),
-                      topRight: Radius.circular(8.w))),
-              decoration: BoxDecoration(
-                color: AppColors.buttonBlue,
-                border: Border(
-                    bottom:
-                        BorderSide(color: AppColors.buttonBlue, width: 12.w)),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8.w),
-                    topRight: Radius.circular(8.w)),
-              ),
-              buttonMargin: EdgeInsets.only(right: 4.w, bottom: 9.h),
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 9.w, vertical: 6.h),
-              controller: controller,
-              onTap: (p0) {
-                // setState(() {
-                //   currentIndex = p0;
-                // });
-                // controller.animateTo(currentIndex);
-              },
-              tabs: listTitle.map((e) {
-                return Tab(
-                  text: e,
-                );
-              }).toList(),
-            ),
             Expanded(
-              child: TabBarView(
-                controller: controller,
-                children: [
-                  TabOrder(),
-                  Container(
-                    child: Text('Hiep'),
-                  ),
-                  Container(
-                    child: Text('Hiep'),
-                  ),
-                  Container(
-                    child: Text('Hiep'),
-                  ),
-                  Container(
-                    child: Text('Hiep'),
-                  ),
-                ],
+              child: Container(
+                decoration: const BoxDecoration(color: AppColors.hintTextColor),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Địa chỉ nhận hàng',
+                          style: AppTypography.headerAppbarStyle,
+                        ),
+                        Text(
+                          'Thay đổi',
+                          style: AppTypography.headerAppbarStyle,
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ),
-            )
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                  Text(
+                    'Tổng cộng',
+                    style: AppTypography.hintTextStyleBold,
+                  ),
+                  Text(
+                    '1.000.000đ',
+                    style: AppTypography.largeRedBold,
+                  )
+                ]),
+                SizedBox(
+                  width: 5.w,
+                ),
+                CustomButton(
+                  buttonColor: Colors.orange.shade900,
+                  buttonText: "Đặt hàng",
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 18.w, vertical: 15.h),
+                  onTap: () {},
+                  textColor: Colors.white,
+                  fontSize: 18.sp,
+                )
+              ],
+            ),
           ],
         ),
       ),

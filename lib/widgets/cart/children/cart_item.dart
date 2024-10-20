@@ -8,6 +8,7 @@ import 'package:share_buy/blocs/cart_bloc/cart_bloc.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_event.dart';
 import 'package:share_buy/models/cart/cart_item_model.dart';
 import 'package:share_buy/models/product/product_detail_model.dart';
+import 'package:share_buy/utils/format.dart';
 import 'package:share_buy/widgets/cart/children/change_detail_item.dart';
 import 'package:share_buy/widgets/component/CustomCachedNetworkImage.dart';
 import 'package:share_buy/widgets/component/custom_button_action.dart';
@@ -43,7 +44,7 @@ class _CartItemState extends State<CartItem> {
                 value: widget.cartItem?.isSelected ?? false,
                 onChanged: (v) {
                   context.read<CartBloc>().add(EventSelectItemCartCheckbox(
-                      itemCartId: widget.cartItem?.id ?? '', value: v!));
+                      itemId: widget.cartItem?.id ?? '', value: v!));
                 },
               ),
               CustomCachedNetworkImage(
@@ -75,20 +76,29 @@ class _CartItemState extends State<CartItem> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: [
-                            Text(
-                              "${widget.cartItem?.productDetail.price ?? ''}",
-                              style: AppTypography.primaryRedBold,
-                            ),
-                            SizedBox(
-                              width: 5.w,
-                            ),
-                            Text(
-                              "${widget.cartItem?.productDetail.price ?? ''}",
-                              style: AppTypography.primaryLineThrough,
-                            ),
-                          ],
+                        Expanded(
+                          child: Row(
+                            children: [
+                              Text(
+                                Format.formatNumber(
+                                    widget.cartItem?.productDetail.price ?? 0),
+                                style: AppTypography.primaryRedBold,
+                              ),
+                              SizedBox(
+                                width: 5.w,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  Format.formatNumber(
+                                      widget.cartItem?.productDetail.price ??
+                                          0),
+                                  style: AppTypography.mediumLineThrough,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                         SizedBox(
                           width: 10.w,
