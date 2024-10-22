@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share_buy/blocs/auth_bloc/auth_bloc.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_event.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_state.dart';
 import 'package:share_buy/models/cart/cart_model.dart';
@@ -12,6 +13,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<CartLoadingEvent>(_loading);
     on<ChangeAttributeCartItemEvent>(_changeAttributeCartItem);
     on<EventSelectItemCartCheckbox>(_selectCartItem);
+    on<EventPurchaseCart>(_purchaseCart);
   }
 
   Future<void> _updateQuantityProductToCart(
@@ -40,7 +42,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   Future<void> _loading(CartLoadingEvent event, Emitter emit) async {
     try {
-      emit(state.copyWith(isLoading: true));
+      emit(state.copyWith(isLoading: true, isSuccues: false));
+      log("get me in cart screen ${AuthBloc.currentUser!.toJson()}");
       List<CartModel> carts = await CartRepository().getByUserId();
       emit(state.copyWith(isLoading: false, carts: carts));
     } catch (e) {
@@ -90,6 +93,18 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       emit(state.copyWith(carts: state.carts));
     } catch (e) {
       log('Error when select cart item: $e');
+    }
+  }
+
+  Future<void> _purchaseCart(EventPurchaseCart event, Emitter emit) async {
+    try {
+      emit(state.copyWith(isLoading: true));
+      bool isSuccues = await CartRepository().purchaseCart(carts: event.carts);
+      log("bloc Purchase cart: $isSuccues");
+      emit(state.copyWith(isLoading: false, isSuccues: isSuccues));
+    } catch (e) {
+      log('Error when purchase cart: $e');
+      emit(state.copyWith(isLoading: false, isSuccues: false));
     }
   }
 }

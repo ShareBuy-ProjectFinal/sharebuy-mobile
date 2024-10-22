@@ -7,9 +7,11 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:share_buy/application/routes/navigator_name.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
+import 'package:share_buy/blocs/auth_bloc/auth_bloc.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_bloc.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_event.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_state.dart';
+import 'package:share_buy/models/cart/cart_model.dart';
 import 'package:share_buy/utils/format.dart';
 import 'package:share_buy/widgets/cart/children/cart_shop_item.dart';
 import 'package:share_buy/widgets/component/custom_button.dart';
@@ -27,13 +29,6 @@ class _CartSreenState extends State<CartSreen> {
     // TODO: implement initState
     super.initState();
     context.read<CartBloc>().add(CartLoadingEvent());
-  }
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    log("didChangeDependencies");
   }
 
   @override
@@ -61,28 +56,19 @@ class _CartSreenState extends State<CartSreen> {
         ),
         body: SafeArea(
             child: BlocBuilder<CartBloc, CartState>(builder: (context, state) {
-          num total = 0;
-          state.carts.forEach((cart) {
-            cart.cartItems?.forEach((cartItem) {
-              if (cartItem.isSelected ?? false) {
-                total +=
-                    cartItem.productDetail.price * (cartItem.quantity ?? 1);
-              }
-            });
-          });
           return state.isLoading
               ? const SizedBox()
               : Column(
                   children: [
                     Expanded(
                       child: Container(
-                          padding: EdgeInsets.only(left: 5.w, right: 5.w),
+                          padding: EdgeInsets.only(left: 10.w, right: 10.w),
                           decoration: const BoxDecoration(
-                              color: AppColors.hintTextColor),
+                              color: AppColors.backgroundGrey),
                           child: ListView.separated(
-                            padding: EdgeInsets.symmetric(vertical: 5.h),
+                            padding: EdgeInsets.symmetric(vertical: 10.h),
                             separatorBuilder: (context, index) =>
-                                SizedBox(height: 5.h),
+                                SizedBox(height: 10.h),
                             shrinkWrap: true,
                             itemCount: state.carts.length,
                             itemBuilder: (context, index) {
@@ -98,11 +84,24 @@ class _CartSreenState extends State<CartSreen> {
                         Checkbox(value: false, onChanged: (value) {}),
                         Row(
                           children: [
-                            Text('Tổng cộng: ${Format.formatNumber(total)}'),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  'Tổng cộng',
+                                  style: AppTypography.hintTextStyleBold,
+                                ),
+                                Text(
+                                  '${Format.formatNumber(state.carts.totalSelected())} vnđ',
+                                  style: AppTypography.largeDarkBlueBold,
+                                ),
+                              ],
+                            ),
                             SizedBox(width: 10.w),
                             CustomButton(
                               buttonColor: AppColors.buttonBlue,
                               buttonText: 'Mua hàng',
+                              disable: !state.carts.isSelected(),
                               onTap: () {
                                 Navigator.pushNamed(
                                     context, NavigatorName.PURCHASE_SCREEN);

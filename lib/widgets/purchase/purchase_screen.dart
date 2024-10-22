@@ -1,10 +1,22 @@
+import 'dart:developer';
+
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
+import 'package:share_buy/blocs/cart_bloc/cart_bloc.dart';
+import 'package:share_buy/blocs/cart_bloc/cart_event.dart';
+import 'package:share_buy/blocs/cart_bloc/cart_state.dart';
+import 'package:share_buy/models/cart/cart_model.dart';
+import 'package:share_buy/utils/format.dart';
 import 'package:share_buy/widgets/component/custom_button.dart';
+import 'package:share_buy/widgets/component/snack_bar.dart';
+import 'package:share_buy/widgets/purchase/children/location_item.dart';
+import 'package:share_buy/widgets/purchase/children/purchase_bottom_screen.dart';
+import 'package:share_buy/widgets/purchase/children/purchase_shop.dart';
 
 class PurchaseScreen extends StatefulWidget {
   const PurchaseScreen({super.key});
@@ -13,86 +25,123 @@ class PurchaseScreen extends StatefulWidget {
   State<PurchaseScreen> createState() => _PurchaseScreenState();
 }
 
-class _PurchaseScreenState extends State<PurchaseScreen>
-    with SingleTickerProviderStateMixin {
-  late TabController controller;
-  final List<String> listTitle = [
-    'Chờ xác nhận',
-    'Chờ lấy hàng',
-    'Chờ giao hàng',
-    'Đã nhận',
-    'Đã hủy'
-  ];
-  int currentIndex = 0;
-  @override
-  void initState() {
-    super.initState();
-    controller = TabController(length: listTitle.length, vsync: this);
-  }
-
+class _PurchaseScreenState extends State<PurchaseScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        forceMaterialTransparency: true,
-        backgroundColor: Colors.white,
-        title: Text(
-          'Đặt hàng',
-          style: AppTypography.headerAppbarStyle,
+    List<CartModel> carts =
+        context.read<CartBloc>().state.carts.getCartItemSelected();
+    return BlocListener<CartBloc, CartState>(
+      listener: (BuildContext context, CartState state) {
+        if (state.isLoading) {
+          context.loaderOverlay.show();
+        } else {
+          log("listener loading show");
+          context.loaderOverlay.hide();
+          if (state.isSuccues) {
+            log("listener success ${state.isSuccues}");
+            Navigator.pop(context);
+            MessageToast.showToast(
+              context,
+              'Đặt hàng thành công',
+            );
+            context.read<CartBloc>().add(CartLoadingEvent());
+          }
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          forceMaterialTransparency: true,
+          backgroundColor: Colors.white,
+          // elevation: 400.0,
+          // shadowColor: Colors.yellow.withOpacity(0.95),
+          title: Text(
+            'Đặt hàng',
+            style: AppTypography.headerAppbarStyle,
+          ),
         ),
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                decoration: const BoxDecoration(color: AppColors.hintTextColor),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Địa chỉ nhận hàng',
-                          style: AppTypography.headerAppbarStyle,
-                        ),
-                        Text(
-                          'Thay đổi',
-                          style: AppTypography.headerAppbarStyle,
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+        body: SafeArea(
+          child: BlocBuilder<CartBloc, CartState>(builder: (context, state) {
+            return Column(
               children: [
-                Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                  Text(
-                    'Tổng cộng',
-                    style: AppTypography.hintTextStyleBold,
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(color: AppColors.backgroundGrey),
+                    child: ListView(
+                        padding: EdgeInsets.symmetric(vertical: 10.h),
+                        children: [
+                          LocationItem(),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          ListView.separated(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) => PurchaseShop(
+                              cart: carts[index],
+                            ),
+                            separatorBuilder: (context, index) => SizedBox(
+                              height: 10.h,
+                            ),
+                            itemCount: carts.length,
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          PurchaseBottomScreen(),
+                        ]),
                   ),
-                  Text(
-                    '1.000.000đ',
-                    style: AppTypography.largeRedBold,
-                  )
-                ]),
-                SizedBox(
-                  width: 5.w,
                 ),
-                CustomButton(
-                  buttonColor: Colors.orange.shade900,
-                  buttonText: "Đặt hàng",
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 18.w, vertical: 15.h),
-                  onTap: () {},
-                  textColor: Colors.white,
-                  fontSize: 18.sp,
-                )
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2), // Màu của shadow
+                        spreadRadius: 0, // Bán kính lan tỏa của shadow
+                        blurRadius: 2, // Bán kính mờ của shadow
+                        offset: Offset(0, -2),
+                      )
+                    ],
+                  ),
+                  child: Row(
+                    //tổng tiền
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              'Tổng cộng',
+                              style: AppTypography.primaryHintText,
+                            ),
+                            Text(
+                              '${Format.formatNumber(carts.totalSelected() + carts.length * 32000)} vnđ',
+                              style: AppTypography.largeDarkBlueBold,
+                            )
+                          ]),
+                      SizedBox(
+                        width: 5.w,
+                      ),
+                      CustomButton(
+                        buttonColor: AppColors.buttonBlue,
+                        buttonText: "Đặt hàng",
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 18.w, vertical: 15.h),
+                        onTap: () {
+                          log("Order clicked ${carts.length}");
+                          context
+                              .read<CartBloc>()
+                              .add(EventPurchaseCart(carts: carts));
+                        },
+                        textColor: Colors.white,
+                        fontSize: 18.sp,
+                      )
+                    ],
+                  ),
+                ),
               ],
-            ),
-          ],
+            );
+          }),
         ),
       ),
     );

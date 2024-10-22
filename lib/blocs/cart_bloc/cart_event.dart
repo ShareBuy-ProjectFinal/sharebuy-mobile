@@ -1,4 +1,5 @@
 import 'package:share_buy/models/cart/cart_item_model.dart';
+import 'package:share_buy/models/cart/cart_model.dart';
 
 class CartEvent {}
 
@@ -23,4 +24,9 @@ class UpdateQuantityCartItemEvent extends CartEvent {
 
   UpdateQuantityCartItemEvent(
       {required this.cartItemId, required this.quantity});
+}
+
+class EventPurchaseCart extends CartEvent {
+  final List<CartModel> carts;
+  EventPurchaseCart({required this.carts});
 }

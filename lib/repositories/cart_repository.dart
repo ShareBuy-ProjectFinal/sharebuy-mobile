@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -59,6 +60,20 @@ class CartRepository extends FetchClient {
     } catch (e) {
       log('Error when get api cart by user id: $e');
       return [];
+    }
+  }
+
+  Future<bool> purchaseCart({required List<CartModel> carts}) async {
+    try {
+      // final Response<dynamic> response = await super.postData(
+      await Future.delayed(const Duration(seconds: 1), () {
+        log('2s delay');
+      });
+      log("delay end");
+      return true;
+    } catch (e) {
+      log('Error when purchase cart: $e');
+      return false;
     }
   }
 }

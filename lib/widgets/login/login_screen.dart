@@ -134,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () {},
                         child: Text(
                           'Quên mật khẩu',
-                          style: AppTypography.primaryBlueBold,
+                          style: AppTypography.mediumBlueBold,
                         )),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -150,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             child: Text(
                               'Đăng kí',
-                              style: AppTypography.primaryBlueBold,
+                              style: AppTypography.mediumBlueBold,
                             )),
                       ],
                     )

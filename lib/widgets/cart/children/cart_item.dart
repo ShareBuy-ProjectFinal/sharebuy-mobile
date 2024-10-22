@@ -52,7 +52,7 @@ class _CartItemState extends State<CartItem> {
                     widget.cartItem?.productDetail.product?.image ??
                     'default_image_url',
                 width: 100,
-                height: 80,
+                height: 100,
               ),
               SizedBox(
                 width: 10.w,

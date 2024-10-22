@@ -45,7 +45,7 @@ class _ProductCategoryState extends State<ProductCategory> {
             ),
             Text(
               'Xem thêm',
-              style: AppTypography.primaryBlueBold,
+              style: AppTypography.mediumBlueBold,
             ),
           ],
         ),

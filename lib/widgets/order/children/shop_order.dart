@@ -24,7 +24,7 @@ class _ShopOrderState extends State<ShopOrder> {
             ),
             Text(
               'Chờ thanh toán',
-              style: AppTypography.primaryBlueBold,
+              style: AppTypography.mediumBlueBold,
             ),
           ],
         ),

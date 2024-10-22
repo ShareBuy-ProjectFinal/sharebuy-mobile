@@ -53,7 +53,7 @@ class _SaleProgramState extends State<SaleProgram> {
                   },
                   child: Text(
                     'Xem thêm',
-                    style: AppTypography.primaryBlueBold,
+                    style: AppTypography.mediumBlueBold,
                   ),
                 ),
               ],

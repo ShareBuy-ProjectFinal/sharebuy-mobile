@@ -63,4 +63,8 @@ class ProductDetailModel {
         "updatedAt": updatedAt?.toIso8601String(),
         "quantity": quantity,
       };
+
+  String getAttributeValuesName() {
+    return customAttributeValues?.map((e) => e.value).join(', ') ?? '';
+  }
 }

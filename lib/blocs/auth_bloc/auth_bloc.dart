@@ -7,6 +7,8 @@ import 'package:share_buy/models/user/user_model.dart';
 import 'package:share_buy/repositories/auth_repository.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  static UserModel? currentUser;
+
   AuthBloc() : super(AuthState(user: UserModel())) {
     on<EventCreateUser>(_createUser);
     on<EventGetCurrentUser>(_getCurrentUser);
@@ -55,6 +57,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(state.copyWith(isLoading: true));
       UserModel user =
           await AuthRepository().getMe(firebaseId: event.firebaseId);
+      currentUser = user;
+      log("user getMe: ${currentUser!.toJson()}");
       emit(state.copyWith(isLoading: false, user: user));
     } catch (e) {
       log('Error when get current user: $e');

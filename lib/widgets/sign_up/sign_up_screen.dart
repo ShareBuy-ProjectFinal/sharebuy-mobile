@@ -141,7 +141,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             },
                             child: Text(
                               'Đăng nhập',
-                              style: AppTypography.primaryBlueBold,
+                              style: AppTypography.mediumBlueBold,
                             )),
                       ],
                     )

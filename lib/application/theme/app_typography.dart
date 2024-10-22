@@ -18,7 +18,49 @@ class AppTypography {
       color: AppColors.textDartBlue,
       fontSize: 16.sp);
 
-  // BlackBold
+// hintText
+  static final smallHintText = TextStyle(
+      fontWeight: FontWeight.w500,
+      color: AppColors.hintTextColor,
+      fontSize: 10.sp);
+
+  static final mediumHintText = TextStyle(
+      fontWeight: FontWeight.w500,
+      color: AppColors.hintTextColor,
+      fontSize: 12.sp);
+
+  static final primaryHintText = TextStyle(
+      fontWeight: FontWeight.w500,
+      color: AppColors.hintTextColor,
+      fontSize: 14.sp);
+
+  static final largeHintText = TextStyle(
+      fontWeight: FontWeight.w500,
+      color: AppColors.hintTextColor,
+      fontSize: 16.sp);
+
+  // hintTextBold
+  static final smallHintTextBold = TextStyle(
+      fontWeight: FontWeight.w700,
+      color: AppColors.hintTextColor,
+      fontSize: 10.sp);
+
+  static final mediumHintTextBold = TextStyle(
+      fontWeight: FontWeight.w700,
+      color: AppColors.hintTextColor,
+      fontSize: 12.sp);
+
+  static final primaryHintTextBold = TextStyle(
+      fontWeight: FontWeight.w700,
+      color: AppColors.hintTextColor,
+      fontSize: 14.sp);
+
+  static final largeHintTextBold = TextStyle(
+      fontWeight: FontWeight.w700,
+      color: AppColors.hintTextColor,
+      fontSize: 16.sp);
+
+  // DarkBlueBold
   static final smallDarkBlueBold = TextStyle(
       fontWeight: FontWeight.w700,
       color: AppColors.textDartBlue,
@@ -34,8 +76,34 @@ class AppTypography {
       color: AppColors.textDartBlue,
       fontSize: 14.sp);
 
+  static final largeDarkBlueBold = TextStyle(
+      fontWeight: FontWeight.w700,
+      color: AppColors.textDartBlue,
+      fontSize: 16.sp);
+
   static final primaryDarkBlueBoldDisable = TextStyle(
       fontWeight: FontWeight.w700, color: Colors.grey, fontSize: 14.sp);
+
+  // DarkBlue
+  static final smallDarkBlue = TextStyle(
+      fontWeight: FontWeight.w500,
+      color: AppColors.textDartBlue,
+      fontSize: 10.sp);
+
+  static final mediumDarkBlue = TextStyle(
+      fontWeight: FontWeight.w500,
+      color: AppColors.textDartBlue,
+      fontSize: 12.sp);
+
+  static final primaryDarkBlue = TextStyle(
+      fontWeight: FontWeight.w500,
+      color: AppColors.textDartBlue,
+      fontSize: 14.sp);
+
+  static final largeDarkBlue = TextStyle(
+      fontWeight: FontWeight.w500,
+      color: AppColors.textDartBlue,
+      fontSize: 16.sp);
 
   // RedBold
   static final smallRedBold = TextStyle(
@@ -51,10 +119,15 @@ class AppTypography {
       fontWeight: FontWeight.w700, color: AppColors.redLight, fontSize: 16.sp);
 
   // BlueBold
-  static final primaryBlueBold = TextStyle(
+  static final mediumBlueBold = TextStyle(
       fontWeight: FontWeight.w700,
       color: AppColors.buttonBlue,
       fontSize: 12.sp);
+
+  static final primaryBlueBold = TextStyle(
+      fontWeight: FontWeight.w700,
+      color: AppColors.buttonBlue,
+      fontSize: 14.sp);
 
   static final largeBlueBold = TextStyle(
       fontWeight: FontWeight.w700,
@@ -89,4 +162,35 @@ class AppTypography {
       color: AppColors.hintTextColor,
       fontSize: 16.sp,
       decoration: TextDecoration.lineThrough);
+
+  // buttonBlue
+  static final smallButtonBlue = TextStyle(
+      fontWeight: FontWeight.w700,
+      color: AppColors.buttonBlue,
+      fontSize: 10.sp);
+
+  static final mediumButtonBlue = TextStyle(
+      fontWeight: FontWeight.w700,
+      color: AppColors.buttonBlue,
+      fontSize: 12.sp);
+
+  static final primaryButtonBlue = TextStyle(
+      fontWeight: FontWeight.w700,
+      color: AppColors.buttonBlue,
+      fontSize: 14.sp);
+
+  static final largeButtonBlue = TextStyle(
+      fontWeight: FontWeight.w700,
+      color: AppColors.buttonBlue,
+      fontSize: 16.sp);
+
+  //black
+  static final smallBlack = TextStyle(
+      fontWeight: FontWeight.w400, color: Colors.black, fontSize: 10.sp);
+  static final mediumBlack = TextStyle(
+      fontWeight: FontWeight.w400, color: Colors.black, fontSize: 12.sp);
+  static final primaryBlack = TextStyle(
+      fontWeight: FontWeight.w400, color: Colors.black, fontSize: 14.sp);
+  static final largeBlack = TextStyle(
+      fontWeight: FontWeight.w400, color: Colors.black, fontSize: 16.sp);
 }

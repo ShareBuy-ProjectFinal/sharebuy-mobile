@@ -32,7 +32,7 @@ class _CartShopItemState extends State<CartShopItem> {
           margin: const EdgeInsets.all(1.0),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5.0),
-              border: Border.all(color: Colors.grey),
+              // border: Border.all(color: Colors.grey),
               color: AppColors.white),
           child: Column(
             children: [
@@ -48,17 +48,23 @@ class _CartShopItemState extends State<CartShopItem> {
                     value: cart.shop?.isSelected ?? false,
                   ),
                   Expanded(
-                    child: Text(
-                      // 'Name shop  Name shop  Name shop Name shop  Name shop Name shop  Name shop  ' ??
-                      cart.shop?.fullName ?? 'Name shop',
-                      style: AppTypography.primaryDarkBlueBold,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  const Center(
-                    child: Icon(
-                      Icons.arrow_forward_ios,
-                      size: 14,
+                    child: Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            cart.shop?.fullName ?? 'Name shop',
+                            style: AppTypography.primaryDarkBlueBold,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                        ),
+                        const Center(
+                          child: Icon(
+                            Icons.arrow_forward_ios,
+                            size: 14,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(
