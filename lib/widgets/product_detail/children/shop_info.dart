@@ -27,33 +27,41 @@ class _ShopInfoState extends State<ShopInfo> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: 30.r,
-                  backgroundImage: CachedNetworkImageProvider(
-                    widget.shop?.image ?? '',
+            Expanded(
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 30.r,
+                    backgroundImage: CachedNetworkImageProvider(
+                      widget.shop?.image ?? '',
+                    ),
                   ),
-                ),
-                SizedBox(
-                  width: 15.w,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${widget.shop?.fullName}',
-                      style: AppTypography.primaryDarkBlueBold,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
+                  SizedBox(
+                    width: 15.w,
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          // '${'widget.shop?.fullName'}',
+                          '${widget.shop?.fullName}',
+                          style: AppTypography.primaryDarkBlueBold,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                        Text(
+                          'Online 3 phút trước',
+                          style: AppTypography.hintTextStyleBold,
+                        ),
+                      ],
                     ),
-                    Text(
-                      'Online 3 phút trước',
-                      style: AppTypography.hintTextStyleBold,
-                    ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: 10.w,
             ),
             CustomButton(
               buttonText: 'Xem Shop',

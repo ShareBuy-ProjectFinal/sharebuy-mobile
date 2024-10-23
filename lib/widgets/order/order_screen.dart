@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
-import 'package:share_buy/widgets/order/children/tab_order.dart';
+import 'package:share_buy/widgets/order/children/tab_cancel.dart';
+import 'package:share_buy/widgets/order/children/tab_completed.dart';
+import 'package:share_buy/widgets/order/children/tab_return.dart';
+import 'package:share_buy/widgets/order/children/tab_to_pay.dart';
+import 'package:share_buy/widgets/order/children/tab_to_ship.dart';
 
 class OrderScreen extends StatefulWidget {
   const OrderScreen({super.key});
@@ -16,9 +20,9 @@ class _OrderScreenState extends State<OrderScreen>
     with SingleTickerProviderStateMixin {
   late TabController controller;
   final List<String> listTitle = [
-    'Chờ xác nhận',
-    'Chờ lấy hàng',
+    'Chờ thanh toán',
     'Chờ giao hàng',
+    'Trả hàng',
     'Đã nhận',
     'Đã hủy'
   ];
@@ -41,7 +45,7 @@ class _OrderScreenState extends State<OrderScreen>
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 14.h),
+        padding: EdgeInsets.symmetric(vertical: 14.h),
         child: Column(
           children: [
             ButtonsTabBar(
@@ -68,9 +72,12 @@ class _OrderScreenState extends State<OrderScreen>
                     topLeft: Radius.circular(8.w),
                     topRight: Radius.circular(8.w)),
               ),
-              buttonMargin: EdgeInsets.only(right: 4.w, bottom: 9.h),
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 9.w, vertical: 6.h),
+              buttonMargin: EdgeInsets.only(
+                right: 4.w,
+                left: 4.w,
+                bottom: 0.h,
+              ),
+              contentPadding: EdgeInsets.symmetric(horizontal: 5.w),
               controller: controller,
               onTap: (p0) {
                 // setState(() {
@@ -78,9 +85,9 @@ class _OrderScreenState extends State<OrderScreen>
                 // });
                 // controller.animateTo(currentIndex);
               },
-              tabs: listTitle.map((e) {
+              tabs: listTitle.map((title) {
                 return Tab(
-                  text: e,
+                  text: title,
                 );
               }).toList(),
             ),
@@ -88,19 +95,11 @@ class _OrderScreenState extends State<OrderScreen>
               child: TabBarView(
                 controller: controller,
                 children: [
-                  TabOrder(),
-                  Container(
-                    child: Text('Hiep'),
-                  ),
-                  Container(
-                    child: Text('Hiep'),
-                  ),
-                  Container(
-                    child: Text('Hiep'),
-                  ),
-                  Container(
-                    child: Text('Hiep'),
-                  ),
+                  TabToPay(),
+                  TabToShip(),
+                  TabReturn(),
+                  TabCompleted(),
+                  TabCancel(),
                 ],
               ),
             )

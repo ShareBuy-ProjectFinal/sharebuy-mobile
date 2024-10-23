@@ -24,6 +24,15 @@ class CartItem extends StatefulWidget {
 }
 
 class _CartItemState extends State<CartItem> {
+  TextEditingController _quantityController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _quantityController.text = (widget.cartItem?.quantity ?? 1).toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     String nameAttributeValue = widget
@@ -107,6 +116,7 @@ class _CartItemState extends State<CartItem> {
                           children: [
                             CustomButtonAction(
                               icon: Icons.remove,
+                              isDisable: (widget.cartItem?.quantity ?? 1) == 1,
                               onTap: () {
                                 if ((widget.cartItem?.quantity ?? 1) > 1) {
                                   context.read<CartBloc>().add(
@@ -116,6 +126,11 @@ class _CartItemState extends State<CartItem> {
                                                       ?.toInt() ??
                                                   1) -
                                               1));
+                                  _quantityController.text =
+                                      ((widget.cartItem?.quantity?.toInt() ??
+                                                  1) -
+                                              1)
+                                          .toString();
                                 }
                               },
                               isLeftRadius: true,
@@ -124,14 +139,29 @@ class _CartItemState extends State<CartItem> {
                                 constraints: BoxConstraints(
                                   minWidth: 30.w,
                                 ),
+                                width: 35.w,
+                                // height: 19.h,
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black),
                                 ),
-                                child: Center(
-                                  child: Text(
-                                    (widget.cartItem!.quantity ?? 1).toString(),
-                                    style: AppTypography.mediumDarkBlueBold,
-                                  ),
+                                child: TextField(
+                                  controller: _quantityController,
+                                  decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      isCollapsed: true),
+                                  textAlign: TextAlign.center,
+                                  textAlignVertical: TextAlignVertical.center,
+                                  style: AppTypography.mediumDarkBlueBold,
+                                  keyboardType: TextInputType.number,
+                                  onChanged: (value) {
+                                    if (value.isNotEmpty) {
+                                      context.read<CartBloc>().add(
+                                          UpdateQuantityCartItemEvent(
+                                              cartItemId:
+                                                  widget.cartItem?.id ?? '',
+                                              quantity: int.parse(value)));
+                                    }
+                                  },
                                 )),
                             CustomButtonAction(
                                 icon: Icons.add,
@@ -143,6 +173,11 @@ class _CartItemState extends State<CartItem> {
                                                       ?.toInt() ??
                                                   1) +
                                               1));
+                                  _quantityController.text =
+                                      ((widget.cartItem?.quantity?.toInt() ??
+                                                  1) +
+                                              1)
+                                          .toString();
                                 }),
                             SizedBox(
                               width: 8.w,

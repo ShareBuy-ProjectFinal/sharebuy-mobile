@@ -6,7 +6,7 @@ class AppColors {
   static const primary = Color(0xffE4F3FF);
   static const white = Color.fromARGB(255, 255, 255, 255);
 
-  static const textBlack = Color(0x00000000);
+  static const textBlack = Colors.black;
   static const hintTextColor = Color(0xff9098B1);
   static const textDartBlue = Color(0xff223263);
 

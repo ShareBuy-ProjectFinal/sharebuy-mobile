@@ -133,10 +133,25 @@ class AppTypography {
       fontWeight: FontWeight.w700,
       color: AppColors.buttonBlue,
       fontSize: 16.sp);
+  // White
+  static final smallWhite = TextStyle(
+      fontWeight: FontWeight.w400, color: AppColors.white, fontSize: 10.sp);
+  static final mediumWhite = TextStyle(
+      fontWeight: FontWeight.w400, color: AppColors.white, fontSize: 12.sp);
+  static final primaryWhite = TextStyle(
+      fontWeight: FontWeight.w400, color: AppColors.white, fontSize: 14.sp);
+  static final largeWhite = TextStyle(
+      fontWeight: FontWeight.w400, color: AppColors.white, fontSize: 16.sp);
 
   // WhiteBold
-  static final primaryWhiteBold = TextStyle(
+  static final smallWhiteBold = TextStyle(
+      fontWeight: FontWeight.w700, color: AppColors.white, fontSize: 10.sp);
+  static final mediumWhiteBold = TextStyle(
       fontWeight: FontWeight.w700, color: AppColors.white, fontSize: 12.sp);
+  static final primaryWhiteBold = TextStyle(
+      fontWeight: FontWeight.w700, color: AppColors.white, fontSize: 14.sp);
+  static final largeWhiteBold = TextStyle(
+      fontWeight: FontWeight.w700, color: AppColors.white, fontSize: 16.sp);
 
   // LineThrough
   static final smallLineThrough = TextStyle(

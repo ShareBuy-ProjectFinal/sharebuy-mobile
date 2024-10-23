@@ -43,7 +43,6 @@ class _BottomSheetItemState extends State<BottomSheetItem> {
     return BlocBuilder<ProductBloc, ProductState>(builder: (context, state) {
       List<CustomAttributeValue> selectedAttributeValues =
           state.selectedAttributeValues;
-      int quantity = context.read<ProductBloc>().state.quantity;
       if (selectedAttributeValues.length == product.customAttributes!.length) {
         product.productDetails?.forEach((element) {
           bool allAttributesMatch =
@@ -157,10 +156,9 @@ class _BottomSheetItemState extends State<BottomSheetItem> {
                       isDisable: isDisable,
                       icon: Icons.remove,
                       onTap: () {
-                        if (quantity > 1) {
-                          context
-                              .read<ProductBloc>()
-                              .add(ChangeQuantityEvent(quantity: quantity - 1));
+                        if (state.quantity > 1) {
+                          context.read<ProductBloc>().add(ChangeQuantityEvent(
+                              quantity: state.quantity - 1));
                         }
                       },
                       isLeftRadius: true,
@@ -182,7 +180,7 @@ class _BottomSheetItemState extends State<BottomSheetItem> {
                           ),
                           child: Center(
                             child: Text(
-                              (quantity).toString(),
+                              (state.quantity).toString(),
                               style: isDisable
                                   ? AppTypography.primaryDarkBlueBoldDisable
                                   : AppTypography.primaryDarkBlueBold,
@@ -193,10 +191,9 @@ class _BottomSheetItemState extends State<BottomSheetItem> {
                       isDisable: isDisable,
                       icon: Icons.add,
                       onTap: () {
-                        if (quantity < product.quantity!) {
-                          context
-                              .read<ProductBloc>()
-                              .add(ChangeQuantityEvent(quantity: quantity + 1));
+                        if (state.quantity < product.quantity!) {
+                          context.read<ProductBloc>().add(ChangeQuantityEvent(
+                              quantity: state.quantity + 1));
                         }
                       },
                     ),
@@ -214,10 +211,8 @@ class _BottomSheetItemState extends State<BottomSheetItem> {
                 buttonText: 'Thêm vào giỏ hàng',
                 onTap: () {
                   context.read<ProductBloc>().add(AddCartItemEvent(
-                      productDetailId: productDetail.id!, quantity: quantity));
-                  if (state.isAddSuccess) {
-                    Navigator.pop(context);
-                  }
+                      productDetailId: productDetail.id!,
+                      quantity: state.quantity));
                 },
                 textColor: Colors.white),
           ],

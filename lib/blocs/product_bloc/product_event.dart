@@ -7,7 +7,10 @@ class ProductLoadingEvent extends ProductEvent {
   ProductLoadingEvent({required this.id});
 }
 
-class ResetProductEvent extends ProductEvent {}
+class ResetProductEvent extends ProductEvent {
+  final bool isAddCart;
+  ResetProductEvent({this.isAddCart = false});
+}
 
 class SelectAttributeValueEvent extends ProductEvent {
   final CustomAttributeValue customAttributeValue;

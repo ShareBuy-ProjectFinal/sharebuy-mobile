@@ -45,6 +45,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       emit(state.copyWith(isLoading: true, isSuccues: false));
       log("get me in cart screen ${AuthBloc.currentUser!.toJson()}");
       List<CartModel> carts = await CartRepository().getByUserId();
+      // await Future.delayed(const Duration(seconds: 1));
       emit(state.copyWith(isLoading: false, carts: carts));
     } catch (e) {
       log("Error when get api cart by user id: $e");

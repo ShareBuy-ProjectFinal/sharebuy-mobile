@@ -33,9 +33,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     super.initState();
     context
         .read<ProductBloc>()
-        // .add(ProductLoadingEvent(id: widget.product.payload!.productId!));
-        // .add(ProductLoadingEvent(id: '66fe1a4e473e570012e3caab'));
-        .add(ProductLoadingEvent(id: '66f9a2d6a95a6154c8ed89dd'));
+        .add(ProductLoadingEvent(id: widget.product.payload!.productId!));
+    // .add(ProductLoadingEvent(id: '66fe1a4e473e570012e3caab'));
+    // .add(ProductLoadingEvent(id: '66f9a2d6a95a6154c8ed89dd'));
   }
 
   @override
@@ -46,6 +46,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           context.loaderOverlay.show();
         } else {
           context.loaderOverlay.hide();
+          if (state.isAddSuccess) {
+            Navigator.of(context).pop();
+            context.read<ProductBloc>().add(ResetProductEvent(isAddCart: true));
+          }
         }
       },
       child: Scaffold(

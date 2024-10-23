@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:share_buy/main.dart';
 
 // ignore: must_be_immutable
 class CustomButtonAction extends StatefulWidget {
@@ -42,7 +44,7 @@ class _CustomButtonActionState extends State<CustomButtonAction> {
           child: Icon(
             widget.icon,
             color: widget.isDisable ? Colors.grey : Colors.black,
-            size: 20,
+            size: 18.sp,
           ),
         ),
       ),

@@ -66,13 +66,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   height: 24.h,
                   color: AppColors.buttonBlue,
                 ),
-                label: 'Flash sale'),
+                label: 'Tìm kiếm'),
             BottomNavigationBarItem(
                 icon: badges.Badge(
                   badgeStyle: badges.BadgeStyle(badgeColor: AppColors.redLight),
                   badgeContent: Text(
                     '3',
-                    style: AppTypography.primaryWhiteBold,
+                    style: AppTypography.mediumWhiteBold,
                   ),
                   child: Image.asset(
                     'assets/icons/icon_cart.png',
@@ -84,7 +84,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 activeIcon: badges.Badge(
                   badgeContent: Text(
                     '3',
-                    style: AppTypography.primaryWhiteBold,
+                    style: AppTypography.mediumWhiteBold,
                   ),
                   child: Image.asset(
                     'assets/icons/icon_cart.png',
