@@ -53,7 +53,9 @@ class _CartItemState extends State<CartItem> {
                 value: widget.cartItem?.isSelected ?? false,
                 onChanged: (v) {
                   context.read<CartBloc>().add(EventSelectItemCartCheckbox(
-                      itemId: widget.cartItem?.id ?? '', value: v!));
+                      itemId: widget.cartItem?.id ?? '',
+                      value: v!,
+                      type: TypeCheckBox.item));
                 },
               ),
               CustomCachedNetworkImage(

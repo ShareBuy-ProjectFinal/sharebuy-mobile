@@ -43,7 +43,7 @@ class _CartShopItemState extends State<CartShopItem> {
                       context.read<CartBloc>().add(EventSelectItemCartCheckbox(
                           itemId: cart.shop?.id ?? '',
                           value: v!,
-                          isShop: true));
+                          type: TypeCheckBox.shop));
                     },
                     value: cart.shop?.isSelected ?? false,
                   ),

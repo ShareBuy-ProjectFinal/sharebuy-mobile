@@ -55,15 +55,19 @@ extension CartModelExtension on List<CartModel> {
     });
   }
 
-  num totalSelected() {
-    // return fold<num>(0, (previousValue, element) {
-    //   return previousValue +
-    //       element.cartItems!.fold<num>(0, (previousValue, element) {
-    //         return previousValue +
-    //             element.productDetail.price! * element.quantity!;
-    //       });
-    // });
+  bool isSelectedAll() {
+    return every((cart) {
+      if (cart.shop?.isSelected ?? false) {
+        return true;
+      }
+      if (cart.cartItems!.every((item) => item.isSelected ?? false)) {
+        return true;
+      }
+      return false;
+    });
+  }
 
+  num totalSelected() {
     return fold<num>(0, (pre, element) {
       return pre +
           element.cartItems!.fold<num>(0, (preElement, cartItem) {
@@ -72,5 +76,17 @@ extension CartModelExtension on List<CartModel> {
                 : preElement;
           });
     });
+  }
+
+  List<String> getCartItemIdSelected() {
+    List<String> result = [];
+    for (var cart in this) {
+      for (var item in cart.cartItems!) {
+        if (item.isSelected ?? false) {
+          result.add(item.id!);
+        }
+      }
+    }
+    return result;
   }
 }

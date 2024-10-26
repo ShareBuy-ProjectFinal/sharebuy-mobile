@@ -86,7 +86,13 @@ class _CartSreenState extends State<CartSreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Checkbox(value: false, onChanged: (value) {}),
+                        Checkbox(
+                            value: state.carts.isSelectedAll(),
+                            onChanged: (value) {
+                              context.read<CartBloc>().add(
+                                  EventSelectItemCartCheckbox(
+                                      value: value!, type: TypeCheckBox.all));
+                            }),
                         Row(
                           children: [
                             Column(

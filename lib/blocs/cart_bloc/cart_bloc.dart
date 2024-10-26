@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_buy/blocs/auth_bloc/auth_bloc.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_event.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_state.dart';
+import 'package:share_buy/enums/PayType.dart';
 import 'package:share_buy/models/cart/cart_model.dart';
+import 'package:share_buy/models/order/order_model.dart';
 import 'package:share_buy/repositories/cart_repository.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
@@ -64,7 +66,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   void _selectCartItem(EventSelectItemCartCheckbox event, Emitter emit) {
     try {
-      if (event.isShop) {
+      if (event.type == TypeCheckBox.all) {
+        state.carts.forEach((cart) {
+          cart.shop!.isSelected = event.value;
+          cart.cartItems!.forEach((cartItem) {
+            cartItem.isSelected = event.value;
+          });
+        });
+      } else if (event.type == TypeCheckBox.shop) {
         state.carts.every((cart) {
           if (cart.shop?.id == event.itemId) {
             cart.shop!.isSelected = event.value;
@@ -100,9 +109,17 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   Future<void> _purchaseCart(EventPurchaseCart event, Emitter emit) async {
     try {
       emit(state.copyWith(isLoading: true));
-      bool isSuccues = await CartRepository().purchaseCart(carts: event.carts);
-      log("bloc Purchase cart: $isSuccues");
-      emit(state.copyWith(isLoading: false, isSuccues: isSuccues));
+      dynamic result = await CartRepository()
+          .purchaseCart(carts: event.carts, payType: state.payType.displayName);
+
+      if (result == false) {
+        emit(state.copyWith(isLoading: false, isSuccues: false));
+      } else if (result is OrderModel) {
+        emit(state.copyWith(
+            isLoading: false,
+            isSuccues: true,
+            payUrl: result.paymentInfo?.payUrl ?? ''));
+      }
     } catch (e) {
       log('Error when purchase cart: $e');
       emit(state.copyWith(isLoading: false, isSuccues: false));

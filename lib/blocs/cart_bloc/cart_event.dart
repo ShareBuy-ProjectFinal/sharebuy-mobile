@@ -10,12 +10,14 @@ class ChangeAttributeCartItemEvent extends CartEvent {
   ChangeAttributeCartItemEvent({required this.productDetailId});
 }
 
+enum TypeCheckBox { shop, item, all }
+
 class EventSelectItemCartCheckbox extends CartEvent {
-  final String itemId;
+  final String? itemId;
   final bool value;
-  final bool isShop;
+  TypeCheckBox type;
   EventSelectItemCartCheckbox(
-      {required this.itemId, required this.value, this.isShop = false});
+      {this.itemId, required this.value, required this.type});
 }
 
 class UpdateQuantityCartItemEvent extends CartEvent {

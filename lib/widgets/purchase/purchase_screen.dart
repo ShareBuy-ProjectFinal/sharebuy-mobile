@@ -10,6 +10,7 @@ import 'package:share_buy/application/theme/app_typography.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_bloc.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_event.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_state.dart';
+import 'package:share_buy/enums/PayType.dart';
 import 'package:share_buy/models/cart/cart_model.dart';
 import 'package:share_buy/utils/format.dart';
 import 'package:share_buy/widgets/component/custom_button.dart';
@@ -35,16 +36,15 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
         if (state.isLoading) {
           context.loaderOverlay.show();
         } else {
-          log("listener loading show");
           context.loaderOverlay.hide();
           if (state.isSuccues) {
-            log("listener success ${state.isSuccues}");
-            Navigator.pop(context);
-            MessageToast.showToast(
-              context,
-              'Đặt hàng thành công',
-            );
-            context.read<CartBloc>().add(CartLoadingEvent());
+            if (state.payType == PayType.direct) {
+              //chuyển sáng tab đơn hàng
+            } else {
+              //chuyển sáng tab thanh toán
+            }
+          } else {
+            MessageToast.showToast(context, "Đặt hàng thất bại");
           }
         }
       },
