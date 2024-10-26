@@ -6,6 +6,7 @@ import 'package:share_buy/widgets/home/home_screen.dart';
 import 'package:share_buy/widgets/login/login_screen.dart';
 import 'package:share_buy/widgets/login/login_screen.dart';
 import 'package:share_buy/widgets/notification/notification_screen.dart';
+import 'package:share_buy/widgets/pay/pay_web.dart';
 import 'package:share_buy/widgets/product_detail/product_detail_screen.dart';
 import 'package:share_buy/widgets/purchase/purchase_screen.dart';
 import 'package:share_buy/widgets/rate/rate_screen.dart';
@@ -24,7 +25,9 @@ class RouteGenerator {
         );
       case NavigatorName.HOME_SCREEN:
         return MaterialPageRoute(
-          builder: (_) => const HomeScreen(),
+          builder: (_) => HomeScreen(
+            currentIndex: args!['currentIndex'],
+          ),
         );
       case NavigatorName.SALE_PROGRAM_SCREEN:
         return MaterialPageRoute(
@@ -63,6 +66,10 @@ class RouteGenerator {
       case NavigatorName.LOGIN_SCREEN:
         return MaterialPageRoute(
           builder: (_) => const LoginScreen(),
+        );
+      case NavigatorName.PAY_WEB_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => PayWeb(url: args!['url']),
         );
       default:
         return MaterialPageRoute(

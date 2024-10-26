@@ -82,7 +82,7 @@ class MyApp extends StatelessWidget {
                       ? const Center(
                           child: CircularProgressIndicator(),
                         )
-                      : const HomeScreen();
+                      : HomeScreen();
                 });
               }
             }),

@@ -12,4 +12,5 @@ class NavigatorName {
   static const String NOTIFICATION_SCREEN = '/notification';
   static const String SEARCH_RESULT_SCREEN = '/search_result';
   static const String PURCHASE_SCREEN = '/purchase';
+  static const String PAY_WEB_SCREEN = '/pay_web';
 }

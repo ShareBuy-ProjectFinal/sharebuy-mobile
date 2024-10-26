@@ -1,10 +1,10 @@
 import 'dart:developer';
 
-import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:share_buy/application/routes/navigator_name.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_bloc.dart';
@@ -42,6 +42,8 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
               //chuyển sáng tab đơn hàng
             } else {
               //chuyển sáng tab thanh toán
+              Navigator.pushNamed(context, NavigatorName.PAY_WEB_SCREEN,
+                  arguments: {'url': state.payUrl});
             }
           } else {
             MessageToast.showToast(context, "Đặt hàng thất bại");
@@ -128,10 +130,15 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                         padding: EdgeInsets.symmetric(
                             horizontal: 18.w, vertical: 15.h),
                         onTap: () {
-                          log("Order clicked ${carts.length}");
                           context
                               .read<CartBloc>()
                               .add(EventPurchaseCart(carts: carts));
+                          // Navigator.pushNamed(
+                          //     context, NavigatorName.PAY_WEB_SCREEN,
+                          //     arguments: {
+                          //       'url':
+                          //           "https://test-payment.momo.vn/shortlink/wLr9yHQ6EH"
+                          //     });
                         },
                         textColor: Colors.white,
                         fontSize: 18.sp,

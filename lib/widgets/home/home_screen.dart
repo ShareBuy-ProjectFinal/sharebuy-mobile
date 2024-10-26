@@ -7,14 +7,21 @@ import 'package:share_buy/widgets/order/order_screen.dart';
 import 'package:share_buy/widgets/profile/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  int currentIndex;
+  HomeScreen({super.key, this.currentIndex = 0});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final PageController _pageController = PageController();
+  late PageController _pageController;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _pageController = PageController(initialPage: widget.currentIndex);
+  }
 
   @override
   Widget build(BuildContext context) {
