@@ -51,7 +51,7 @@ class _TopSearchBarState extends State<TopSearchBar> {
             badgeStyle: const badges.BadgeStyle(badgeColor: AppColors.redLight),
             badgeContent: Text(
               '3',
-              style: AppTypography.primaryWhiteBold,
+              style: AppTypography.mediumWhiteBold,
             ),
             child: Image.asset(
               'assets/icons/icon_ring.png',

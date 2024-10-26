@@ -34,11 +34,20 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   }
 
   void _reset(ResetProductEvent event, Emitter emit) {
-    emit(ProductState(
-        product: ProductModel(shop: ShopModel()),
+    if (event.isAddCart) {
+      emit(state.copyWith(
         quantity: 1,
+        isAddSuccess: false,
         selectedAttributeValues: [],
-        isLoading: false));
+      ));
+    } else {
+      emit(ProductState(
+          product: ProductModel(shop: ShopModel()),
+          quantity: 1,
+          selectedAttributeValues: [],
+          isLoading: false,
+          isAddSuccess: false));
+    }
   }
 
   void _selectAttributeValue(SelectAttributeValueEvent event, Emitter emit) {
@@ -85,15 +94,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       ));
       final bool isSuccues = await CartRepository().addToCart(
           productDetailId: event.productDetailId, quantity: event.quantity);
-      if (isSuccues) {
-        emit(state.copyWith(
-            isLoading: false,
-            productDetailId: '',
-            quantity: 1,
-            isAddSuccess: true));
-      } else {
-        emit(state.copyWith(isLoading: false));
-      }
+      emit(state.copyWith(isLoading: false, isAddSuccess: isSuccues));
     } catch (e) {
       emit(state.copyWith(isLoading: false, isAddSuccess: false));
       log("Error when add product to cart: $e");

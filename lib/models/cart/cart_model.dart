@@ -25,3 +25,68 @@ class CartModel {
         "shop": shop?.toJson(),
       };
 }
+
+extension CartModelExtension on List<CartModel> {
+  List<CartModel> getCartItemSelected() {
+    List<CartModel> result = [];
+    for (var cart in this) {
+      if (cart.shop?.isSelected ?? false) {
+        result.add(cart);
+      } else {
+        List<CartItemModel> cartItems =
+            cart.cartItems!.where((item) => item.isSelected ?? false).toList();
+        if (cartItems.isNotEmpty) {
+          result.add(CartModel(cartItems: cartItems, shop: cart.shop));
+        }
+      }
+    }
+    return result;
+  }
+
+  bool isSelected() {
+    return any((cart) {
+      if (cart.shop?.isSelected ?? false) {
+        return true;
+      }
+      if (cart.cartItems!.any((item) => item.isSelected ?? false)) {
+        return true;
+      }
+      return false;
+    });
+  }
+
+  bool isSelectedAll() {
+    return every((cart) {
+      if (cart.shop?.isSelected ?? false) {
+        return true;
+      }
+      if (cart.cartItems!.every((item) => item.isSelected ?? false)) {
+        return true;
+      }
+      return false;
+    });
+  }
+
+  num totalSelected() {
+    return fold<num>(0, (pre, element) {
+      return pre +
+          element.cartItems!.fold<num>(0, (preElement, cartItem) {
+            return cartItem.isSelected ?? false
+                ? preElement + cartItem.productDetail.price * cartItem.quantity!
+                : preElement;
+          });
+    });
+  }
+
+  List<String> getCartItemIdSelected() {
+    List<String> result = [];
+    for (var cart in this) {
+      for (var item in cart.cartItems!) {
+        if (item.isSelected ?? false) {
+          result.add(item.id!);
+        }
+      }
+    }
+    return result;
+  }
+}

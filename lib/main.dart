@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +13,7 @@ import 'package:share_buy/application/theme/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:share_buy/blocs/auth_bloc/auth_bloc.dart';
 import 'package:share_buy/blocs/auth_bloc/auth_event.dart';
+import 'package:share_buy/blocs/auth_bloc/auth_state.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_bloc.dart';
 import 'package:share_buy/blocs/home_bloc/home_bloc.dart';
 import 'package:share_buy/blocs/product_bloc/product_bloc.dart';
@@ -70,10 +73,17 @@ class MyApp extends StatelessWidget {
               if (snapshot.data == null) {
                 return const LoginScreen();
               } else {
-                context
-                    .read<AuthBloc>()
-                    .add(EventGetCurrentUser(firebaseId: snapshot.data!.uid));
-                return const HomeScreen();
+                context.read<AuthBloc>().add(EventGetCurrentUser(
+                      firebaseId: snapshot.data!.uid,
+                    ));
+                return BlocBuilder<AuthBloc, AuthState>(
+                    builder: (context, state) {
+                  return state.user.id!.isEmpty
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : const HomeScreen();
+                });
               }
             }),
       ),

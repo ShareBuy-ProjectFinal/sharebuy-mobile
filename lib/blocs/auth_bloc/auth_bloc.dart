@@ -7,6 +7,8 @@ import 'package:share_buy/models/user/user_model.dart';
 import 'package:share_buy/repositories/auth_repository.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  static UserModel? currentUser;
+
   AuthBloc() : super(AuthState(user: UserModel())) {
     on<EventCreateUser>(_createUser);
     on<EventGetCurrentUser>(_getCurrentUser);
@@ -34,9 +36,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _createUser(EventCreateUser event, Emitter emit) async {
     try {
       emit(state.copyWith(isLoading: true));
-      bool isCreateUserSuccess = await AuthRepository()
-          .createUser(email: event.email, password: event.password);
-      if (isCreateUserSuccess) {
+      String firebaseId = await AuthRepository().createUser(
+          email: event.email,
+          password: event.password,
+          fullName: event.fullName);
+      if (firebaseId.isNotEmpty) {
+        add(EventGetCurrentUser(firebaseId: firebaseId));
         emit(state.copyWith(isLoading: false, isSuccess: true));
       } else {
         emit(state.copyWith(isLoading: false, isSuccess: false));
@@ -52,6 +57,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(state.copyWith(isLoading: true));
       UserModel user =
           await AuthRepository().getMe(firebaseId: event.firebaseId);
+      currentUser = user;
+      log("user getMe: ${currentUser!.toJson()}");
       emit(state.copyWith(isLoading: false, user: user));
     } catch (e) {
       log('Error when get current user: $e');

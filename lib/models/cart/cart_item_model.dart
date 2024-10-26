@@ -52,3 +52,19 @@ class CartItemModel {
         "product_detail": productDetail.toJson(),
       };
 }
+
+extension CartItemModelExtension on List<CartItemModel> {
+  num total() {
+    return fold<num>(0, (previousValue, element) {
+      return previousValue + element.productDetail.price! * element.quantity!;
+    });
+  }
+
+  bool isSelected() {
+    return any((element) => element.isSelected ?? false);
+  }
+
+  List<CartItemModel> getSelected() {
+    return where((element) => element.isSelected ?? false).toList();
+  }
+}

@@ -1,9 +1,12 @@
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:share_buy/blocs/auth_bloc/auth_bloc.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_event.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_state.dart';
+import 'package:share_buy/enums/PayType.dart';
 import 'package:share_buy/models/cart/cart_model.dart';
+import 'package:share_buy/models/order/order_model.dart';
 import 'package:share_buy/repositories/cart_repository.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
@@ -12,27 +15,27 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<CartLoadingEvent>(_loading);
     on<ChangeAttributeCartItemEvent>(_changeAttributeCartItem);
     on<EventSelectItemCartCheckbox>(_selectCartItem);
+    on<EventPurchaseCart>(_purchaseCart);
   }
 
   Future<void> _updateQuantityProductToCart(
       UpdateQuantityCartItemEvent event, Emitter emit) async {
     try {
-      emit(state.copyWith(isLoading: true));
       final bool isSuccues = await CartRepository().updateToCartById(
           cartItemId: event.cartItemId, quantity: event.quantity);
       if (isSuccues) {
-        int indexFind = state.carts.indexWhere((e) =>
-            e.cartItems
-                ?.indexWhere((element) => element.id == event.cartItemId) !=
+        int indexCart = state.carts.indexWhere((cart) =>
+            cart.cartItems
+                ?.indexWhere((cartItem) => cartItem.id == event.cartItemId) !=
             -1);
-        if (indexFind != -1) {
-          int indexItem = state.carts[indexFind].cartItems!
+        if (indexCart != -1) {
+          int indexItem = state.carts[indexCart].cartItems!
               .indexWhere((element) => element.id == event.cartItemId);
-          state.carts[indexFind].cartItems![indexItem].quantity =
+          state.carts[indexCart].cartItems![indexItem].quantity =
               event.quantity;
+          emit(state.copyWith(carts: state.carts));
         }
       }
-      emit(state.copyWith(isLoading: false));
     } catch (e) {
       emit(state.copyWith(isLoading: false));
       log("Error when update quantity product to cart: $e");
@@ -41,8 +44,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   Future<void> _loading(CartLoadingEvent event, Emitter emit) async {
     try {
-      emit(state.copyWith(isLoading: true));
+      emit(state.copyWith(isLoading: true, isSuccues: false));
+      log("get me in cart screen ${AuthBloc.currentUser!.toJson()}");
       List<CartModel> carts = await CartRepository().getByUserId();
+      // await Future.delayed(const Duration(seconds: 1));
       emit(state.copyWith(isLoading: false, carts: carts));
     } catch (e) {
       log("Error when get api cart by user id: $e");
@@ -61,26 +66,63 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   void _selectCartItem(EventSelectItemCartCheckbox event, Emitter emit) {
     try {
-      if (!event.value) {
+      if (event.type == TypeCheckBox.all) {
         state.carts.forEach((cart) {
+          cart.shop!.isSelected = event.value;
           cart.cartItems!.forEach((cartItem) {
-            if (cartItem.id == event.itemCartId) {
-              cartItem.isSelected = false;
-            }
+            cartItem.isSelected = event.value;
           });
         });
+      } else if (event.type == TypeCheckBox.shop) {
+        state.carts.every((cart) {
+          if (cart.shop?.id == event.itemId) {
+            cart.shop!.isSelected = event.value;
+            cart.cartItems!.forEach((cartItem) {
+              cartItem.isSelected = event.value;
+            });
+            log("Select shop: ${event.itemId}");
+            return false;
+          }
+          return true;
+        });
       } else {
-        state.carts.forEach((cart) {
-          cart.cartItems!.forEach((cartItem) {
-            if (cartItem.id == event.itemCartId) {
-              cartItem.isSelected = true;
+        state.carts.every((cart) {
+          return cart.cartItems!.every((cartItem) {
+            if (cartItem.id == event.itemId) {
+              cartItem.isSelected = event.value;
+              //check all shop is selected
+              cart.shop?.isSelected = cart.cartItems?.every((item) {
+                return item.isSelected ?? false;
+              });
+              return false;
             }
+            return true;
           });
         });
       }
       emit(state.copyWith(carts: state.carts));
     } catch (e) {
       log('Error when select cart item: $e');
+    }
+  }
+
+  Future<void> _purchaseCart(EventPurchaseCart event, Emitter emit) async {
+    try {
+      emit(state.copyWith(isLoading: true));
+      dynamic result = await CartRepository()
+          .purchaseCart(carts: event.carts, payType: state.payType.displayName);
+
+      if (result == false) {
+        emit(state.copyWith(isLoading: false, isSuccues: false));
+      } else if (result is OrderModel) {
+        emit(state.copyWith(
+            isLoading: false,
+            isSuccues: true,
+            payUrl: result.paymentInfo?.payUrl ?? ''));
+      }
+    } catch (e) {
+      log('Error when purchase cart: $e');
+      emit(state.copyWith(isLoading: false, isSuccues: false));
     }
   }
 }

@@ -39,7 +39,7 @@ class _RateCommentState extends State<RateComment> {
               ),
               child: Text(
                 'Xem thêm',
-                style: AppTypography.primaryBlueBold,
+                style: AppTypography.mediumBlueBold,
               ),
             ),
           ],

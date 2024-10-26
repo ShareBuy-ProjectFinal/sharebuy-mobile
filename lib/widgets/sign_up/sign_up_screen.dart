@@ -121,7 +121,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         onTap: () {
                           context.read<AuthBloc>().add(EventCreateUser(
                               email: _emailController.text,
-                              password: _passController.text));
+                              password: _passController.text,
+                              fullName: _nameController.text));
                         },
                         textColor: AppColors.white),
                     SizedBox(
@@ -140,7 +141,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             },
                             child: Text(
                               'Đăng nhập',
-                              style: AppTypography.primaryBlueBold,
+                              style: AppTypography.mediumBlueBold,
                             )),
                       ],
                     )

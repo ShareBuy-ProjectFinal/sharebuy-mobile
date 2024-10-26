@@ -46,6 +46,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           context.loaderOverlay.show();
         } else {
           context.loaderOverlay.hide();
+          if (state.isAddSuccess) {
+            Navigator.of(context).pop();
+            context.read<ProductBloc>().add(ResetProductEvent(isAddCart: true));
+          }
         }
       },
       child: Scaffold(
@@ -161,7 +165,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     ),
                                     Text(
                                       "${state.product.oldPrice ?? ''}",
-                                      style: AppTypography.primaryLineThrough,
+                                      style: AppTypography.largeLineThrough,
                                     ),
                                   ],
                                 ),

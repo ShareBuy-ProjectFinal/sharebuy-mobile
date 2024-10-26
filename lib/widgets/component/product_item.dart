@@ -91,7 +91,7 @@ class _ProductItemState extends State<ProductItem> {
             ),
             Text(
               "\$" "${widget.product.payload?.price ?? 0}",
-              style: AppTypography.primaryBlueBold,
+              style: AppTypography.mediumBlueBold,
             ),
             SizedBox(
               height: 12.h,

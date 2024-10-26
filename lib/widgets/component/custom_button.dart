@@ -7,6 +7,7 @@ class CustomButton extends StatefulWidget {
   final String buttonText;
   final Color textColor;
   final Color? borderColor;
+  final double? fontSize;
   final bool isDisable;
   final VoidCallback onTap;
   final EdgeInsets? padding;
@@ -17,6 +18,7 @@ class CustomButton extends StatefulWidget {
       required this.onTap,
       required this.textColor,
       this.borderColor,
+      this.fontSize,
       bool disable = false,
       this.padding})
       : isDisable = disable, // Gán giá trị cho thuộc tính isDisable
@@ -47,10 +49,8 @@ class _CustomButtonState extends State<CustomButton> {
             widget.buttonText,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: widget.isDisable
-                    ? AppColors.colorDisable
-                    : widget.textColor,
-                fontSize: 12.sp),
+                color: widget.isDisable ? AppColors.white : widget.textColor,
+                fontSize: widget.fontSize ?? 12.sp),
           ),
         ),
       ),

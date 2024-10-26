@@ -67,7 +67,7 @@ class _StarButtonState extends State<StarButton> {
                       children: [
                         Text(
                           'Tất cả',
-                          style: AppTypography.primaryBlueBold,
+                          style: AppTypography.mediumBlueBold,
                         )
                       ],
                     ),
