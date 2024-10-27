@@ -58,3 +58,9 @@ class CustomAttributeValue {
         "custom_attribut": customAttribute?.toJson(),
       };
 }
+
+extension CustomAttributeValueExtension on List<CustomAttributeValue> {
+  String getAttributeValuesName() {
+    return map((e) => e.value).join(', ');
+  }
+}

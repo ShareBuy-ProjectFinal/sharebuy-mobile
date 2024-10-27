@@ -11,19 +11,19 @@ import 'package:share_buy/blocs/order_bloc/order_state.dart';
 import 'package:share_buy/widgets/component/custom_button.dart';
 import 'package:share_buy/widgets/order/children/ordered_item.dart';
 
-class TabToPay extends StatefulWidget {
-  const TabToPay({super.key});
+class TabPreparing extends StatefulWidget {
+  const TabPreparing({super.key});
 
   @override
-  State<TabToPay> createState() => _TabToPayState();
+  State<TabPreparing> createState() => _TabPreparingState();
 }
 
-class _TabToPayState extends State<TabToPay> {
+class _TabPreparingState extends State<TabPreparing> {
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    context.read<OrderBloc>().add(EventLoadingOrderTopay());
+    context.read<OrderBloc>().add(EventLoadingOrderPreparing());
   }
 
   @override
@@ -38,10 +38,10 @@ class _TabToPayState extends State<TabToPay> {
       },
       child: BlocBuilder<OrderBloc, OrderState>(builder: (context, state) {
         return Container(
-          decoration: const BoxDecoration(color: AppColors.backgroundGrey),
+          decoration: BoxDecoration(color: AppColors.backgroundGrey),
           child: ListView.separated(
             padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 8.w),
-            itemCount: state.ordersToPay.length,
+            itemCount: state.ordersPreparing.length,
             separatorBuilder: (context, index) => SizedBox(
               height: 10.h,
             ),
@@ -58,7 +58,8 @@ class _TabToPayState extends State<TabToPay> {
                   child: Column(
                     children: [
                       OrderedItem(
-                        order: state.ordersToPay[index],
+                        typeOrdered: OrderedItemType.preparing,
+                        order: state.ordersPreparing[index],
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -68,24 +69,11 @@ class _TabToPayState extends State<TabToPay> {
                             buttonColor: AppColors.white,
                             padding: EdgeInsets.symmetric(
                                 horizontal: 10.w, vertical: 10.h),
-                            buttonText: 'Đổi phương thức thanh toán',
+                            buttonText: 'Xem chi tiết',
                             onTap: () {
-                              log('Change payment method tab pay_to');
+                              log('See order detail tab cancel');
                             },
                             textColor: AppColors.textBlack,
-                          ),
-                          SizedBox(
-                            width: 8.w,
-                          ),
-                          CustomButton(
-                            buttonColor: AppColors.buttonBlue,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10.w, vertical: 10.h),
-                            buttonText: 'Thanh toán',
-                            onTap: () {
-                              log('Change payment method tab pay_to');
-                            },
-                            textColor: AppColors.white,
                           ),
                         ],
                       ),

@@ -16,6 +16,7 @@ import 'package:share_buy/blocs/auth_bloc/auth_event.dart';
 import 'package:share_buy/blocs/auth_bloc/auth_state.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_bloc.dart';
 import 'package:share_buy/blocs/home_bloc/home_bloc.dart';
+import 'package:share_buy/blocs/order_bloc/order_bloc.dart';
 import 'package:share_buy/blocs/product_bloc/product_bloc.dart';
 import 'package:share_buy/widgets/home/home_screen.dart';
 import 'package:share_buy/widgets/login/login_screen.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<ProductBloc>(create: (context) => ProductBloc()),
         BlocProvider<CartBloc>(create: (context) => CartBloc()),
         BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
+        BlocProvider<OrderBloc>(create: (context) => OrderBloc()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),

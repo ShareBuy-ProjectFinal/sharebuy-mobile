@@ -47,7 +47,7 @@ class _PayWebState extends State<PayWeb> {
             // }
             if (request.url.startsWith("momo://app")) {
               await launchUrl(Uri.parse(request.url));
-              log("request.url: ${request.url}");
+              log("momo://app: ${request.url}");
               return NavigationDecision.prevent;
             }
             if (request.url.contains("message=Successful")) {
@@ -56,6 +56,8 @@ class _PayWebState extends State<PayWeb> {
                   NavigatorName.HOME_SCREEN,
                   arguments: {'currentIndex': 3},
                   (route) => false);
+              // Navigator.pushNamed(context, NavigatorName.HOME_SCREEN,
+              //     arguments: {'currentIndex': 3});
             }
             log("request.url: ${request.url}");
             return NavigationDecision.navigate;

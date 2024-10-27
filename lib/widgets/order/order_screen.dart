@@ -5,6 +5,7 @@ import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
 import 'package:share_buy/widgets/order/children/tab_cancel.dart';
 import 'package:share_buy/widgets/order/children/tab_completed.dart';
+import 'package:share_buy/widgets/order/children/tab_preparing.dart';
 import 'package:share_buy/widgets/order/children/tab_return.dart';
 import 'package:share_buy/widgets/order/children/tab_to_pay.dart';
 import 'package:share_buy/widgets/order/children/tab_to_ship.dart';
@@ -21,6 +22,7 @@ class _OrderScreenState extends State<OrderScreen>
   late TabController controller;
   final List<String> listTitle = [
     'Chờ thanh toán',
+    "Đang chuẩn bị",
     'Chờ giao hàng',
     'Trả hàng',
     'Đã nhận',
@@ -96,6 +98,7 @@ class _OrderScreenState extends State<OrderScreen>
                 controller: controller,
                 children: [
                   TabToPay(),
+                  TabPreparing(),
                   TabToShip(),
                   TabReturn(),
                   TabCompleted(),
