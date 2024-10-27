@@ -42,7 +42,10 @@ class _LoginScreenState extends State<LoginScreen> {
         }
         if (state.isSuccess) {
           Navigator.of(context).pushNamedAndRemoveUntil(
-              NavigatorName.HOME_SCREEN, (route) => false);
+              NavigatorName.HOME_SCREEN, (route) => false,
+              arguments: {
+                'currentIndex': 0,
+              });
           state.isSuccess = false;
         }
         // else {

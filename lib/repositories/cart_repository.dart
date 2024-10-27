@@ -84,7 +84,7 @@ class CartRepository extends FetchClient {
         return false;
       }
     } catch (e) {
-      log('Error when purchase cart: $e');
+      log('Error when call api purchase cart: $e');
       return false;
     }
   }

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
@@ -5,15 +7,16 @@ import 'package:badges/badges.dart' as badges;
 import 'package:share_buy/application/theme/app_typography.dart';
 
 class BottomNavBar extends StatefulWidget {
+  int index;
   final PageController pageController;
-  const BottomNavBar({super.key, required this.pageController});
+  BottomNavBar({super.key, required this.pageController, required this.index});
 
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
-  int index = 0;
+  // int index = 0;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,12 +28,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
       child: BottomNavigationBar(
           onTap: (value) {
             setState(() {
-              index = value;
-              widget.pageController.jumpToPage(index);
+              widget.index = value;
+              widget.pageController.jumpToPage(widget.index);
             });
           },
           backgroundColor: Colors.white,
-          currentIndex: index,
+          currentIndex: widget.index,
           type: BottomNavigationBarType.fixed,
           showUnselectedLabels: true,
           selectedItemColor: AppColors.buttonBlue,
