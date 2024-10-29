@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:share_buy/widgets/explore/explore_screen.dart';
 import 'package:share_buy/widgets/cart/cart_sreen.dart';
@@ -16,11 +18,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late PageController _pageController;
+  late int index;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _pageController = PageController(initialPage: widget.currentIndex);
+    index = widget.currentIndex;
   }
 
   @override
@@ -28,6 +32,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: SafeArea(
         child: PageView(
+          onPageChanged: (value) {
+            setState(() {
+              index = value;
+              _pageController.jumpToPage(value);
+            });
+          },
           controller: _pageController,
           children: const [
             MainScreen(),
@@ -40,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       bottomNavigationBar: BottomNavBar(
         pageController: _pageController,
+        index: index,
       ),
     );
   }

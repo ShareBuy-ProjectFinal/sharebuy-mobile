@@ -82,7 +82,7 @@ class _PurchaseShopState extends State<PurchaseShop> {
                     'Tổng tiền (${widget.cart.cartItems?.length ?? 0} sản phẩm)',
                     style: AppTypography.primaryBlack),
                 Text(
-                    "${Format.formatNumber(widget.cart.cartItems!.total() + 32000)} vnđ",
+                    "${Format.formatNumber(widget.cart.cartItems!.total() + 20000)} vnđ",
                     style: AppTypography.primaryDarkBlueBold),
               ],
             ),

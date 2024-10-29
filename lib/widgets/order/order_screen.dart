@@ -47,7 +47,7 @@ class _OrderScreenState extends State<OrderScreen>
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 14.h),
+        padding: EdgeInsets.symmetric(vertical: 0.h),
         child: Column(
           children: [
             ButtonsTabBar(

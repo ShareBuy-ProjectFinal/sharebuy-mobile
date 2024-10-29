@@ -32,3 +32,5 @@ class EventPurchaseCart extends CartEvent {
   final List<CartModel> carts;
   EventPurchaseCart({required this.carts});
 }
+
+class EventReLoadScreen extends CartEvent {}

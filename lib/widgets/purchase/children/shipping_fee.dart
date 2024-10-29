@@ -30,7 +30,7 @@ class _ShippingFeeState extends State<ShippingFee> {
             children: [
               Text('Giao hàng tận nơi', style: AppTypography.primaryBlack),
               Spacer(),
-              Text("${Format.formatNumber(32000)} vnđ",
+              Text("${Format.formatNumber(20000)} vnđ",
                   style: AppTypography.primaryBlack),
             ],
           )

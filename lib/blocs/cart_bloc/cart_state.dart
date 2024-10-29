@@ -5,6 +5,8 @@ import 'package:share_buy/models/cart/cart_model.dart';
 class CartState {
   bool isLoading;
   bool isSuccues;
+  bool isShowMessageToast;
+  String message;
   String productDetailId;
   PayType payType;
   String? payUrl;
@@ -15,6 +17,8 @@ class CartState {
   CartState({
     this.isLoading = false,
     this.isSuccues = false,
+    this.isShowMessageToast = false,
+    this.message = '',
     this.carts = const [],
     this.productDetailId = '',
     this.selectedCartItems = const [],
@@ -25,6 +29,8 @@ class CartState {
   CartState copyWith({
     bool? isLoading,
     bool? isSuccues,
+    bool? isShowMessageToast,
+    String? message,
     List<CartModel>? carts,
     List<CartItemModel>? selectedCartItems,
     String? productDetailId,
@@ -34,6 +40,8 @@ class CartState {
     return CartState(
       isLoading: isLoading ?? this.isLoading,
       isSuccues: isSuccues ?? this.isSuccues,
+      isShowMessageToast: isShowMessageToast ?? this.isShowMessageToast,
+      message: message ?? this.message,
       carts: carts ?? this.carts,
       productDetailId: productDetailId ?? this.productDetailId,
       selectedCartItems: selectedCartItems ?? this.selectedCartItems,

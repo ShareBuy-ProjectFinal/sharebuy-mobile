@@ -43,15 +43,15 @@ class AddressModel {
         region: json["region"] == null
             ? null
             : RegionModel.fromJson(json["region"]),
-        createdAt: json["createdAt"] == null
+        createdAt: json["created_at"] == null
             ? null
-            : DateTime.parse(json["createdAt"]),
-        updatedAt: json["updatedAt"] == null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
             ? null
-            : DateTime.parse(json["updatedAt"]),
-        userInfo: json["userInfo"] == null
+            : DateTime.parse(json["updated_at"]),
+        userInfo: json["user_info"] == null
             ? null
-            : UserModel.fromJson(json["userInfo"]),
+            : UserModel.fromJson(json["user_info"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -62,8 +62,8 @@ class AddressModel {
         "detail": detail,
         "phone_number": phoneNumber,
         "region": region?.toJson(),
-        "createdAt": createdAt?.toIso8601String(),
-        "updatedAt": updatedAt?.toIso8601String(),
-        "userInfo": userInfo?.toJson(),
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "user_info": userInfo?.toJson(),
       };
 }

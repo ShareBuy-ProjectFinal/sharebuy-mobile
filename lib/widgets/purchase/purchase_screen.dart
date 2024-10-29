@@ -40,14 +40,29 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
           if (state.isSuccues) {
             if (state.payType == PayType.direct) {
               //chuyển sáng tab đơn hàng
+              Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  NavigatorName.HOME_SCREEN,
+                  arguments: {'currentIndex': 3},
+                  (route) => false);
+              MessageToast.showToast(context, "Đặt hàng thành công");
             } else {
               //chuyển sáng tab thanh toán
               Navigator.pushNamed(context, NavigatorName.PAY_WEB_SCREEN,
                   arguments: {'url': state.payUrl});
             }
-          } else {
-            MessageToast.showToast(context, "Đặt hàng thất bại");
           }
+          // else {
+          //   MessageToast.showToast(context, "Đặt hàng thất bại");
+          // }
+        }
+
+        if (state.isShowMessageToast) {
+          state.isShowMessageToast = false;
+          if (ModalRoute.of(context)?.isCurrent == true) {
+            MessageToast.showToast(context, state.message);
+          }
+          state.message = '';
         }
       },
       child: Scaffold(
@@ -117,7 +132,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                               style: AppTypography.primaryHintText,
                             ),
                             Text(
-                              '${Format.formatNumber(carts.totalSelected() + carts.length * 32000)} vnđ',
+                              '${Format.formatNumber(carts.totalSelected() + carts.length * 20000)} vnđ',
                               style: AppTypography.largeDarkBlueBold,
                             )
                           ]),

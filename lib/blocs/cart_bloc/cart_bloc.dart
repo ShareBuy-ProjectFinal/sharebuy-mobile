@@ -16,6 +16,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<ChangeAttributeCartItemEvent>(_changeAttributeCartItem);
     on<EventSelectItemCartCheckbox>(_selectCartItem);
     on<EventPurchaseCart>(_purchaseCart);
+    on<EventReLoadScreen>(_loadScreen);
   }
 
   Future<void> _updateQuantityProductToCart(
@@ -113,16 +114,26 @@ class CartBloc extends Bloc<CartEvent, CartState> {
           .purchaseCart(carts: event.carts, payType: state.payType.displayName);
 
       if (result == false) {
-        emit(state.copyWith(isLoading: false, isSuccues: false));
+        emit(state.copyWith(
+            isLoading: false,
+            isSuccues: false,
+            isShowMessageToast: true,
+            message: 'Đặt hàng thất bại'));
       } else if (result is OrderModel) {
         emit(state.copyWith(
             isLoading: false,
             isSuccues: true,
+            isShowMessageToast: true,
+            message: 'Đặt hàng thành công',
             payUrl: result.paymentInfo?.payUrl ?? ''));
       }
     } catch (e) {
       log('Error when purchase cart: $e');
       emit(state.copyWith(isLoading: false, isSuccues: false));
     }
+  }
+
+  void _loadScreen(EventReLoadScreen event, Emitter emit) {
+    emit(state.copyWith(isLoading: false));
   }
 }

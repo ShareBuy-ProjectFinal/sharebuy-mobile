@@ -7,9 +7,11 @@ import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_bloc.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_state.dart';
+import 'package:share_buy/enums/PayType.dart';
 import 'package:share_buy/models/cart/cart_model.dart';
 import 'package:share_buy/repositories/cart_repository.dart';
 import 'package:share_buy/utils/format.dart';
+import 'package:share_buy/widgets/purchase/children/bottom_sheet_payment_type.dart';
 
 class PurchaseBottomScreen extends StatefulWidget {
   const PurchaseBottomScreen({super.key});
@@ -23,7 +25,7 @@ class _PurchaseBottomScreenState extends State<PurchaseBottomScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<CartBloc, CartState>(builder: (context, state) {
       num total = state.carts.totalSelected();
-      num totalShipping = state.carts.getCartItemSelected().length * 32000;
+      num totalShipping = state.carts.getCartItemSelected().length * 20000;
       return Container(
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -73,7 +75,11 @@ class _PurchaseBottomScreenState extends State<PurchaseBottomScreen> {
             Divider(),
             GestureDetector(
               onTap: () {
-                log("Shipping fee clicked");
+                showModalBottomSheet(
+                    barrierColor: Colors.black12,
+                    isDismissible: true,
+                    context: context,
+                    builder: (context) => const BottomSheetPaymentType());
               },
               child: Padding(
                 padding: EdgeInsets.only(
@@ -89,7 +95,9 @@ class _PurchaseBottomScreenState extends State<PurchaseBottomScreen> {
                     ),
                     Expanded(
                       child: Text(
-                        'Thanh toán khi nhận hàng',
+                        state.payType == PayType.direct
+                            ? 'Thanh toán khi nhận hàng'
+                            : 'Thanh toán momo',
                         style: AppTypography.primaryDarkBlue,
                         overflow: TextOverflow.visible,
                         textAlign: TextAlign.end,
