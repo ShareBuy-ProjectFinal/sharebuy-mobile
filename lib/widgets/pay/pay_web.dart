@@ -1,10 +1,10 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:share_buy/application/routes/navigator_name.dart';
 import 'package:share_buy/widgets/component/snack_bar.dart';
-import 'package:share_buy/widgets/home/home_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -54,10 +54,8 @@ class _PayWebState extends State<PayWeb> {
               Navigator.pushNamedAndRemoveUntil(
                   context,
                   NavigatorName.HOME_SCREEN,
-                  arguments: {'currentIndex': 3},
+                  arguments: {'currentIndex': 3, 'currentTabInderOrder': 1},
                   (route) => false);
-              // Navigator.pushNamed(context, NavigatorName.HOME_SCREEN,
-              //     arguments: {'currentIndex': 3});
             }
             log("request.url: ${request.url}");
             return NavigationDecision.navigate;
@@ -78,6 +76,21 @@ class _PayWebState extends State<PayWeb> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Thanh toán'),
+        //  Navigator.pushNamedAndRemoveUntil(
+        //               context,
+        //               NavigatorName.HOME_SCREEN,
+        //               arguments: {'currentIndex': 3},
+        //               (route) => false);
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushNamedAndRemoveUntil(
+                context,
+                NavigatorName.HOME_SCREEN,
+                arguments: {'currentIndex': 3},
+                (route) => false);
+          },
+        ),
       ),
       body: SafeArea(child: WebViewWidget(controller: _controller)),
     );

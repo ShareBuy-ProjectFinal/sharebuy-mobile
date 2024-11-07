@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:share_buy/application/routes/navigator_name.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
+import 'package:share_buy/widgets/address_select/address_add_screen.dart';
+import 'package:share_buy/widgets/address_select/address_selected_screen.dart';
 import 'package:share_buy/widgets/favourite/favourite_screen.dart';
 import 'package:share_buy/widgets/home/home_screen.dart';
 import 'package:share_buy/widgets/login/login_screen.dart';
@@ -26,7 +28,8 @@ class RouteGenerator {
       case NavigatorName.HOME_SCREEN:
         return MaterialPageRoute(
           builder: (_) => HomeScreen(
-            currentIndex: args!['currentIndex'],
+            currentIndex: args!['currentIndex'] ?? 0,
+            currentTabInderOrder: args['currentTabInderOrder'],
           ),
         );
       case NavigatorName.SALE_PROGRAM_SCREEN:
@@ -71,6 +74,12 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => PayWeb(url: args!['url']),
         );
+      case NavigatorName.ADDRESS_SELECTION_SCREEN:
+        return MaterialPageRoute(
+          builder: (_) => const AddressSelected(),
+        );
+      case NavigatorName.ADDRESS_FORM_SCREEN:
+        return MaterialPageRoute(builder: (_) => const AddressAdd());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

@@ -13,4 +13,6 @@ class NavigatorName {
   static const String SEARCH_RESULT_SCREEN = '/search_result';
   static const String PURCHASE_SCREEN = '/purchase';
   static const String PAY_WEB_SCREEN = '/pay_web';
+  static const String ADDRESS_SELECTION_SCREEN = '/address_selection';
+  static const String ADDRESS_FORM_SCREEN = '/address_form';
 }

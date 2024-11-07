@@ -10,7 +10,8 @@ import 'package:share_buy/widgets/profile/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   int currentIndex;
-  HomeScreen({super.key, this.currentIndex = 0});
+  int currentTabInderOrder;
+  HomeScreen({super.key, this.currentIndex = 0, this.currentTabInderOrder = 0});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -25,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _pageController = PageController(initialPage: widget.currentIndex);
     index = widget.currentIndex;
+    log('taborde index: ${widget.currentTabInderOrder}');
   }
 
   @override
@@ -39,11 +41,13 @@ class _HomeScreenState extends State<HomeScreen> {
             });
           },
           controller: _pageController,
-          children: const [
+          children: [
             MainScreen(),
             ExploreScreen(),
             CartSreen(),
-            OrderScreen(),
+            OrderScreen(
+              currentTabIndex: widget.currentTabInderOrder,
+            ),
             ProfileScreen()
           ],
         ),

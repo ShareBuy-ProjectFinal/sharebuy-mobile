@@ -11,6 +11,7 @@ import 'package:share_buy/application/routes/route_generator.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:share_buy/blocs/address_bloc/address_bloc.dart';
 import 'package:share_buy/blocs/auth_bloc/auth_bloc.dart';
 import 'package:share_buy/blocs/auth_bloc/auth_event.dart';
 import 'package:share_buy/blocs/auth_bloc/auth_state.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<CartBloc>(create: (context) => CartBloc()),
         BlocProvider<AuthBloc>(create: (context) => AuthBloc()),
         BlocProvider<OrderBloc>(create: (context) => OrderBloc()),
+        BlocProvider<AddressBloc>(create: (context) => AddressBloc()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
@@ -75,9 +77,14 @@ class MyApp extends StatelessWidget {
               if (snapshot.data == null) {
                 return const LoginScreen();
               } else {
-                context.read<AuthBloc>().add(EventGetCurrentUser(
-                      firebaseId: snapshot.data!.uid,
-                    ));
+                snapshot.data!.getIdToken().then((token) {
+                  if (token != null) {
+                    context.read<AuthBloc>().add(EventGetCurrentUser(
+                          firebaseId: snapshot.data!.uid,
+                          token: token,
+                        ));
+                  }
+                });
                 return BlocBuilder<AuthBloc, AuthState>(
                     builder: (context, state) {
                   return state.user.id!.isEmpty

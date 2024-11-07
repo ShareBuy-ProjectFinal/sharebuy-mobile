@@ -118,6 +118,24 @@ class AppTypography {
   static final largeRedBold = TextStyle(
       fontWeight: FontWeight.w700, color: AppColors.redLight, fontSize: 16.sp);
 
+  // Blue
+  static final smallBlue = TextStyle(
+      fontWeight: FontWeight.w500,
+      color: AppColors.buttonBlue,
+      fontSize: 10.sp);
+  static final mediumBlue = TextStyle(
+      fontWeight: FontWeight.w500,
+      color: AppColors.buttonBlue,
+      fontSize: 12.sp);
+  static final primaryBlue = TextStyle(
+      fontWeight: FontWeight.w500,
+      color: AppColors.buttonBlue,
+      fontSize: 14.sp);
+  static final largeBlue = TextStyle(
+      fontWeight: FontWeight.w500,
+      color: AppColors.buttonBlue,
+      fontSize: 16.sp);
+
   // BlueBold
   static final mediumBlueBold = TextStyle(
       fontWeight: FontWeight.w700,

@@ -28,7 +28,8 @@ class _BottomSheetPaymentTypeState extends State<BottomSheetPaymentType> {
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20.r), topRight: Radius.circular(20.r)),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 14.h),
+      padding:
+          EdgeInsets.only(left: 12.w, right: 12.w, top: 14.h, bottom: 24.h),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -38,15 +39,18 @@ class _BottomSheetPaymentTypeState extends State<BottomSheetPaymentType> {
                   value: types[1],
                   groupValue: value,
                   onChanged: (v) {
-                    setState(() {
-                      value = v!;
-                    });
+                    // setState(() {
+                    //   value = v!;
+                    // });
+                    Navigator.pop(context);
                     context.read<CartBloc>().state.payType = PayType.direct;
                     context.read<CartBloc>().add(EventReLoadScreen());
                   }),
-              Text(
-                'Thanh toán khi nhận hàng',
-                style: AppTypography.hintTextStyle,
+              Expanded(
+                child: Text(
+                  'Thanh toán khi nhận hàng',
+                  style: AppTypography.hintTextStyle,
+                ),
               )
             ],
           ),
@@ -56,15 +60,18 @@ class _BottomSheetPaymentTypeState extends State<BottomSheetPaymentType> {
                   value: types[0],
                   groupValue: value,
                   onChanged: (v) {
-                    setState(() {
-                      value = v!;
-                    });
+                    // setState(() {
+                    //   value = v!;
+                    // });
+                    Navigator.pop(context);
                     context.read<CartBloc>().state.payType = PayType.momo;
                     context.read<CartBloc>().add(EventReLoadScreen());
                   }),
-              Text(
-                'Thanh toán Momo',
-                style: AppTypography.hintTextStyle,
+              Expanded(
+                child: Text(
+                  'Thanh toán Momo',
+                  style: AppTypography.hintTextStyle,
+                ),
               )
             ],
           ),

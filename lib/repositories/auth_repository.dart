@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:share_buy/blocs/auth_bloc/auth_bloc.dart';
 import 'package:share_buy/helper/network/http_client.dart';
 import 'package:share_buy/models/user/user_model.dart';
 
@@ -59,6 +60,8 @@ class AuthRepository extends FetchClient {
         email: email,
         password: password,
       );
+      String? token = await userCredential.user!.getIdToken();
+      FetchClient.token = token!;
       return userCredential.user!.uid;
     } catch (e) {
       log('Error when login: $e');
@@ -87,6 +90,24 @@ class AuthRepository extends FetchClient {
       return true;
     } catch (e) {
       log('Error when logout: $e');
+      return false;
+    }
+  }
+
+  Future<bool> updateProfile({required UserModel user}) async {
+    try {
+      final Response<dynamic> response = await super.postData(
+        path: '/api/users/users/${AuthBloc.currentUser?.id}',
+        params: user.toJson(),
+      );
+      if (response.statusCode == 200) {
+        AuthBloc.currentUser = UserModel.fromJson(response.data);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      log('Error when update profile: $e');
       return false;
     }
   }

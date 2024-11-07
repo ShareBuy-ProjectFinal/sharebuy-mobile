@@ -24,7 +24,9 @@ class EventCreateUser extends AuthEvent {
 
 class EventGetCurrentUser extends AuthEvent {
   final String firebaseId;
+  final String token;
   EventGetCurrentUser({
     required this.firebaseId,
+    required this.token,
   });
 }

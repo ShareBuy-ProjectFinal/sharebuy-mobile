@@ -1,3 +1,5 @@
+import 'package:share_buy/models/address/address_model.dart';
+
 class UserModel {
   String? id;
   String? state;
@@ -11,7 +13,7 @@ class UserModel {
   String? firebaseId;
   DateTime? createdAt;
   DateTime? updatedAt;
-  int? v;
+  AddressModel? address;
 
   UserModel({
     this.id = '',
@@ -26,7 +28,7 @@ class UserModel {
     this.firebaseId = '',
     this.createdAt,
     this.updatedAt,
-    this.v = 0,
+    this.address,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -48,7 +50,9 @@ class UserModel {
         updatedAt: json["updatedAt"] == null
             ? DateTime.now()
             : DateTime.parse(json["updatedAt"]),
-        v: json["__v"] ?? 0,
+        address: json["default_address"] == null
+            ? null
+            : AddressModel.fromJson(json["default_address"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -66,6 +70,7 @@ class UserModel {
         "firebase_id": firebaseId,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
-        "__v": v,
+        "default_address": address?.toJson(),
+        "default_address_id": address?.id,
       };
 }

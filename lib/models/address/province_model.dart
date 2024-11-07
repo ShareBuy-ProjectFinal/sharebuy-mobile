@@ -25,3 +25,11 @@ class ProvinceModel {
         "type": type,
       };
 }
+
+extension ProvinceModelExtension on List<ProvinceModel> {
+  List<ProvinceModel> getBySearchName(String name) {
+    return where((element) =>
+            element.provinceName!.toLowerCase().contains(name.toLowerCase()))
+        .toList();
+  }
+}

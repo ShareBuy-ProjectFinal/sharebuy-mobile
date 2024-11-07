@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_buy/blocs/auth_bloc/auth_event.dart';
 import 'package:share_buy/blocs/auth_bloc/auth_state.dart';
+import 'package:share_buy/helper/network/http_client.dart';
 import 'package:share_buy/models/user/user_model.dart';
 import 'package:share_buy/repositories/auth_repository.dart';
 
@@ -22,7 +23,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       String fireBaseId = await AuthRepository()
           .login(email: event.email, password: event.password);
       if (fireBaseId.isNotEmpty) {
-        add(EventGetCurrentUser(firebaseId: fireBaseId));
+        add(EventGetCurrentUser(
+            firebaseId: fireBaseId, token: FetchClient.token));
         emit(state.copyWith(isSuccess: true));
       } else {
         emit(state.copyWith(isLoading: false, isSuccess: false));
@@ -41,7 +43,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           password: event.password,
           fullName: event.fullName);
       if (firebaseId.isNotEmpty) {
-        add(EventGetCurrentUser(firebaseId: firebaseId));
+        add(EventGetCurrentUser(
+            firebaseId: firebaseId, token: FetchClient.token));
         emit(state.copyWith(isLoading: false, isSuccess: true));
       } else {
         emit(state.copyWith(isLoading: false, isSuccess: false));
@@ -55,6 +58,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _getCurrentUser(EventGetCurrentUser event, Emitter emit) async {
     try {
       emit(state.copyWith(isLoading: true));
+      await Future.delayed(const Duration(), () {
+        FetchClient.token = event.token;
+      });
       UserModel user =
           await AuthRepository().getMe(firebaseId: event.firebaseId);
       currentUser = user;

@@ -59,9 +59,9 @@ class _MainScreenState extends State<MainScreen>
                   SizedBox(
                     height: 28.h,
                   ),
-                  SaleProgram(
-                    title: 'Mega Sale',
-                  ),
+                  // SaleProgram(
+                  //   title: 'Mega Sale',
+                  // ),
                   SizedBox(
                     height: 28.h,
                   ),

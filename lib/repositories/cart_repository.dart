@@ -3,7 +3,6 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:share_buy/blocs/auth_bloc/auth_bloc.dart';
-import 'package:share_buy/helper/constant/app_constant.dart';
 import 'package:share_buy/helper/network/http_client.dart';
 import 'package:share_buy/models/cart/cart_model.dart';
 import 'package:share_buy/models/order/order_model.dart';
@@ -73,8 +72,8 @@ class CartRepository extends FetchClient {
           await super.postData(path: "/api/orders/", params: {
         'customer_id': AuthBloc.currentUser?.id,
         "payment_method": payType,
-        // "address_id": " AuthBloc.currentUser" ,
-        "address_id": "6719705c6c7e9300135e4b52",
+        "address_id": AuthBloc.currentUser?.address?.id ?? '',
+        // "address_id": "6719705c6c7e9300135e4b52",
         "cart_items": carts.getCartItemIdSelected()
       });
       if (response.statusCode == 201) {

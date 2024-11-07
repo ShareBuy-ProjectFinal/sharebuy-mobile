@@ -11,7 +11,8 @@ import 'package:share_buy/widgets/order/children/tab_to_pay.dart';
 import 'package:share_buy/widgets/order/children/tab_to_ship.dart';
 
 class OrderScreen extends StatefulWidget {
-  const OrderScreen({super.key});
+  final int currentTabIndex;
+  OrderScreen({super.key, this.currentTabIndex = 1});
 
   @override
   State<OrderScreen> createState() => _OrderScreenState();
@@ -28,11 +29,16 @@ class _OrderScreenState extends State<OrderScreen>
     'Đã nhận',
     'Đã hủy'
   ];
-  int currentIndex = 0;
+  late int currentIndex;
+
   @override
   void initState() {
     super.initState();
-    controller = TabController(length: listTitle.length, vsync: this);
+    controller = TabController(
+        length: listTitle.length,
+        vsync: this,
+        initialIndex: widget.currentTabIndex);
+    currentIndex = widget.currentTabIndex;
   }
 
   @override
@@ -81,10 +87,11 @@ class _OrderScreenState extends State<OrderScreen>
               ),
               contentPadding: EdgeInsets.symmetric(horizontal: 5.w),
               controller: controller,
-              onTap: (p0) {
-                // setState(() {
-                //   currentIndex = p0;
-                // });
+              onTap: (value) {
+                setState(() {
+                  currentIndex = value;
+                  controller.animateTo(value);
+                });
                 // controller.animateTo(currentIndex);
               },
               tabs: listTitle.map((title) {

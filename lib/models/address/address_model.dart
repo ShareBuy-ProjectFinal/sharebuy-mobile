@@ -18,9 +18,9 @@ class AddressModel {
 
   AddressModel({
     this.id = '',
-    required this.province,
-    required this.district,
-    required this.ward,
+    this.province,
+    this.district,
+    this.ward,
     this.detail = '',
     this.phoneNumber = '',
     this.region,
@@ -50,7 +50,9 @@ class AddressModel {
             ? null
             : DateTime.parse(json["updated_at"]),
         userInfo: json["user_info"] == null
-            ? null
+            ? json["user_id"] == null
+                ? null
+                : UserModel.fromJson(json["user_id"])
             : UserModel.fromJson(json["user_info"]),
       );
 

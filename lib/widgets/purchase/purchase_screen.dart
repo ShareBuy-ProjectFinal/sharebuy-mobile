@@ -7,6 +7,8 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:share_buy/application/routes/navigator_name.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
+import 'package:share_buy/blocs/address_bloc/address_bloc.dart';
+import 'package:share_buy/blocs/auth_bloc/auth_bloc.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_bloc.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_event.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_state.dart';
@@ -28,6 +30,14 @@ class PurchaseScreen extends StatefulWidget {
 
 class _PurchaseScreenState extends State<PurchaseScreen> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<AddressBloc>().state.selectedAddress =
+        AuthBloc.currentUser?.address;
+  }
+
+  @override
   Widget build(BuildContext context) {
     List<CartModel> carts =
         context.read<CartBloc>().state.carts.getCartItemSelected();
@@ -43,7 +53,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
               Navigator.pushNamedAndRemoveUntil(
                   context,
                   NavigatorName.HOME_SCREEN,
-                  arguments: {'currentIndex': 3},
+                  arguments: {'currentIndex': 3, 'currentTabInderOrder': 1},
                   (route) => false);
               MessageToast.showToast(context, "Đặt hàng thành công");
             } else {
@@ -145,15 +155,18 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                         padding: EdgeInsets.symmetric(
                             horizontal: 18.w, vertical: 15.h),
                         onTap: () {
+                          if (context
+                                  .read<AddressBloc>()
+                                  .state
+                                  .selectedAddress ==
+                              null) {
+                            MessageToast.showToast(
+                                context, "Chưa có địa chỉ giao hàng");
+                            return;
+                          }
                           context
                               .read<CartBloc>()
                               .add(EventPurchaseCart(carts: carts));
-                          // Navigator.pushNamed(
-                          //     context, NavigatorName.PAY_WEB_SCREEN,
-                          //     arguments: {
-                          //       'url':
-                          //           "https://test-payment.momo.vn/shortlink/wLr9yHQ6EH"
-                          //     });
                         },
                         textColor: Colors.white,
                         fontSize: 18.sp,
