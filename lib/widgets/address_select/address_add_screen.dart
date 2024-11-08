@@ -43,6 +43,7 @@ class _AddressAddState extends State<AddressAdd> {
   WardModel selectedWard = WardModel();
 
   bool isDefault = false;
+  bool isDisable = true;
 
   @override
   void initState() {
@@ -85,6 +86,10 @@ class _AddressAddState extends State<AddressAdd> {
   void _onFocusChangeDistrict() {
     if (!_focusNodeDistrict.hasFocus) {
       _controllerDistrict.text = selectedDistrict.districtName ?? "";
+      // if (selectedDistrict.id == 0) {
+      //   _controllerWard.text = "";
+      //   selectedWard = WardModel();
+      // }
     }
   }
 
@@ -92,6 +97,28 @@ class _AddressAddState extends State<AddressAdd> {
     if (!_focusNodeWard.hasFocus) {
       _controllerWard.text = selectedWard.wardName ?? "";
     }
+  }
+
+  bool checkDisable() {
+    if (_controllerName.text.isEmpty ||
+        _controllerNumberPhone.text.isEmpty ||
+        selectedProvince.id == 0 ||
+        selectedDistrict.id == 0 ||
+        selectedWard.id == 0 ||
+        _controllerStreet.text.isEmpty) {
+      if (!isDisable) {
+        setState(() {
+          isDisable = true;
+        });
+      }
+      return true;
+    }
+    if (isDisable) {
+      setState(() {
+        isDisable = false;
+      });
+    }
+    return false;
   }
 
   @override
@@ -133,8 +160,11 @@ class _AddressAddState extends State<AddressAdd> {
                         ),
                       ),
                       TextFieldAddressCustom(
-                          hintText: 'Họ và tên', controller: _controllerName),
+                          onChanged: (value) => checkDisable(),
+                          hintText: 'Họ và tên',
+                          controller: _controllerName),
                       TextFieldAddressCustom(
+                          onChanged: (value) => checkDisable(),
                           hintText: 'Số điện thoại',
                           controller: _controllerNumberPhone),
                       SizedBox(height: 10.h),
@@ -179,10 +209,13 @@ class _AddressAddState extends State<AddressAdd> {
                           selectedProvince = province;
                           _controllerProvince.text =
                               province.provinceName ?? "";
+
                           _controllerDistrict.text = "";
                           selectedDistrict = DistrictModel();
                           _controllerWard.text = "";
                           selectedWard = WardModel();
+                          _focusNodeWard.unfocus();
+
                           _focusNodeDistrict.requestFocus();
                           context.read<AddressBloc>().add(
                               EventFindDistrictByProvinceId(province.id ?? 0));
@@ -212,6 +245,7 @@ class _AddressAddState extends State<AddressAdd> {
                       ),
                       TypeAheadField<DistrictModel>(
                         controller: _controllerDistrict,
+                        hideOnUnfocus: true,
                         focusNode: _focusNodeDistrict,
                         itemBuilder: (context, district) {
                           return ListTile(
@@ -234,22 +268,28 @@ class _AddressAddState extends State<AddressAdd> {
                           );
                         },
                         onSelected: (district) {
+                          if (district.id == selectedDistrict.id) {
+                            _focusNodeWard.nextFocus();
+                            return;
+                          }
                           selectedDistrict = district;
                           _controllerDistrict.text =
                               district.districtName ?? "";
-                          // _focusNodeDistrict.nextFocus();
-                          _focusNodeWard.requestFocus();
-                          context
-                              .read<AddressBloc>()
-                              .add(EventFindWardByDistrictId(district.id ?? 0));
+                          _controllerWard.text = "";
+                          selectedWard = WardModel();
+                          if (district.id != 0) {
+                            _focusNodeWard.requestFocus();
+                            context.read<AddressBloc>().add(
+                                EventFindWardByDistrictId(district.id ?? 0));
+                          }
                         },
                         suggestionsCallback: (search) {
-                          log("suggestionsCallback $search : ${state.districts?.length}");
+                          // log("suggestionsCallback $search : ${state.districts?.length}");
                           // return state.districts!.getBySearchName(search);
                           return search.isEmpty
                               ? context
                                   .read<AddressBloc>()
-                                  .getProductItemsBySearchString(
+                                  .getAllDistrictByProvinceId(
                                       selectedProvince.id ?? 0)
                               : state.districts?.getBySearchName(search) ?? [];
                         },
@@ -294,22 +334,35 @@ class _AddressAddState extends State<AddressAdd> {
                           );
                         },
                         onSelected: (ward) {
+                          checkDisable();
+                          if (ward.id == selectedWard.id) {
+                            _focusNodeStreet.nextFocus();
+                            return;
+                          }
                           selectedWard = ward;
                           _controllerWard.text = ward.wardName ?? "";
                           _focusNodeStreet.requestFocus();
-                          setState(() {});
                         },
                         suggestionsCallback: (search) {
-                          return state.wards?.getBySearchName(search) ?? [];
+                          return search.isEmpty
+                              ? context
+                                  .read<AddressBloc>()
+                                  .getAllWardByDistrictId(
+                                      selectedDistrict.id ?? 0)
+                              : state.wards?.getBySearchName(search) ?? [];
                         },
                         emptyBuilder: (context) {
-                          return Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 15.w, vertical: 10.h),
-                              child: Text(
-                                'Không có dữ liệu',
-                                style: AppTypography.hintTextStyle,
-                              ));
+                          return selectedDistrict.id != 0
+                              ? Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 15.w, vertical: 10.h),
+                                  child: Text(
+                                    'Không có dữ liệu',
+                                    style: AppTypography.hintTextStyle,
+                                  ))
+                              : Container(
+                                  height: 0,
+                                );
                         },
                         loadingBuilder: (context) {
                           return Padding(
@@ -323,9 +376,7 @@ class _AddressAddState extends State<AddressAdd> {
                         },
                       ),
                       TextField(
-                        onChanged: (value) {
-                          //
-                        },
+                        onChanged: (value) => checkDisable(),
                         controller: _controllerStreet,
                         focusNode: _focusNodeStreet,
                         decoration: InputDecoration(
@@ -372,11 +423,13 @@ class _AddressAddState extends State<AddressAdd> {
                   ),
                 ),
                 CustomButton(
+                  // disable: checkDisable(),
                   buttonColor: AppColors.buttonBlue,
                   textColor: AppColors.white,
                   buttonText: 'Hoàn thành',
                   onTap: () {
-                    log('Hoàn thành ${_controllerName.text} ${_controllerNumberPhone.text}  ${selectedProvince.provinceName}  ${selectedDistrict.districtName}${selectedWard.wardName} ${_controllerStreet.text} ${isDefault}');
+                    // _controllerWard.text = "";
+                    // _focusNodeWard.unfocus();
                     // context.read<AddressBloc>().add(EventAddAddress(
                     //     name: _controllerName.text,
                     //     phone: _controllerNumberPhone.text,
@@ -388,12 +441,6 @@ class _AddressAddState extends State<AddressAdd> {
                     //         latitude: 10.783935, longitude: 106.69128),
                     //     isDefault: isDefault));
                   },
-                  disable: _controllerName.text.isEmpty ||
-                      _controllerNumberPhone.text.isEmpty ||
-                      selectedProvince.id == null ||
-                      selectedDistrict.id == null ||
-                      selectedWard.id == null ||
-                      _controllerStreet.text.isEmpty,
                 )
               ],
             );

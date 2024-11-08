@@ -6,8 +6,12 @@ import 'package:share_buy/utils/help_function.dart';
 class TextFieldAddressCustom extends StatefulWidget {
   final String hintText;
   final TextEditingController controller;
-  const TextFieldAddressCustom(
-      {super.key, required this.hintText, required this.controller});
+  void Function(String)? onChanged;
+  TextFieldAddressCustom(
+      {super.key,
+      required this.hintText,
+      required this.controller,
+      this.onChanged});
 
   @override
   State<TextFieldAddressCustom> createState() => _TextFieldAddressCustomState();
@@ -17,6 +21,7 @@ class _TextFieldAddressCustomState extends State<TextFieldAddressCustom> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onChanged: widget.onChanged,
       maxLines: 1,
       maxLength: 50,
       onTapOutside: (event) {

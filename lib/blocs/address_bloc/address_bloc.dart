@@ -38,7 +38,7 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     try {
       List<ProvinceModel> provinces =
           await AddressRepository().getAllProvince();
-      emit(state.copyWith(provinces: provinces));
+      emit(state.copyWith(provinces: provinces, wards: []));
     } catch (e) {
       log("Error when get all province: $e");
     }
@@ -80,8 +80,11 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
     }
   }
 
-  Future<List<DistrictModel>> getProductItemsBySearchString(
-      num provinceId) async {
+  Future<List<DistrictModel>> getAllDistrictByProvinceId(num provinceId) async {
     return await AddressRepository().getAllDistrictByProvinceId(provinceId);
+  }
+
+  Future<List<WardModel>> getAllWardByDistrictId(num districtId) async {
+    return await AddressRepository().getAllWardByDistrictId(districtId);
   }
 }
