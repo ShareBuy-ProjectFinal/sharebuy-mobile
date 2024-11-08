@@ -245,8 +245,13 @@ class _AddressAddState extends State<AddressAdd> {
                         },
                         suggestionsCallback: (search) {
                           log("suggestionsCallback $search : ${state.districts?.length}");
-                          // return state.districts;
-                          return state.districts?.getBySearchName(search) ?? [];
+                          // return state.districts!.getBySearchName(search);
+                          return search.isEmpty
+                              ? context
+                                  .read<AddressBloc>()
+                                  .getProductItemsBySearchString(
+                                      selectedProvince.id ?? 0)
+                              : state.districts?.getBySearchName(search) ?? [];
                         },
                         emptyBuilder: (context) {
                           return Padding(
@@ -318,6 +323,9 @@ class _AddressAddState extends State<AddressAdd> {
                         },
                       ),
                       TextField(
+                        onChanged: (value) {
+                          //
+                        },
                         controller: _controllerStreet,
                         focusNode: _focusNodeStreet,
                         decoration: InputDecoration(
