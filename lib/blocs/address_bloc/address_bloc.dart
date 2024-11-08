@@ -79,4 +79,9 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
       emit(state.copyWith(isLoading: false));
     }
   }
+
+  Future<List<DistrictModel>> getProductItemsBySearchString(
+      num provinceId) async {
+    return await AddressRepository().getAllDistrictByProvinceId(provinceId);
+  }
 }
