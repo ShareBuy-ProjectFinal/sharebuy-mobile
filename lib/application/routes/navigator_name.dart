@@ -16,3 +16,7 @@ class NavigatorName {
   static const String ADDRESS_SELECTION_SCREEN = '/address_selection';
   static const String ADDRESS_FORM_SCREEN = '/address_form';
 }
+
+class NameScreen {
+  static const String CART_SCREEN = 'CartScreen';
+}

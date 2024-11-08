@@ -19,12 +19,14 @@ class ProductItem extends StatefulWidget {
   final bool isShowIconRemove;
   final bool haveMargin;
   final bool isOnHorizontalList;
+  final String? preNameScreen;
   const ProductItem(
       {super.key,
       required this.product,
       required this.isShowIconRemove,
       required this.haveMargin,
-      this.isOnHorizontalList = false});
+      this.isOnHorizontalList = false,
+      this.preNameScreen});
 
   @override
   State<ProductItem> createState() => _ProductItemState();
@@ -36,7 +38,10 @@ class _ProductItemState extends State<ProductItem> {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed(NavigatorName.PRODUCT_DETAIL_SCREEN,
-            arguments: {'product': widget.product});
+            arguments: {
+              'product': widget.product,
+              'nameScreen': widget.preNameScreen
+            });
       },
       child: Container(
         margin: widget.haveMargin

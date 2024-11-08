@@ -5,6 +5,7 @@ import 'package:share_buy/blocs/product_bloc/product_event.dart';
 import 'package:share_buy/blocs/product_bloc/product_state.dart';
 import 'package:share_buy/models/attribute/attribute_custom_value_model.dart';
 import 'package:share_buy/models/product/product_model.dart';
+import 'package:share_buy/models/product/product_recommend_model.dart';
 import 'package:share_buy/models/shop/shop_model.dart';
 import 'package:share_buy/repositories/cart_repository.dart';
 import 'package:share_buy/repositories/product_repository.dart';
@@ -18,6 +19,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<SelectAttributeValueEvent>(_selectAttributeValue);
     on<ChangeQuantityEvent>(_changeQuantity);
     on<AddCartItemEvent>(_addProductToCart);
+    on<EventLoadingRecommendProduct>(_loadingRecommendProduct);
   }
 
   Future<void> _loading(ProductLoadingEvent event, Emitter emit) async {
@@ -25,7 +27,9 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       emit(state.copyWith(isLoading: true));
       ProductModel product =
           await ProductRepository().getById(productId: event.id);
-
+      // List<ProductRecommendModel> products =
+      //     await ProductRepository().getRecommendProduct(productId: event.id);
+      // emit(state.copyWith(isLoading: false, productRecommends: products));
       emit(state.copyWith(isLoading: false, product: product));
     } catch (e) {
       log('Error when get api home: $e');
@@ -98,6 +102,19 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     } catch (e) {
       emit(state.copyWith(isLoading: false, isAddSuccess: false));
       log("Error when add product to cart: $e");
+    }
+  }
+
+  Future<void> _loadingRecommendProduct(
+      EventLoadingRecommendProduct event, Emitter emit) async {
+    try {
+      // emit(state.copyWith(isLoading: true));
+      List<ProductRecommendModel> products = await ProductRepository()
+          .getRecommendProduct(productId: event.productId);
+      emit(state.copyWith(productRecommends: products));
+    } catch (e) {
+      log('Error when get api home: $e');
+      // emit(state.copyWith(isLoading: false));
     }
   }
 }

@@ -75,6 +75,31 @@ class ProductRepository extends FetchClient {
       return [];
     }
   }
+
+  Future<List<ProductRecommendModel>> getRecommendProduct(
+      {required String productId, num? offset, num? limit}) async {
+    try {
+      final Response<dynamic> response = await super.getData(
+          path: '/api/recommends/related-by-image/$productId',
+          queryParameters: {
+            'offset': offset ?? 0,
+            'limit': limit ?? 10,
+          });
+      if (response.statusCode == 200) {
+        List<dynamic> data = response.data;
+        List<ProductRecommendModel> products = [];
+        data.forEach((element) {
+          products.add(ProductRecommendModel.fromJson(element));
+        });
+        return products;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      log('Error when get api recommend product: $e');
+      return [];
+    }
+  }
 }
 
 List<CustomAttribute> _extractArrays(

@@ -87,7 +87,7 @@ class _PayWebState extends State<PayWeb> {
             Navigator.pushNamedAndRemoveUntil(
                 context,
                 NavigatorName.HOME_SCREEN,
-                arguments: {'currentIndex': 3},
+                arguments: {'currentIndex': 3, 'currentTabInderOrder': 0},
                 (route) => false);
           },
         ),

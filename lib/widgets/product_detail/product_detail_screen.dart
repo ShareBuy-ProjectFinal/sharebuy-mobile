@@ -1,10 +1,15 @@
+import 'dart:developer';
+
 import 'package:animated_rating_stars/animated_rating_stars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:share_buy/application/routes/navigator_name.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
+import 'package:share_buy/blocs/cart_bloc/cart_bloc.dart';
+import 'package:share_buy/blocs/cart_bloc/cart_event.dart';
 import 'package:share_buy/blocs/product_bloc/product_bloc.dart';
 import 'package:share_buy/blocs/product_bloc/product_event.dart';
 import 'package:share_buy/blocs/product_bloc/product_state.dart';
@@ -19,8 +24,10 @@ import 'package:share_buy/widgets/product_detail/children/shop_info.dart';
 import 'package:share_buy/widgets/product_detail/children/suggest_product.dart';
 
 class ProductDetailScreen extends StatefulWidget {
+  final String? nameScreen;
   final ProductRecommendModel product;
-  const ProductDetailScreen({super.key, required this.product});
+  const ProductDetailScreen(
+      {super.key, required this.product, this.nameScreen});
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -34,8 +41,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     context
         .read<ProductBloc>()
         .add(ProductLoadingEvent(id: widget.product.payload!.productId!));
-    // .add(ProductLoadingEvent(id: '66fe1a4e473e570012e3caab'));
-    // .add(ProductLoadingEvent(id: '66f9a2d6a95a6154c8ed89dd'));
+    // .add(ProductLoadingEvent(id: '66f9a4d6a95a6154c8ed97eb'));
+    // .add(ProductLoadingEvent(id: '66f99743a95a6154c8ed8777'));
   }
 
   @override
@@ -58,7 +65,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           backgroundColor: AppColors.white,
           leading: IconButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.of(context).pop(true);
+              if (widget.nameScreen == NameScreen.CART_SCREEN) {
+                context.read<CartBloc>().add(CartLoadingEvent());
+              }
               context.read<ProductBloc>().add(ResetProductEvent());
             },
             icon: Image.asset(
@@ -186,7 +196,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 SizedBox(
                                   height: 24.h,
                                 ),
-                                SuggestProduct(),
+                                SuggestProduct(
+                                  productId: state.product.id ?? "",
+                                ),
                                 SizedBox(
                                   height: 12.h,
                                 ),

@@ -28,3 +28,8 @@ class AddCartItemEvent extends ProductEvent {
 
   AddCartItemEvent({required this.productDetailId, required this.quantity});
 }
+
+class EventLoadingRecommendProduct extends ProductEvent {
+  final String productId;
+  EventLoadingRecommendProduct({required this.productId});
+}

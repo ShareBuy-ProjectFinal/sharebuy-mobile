@@ -28,8 +28,8 @@ class RouteGenerator {
       case NavigatorName.HOME_SCREEN:
         return MaterialPageRoute(
           builder: (_) => HomeScreen(
-            currentIndex: args!['currentIndex'] ?? 0,
-            currentTabInderOrder: args['currentTabInderOrder'],
+            currentIndex: args?['currentIndex'] ?? 0,
+            currentTabInderOrder: args?['currentTabInderOrder'] ?? 0,
           ),
         );
       case NavigatorName.SALE_PROGRAM_SCREEN:
@@ -54,6 +54,7 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (_) => ProductDetailScreen(
             product: args!['product'],
+            nameScreen: args['nameScreen'],
           ),
         );
       case NavigatorName.NOTIFICATION_SCREEN:

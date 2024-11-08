@@ -1,9 +1,12 @@
 import 'package:share_buy/models/attribute/attribute_custom_value_model.dart';
 import 'package:share_buy/models/product/product_model.dart';
+import 'package:share_buy/models/product/product_recommend_model.dart';
 
 class ProductState {
   bool isLoading;
   ProductModel product;
+  List<ProductRecommendModel> productRecommends;
+
   String productDetailId;
   int quantity;
   bool isAddSuccess;
@@ -12,6 +15,7 @@ class ProductState {
   ProductState(
       {this.isLoading = false,
       required this.product,
+      this.productRecommends = const [],
       this.selectedAttributeValues = const [],
       this.productDetailId = '',
       this.isAddSuccess = false,
@@ -20,6 +24,7 @@ class ProductState {
   ProductState copyWith(
       {bool? isLoading,
       ProductModel? product,
+      List<ProductRecommendModel>? productRecommends,
       List<CustomAttributeValue>? selectedAttributeValues,
       String? productDetailId,
       bool? isAddSuccess,
@@ -27,6 +32,7 @@ class ProductState {
     return ProductState(
         isLoading: isLoading ?? this.isLoading,
         product: product ?? this.product,
+        productRecommends: productRecommends ?? this.productRecommends,
         selectedAttributeValues:
             selectedAttributeValues ?? this.selectedAttributeValues,
         productDetailId: productDetailId ?? this.productDetailId,

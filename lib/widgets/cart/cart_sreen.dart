@@ -141,6 +141,7 @@ class _CartSreenState extends State<CartSreen> {
                                   decoration:
                                       BoxDecoration(color: AppColors.white),
                                   child: ProductItem(
+                                      preNameScreen: NameScreen.CART_SCREEN,
                                       product: productsRecommend[index],
                                       isShowIconRemove: false,
                                       haveMargin: false),
@@ -185,8 +186,10 @@ class _CartSreenState extends State<CartSreen> {
                                   // disable: !state.carts.isSelected(),
                                   onTap: () {
                                     if (state.carts.isSelected()) {
-                                      Navigator.pushNamed(context,
-                                          NavigatorName.PURCHASE_SCREEN);
+                                      Navigator.pushNamed(
+                                        context,
+                                        NavigatorName.PURCHASE_SCREEN,
+                                      );
                                     } else {
                                       MessageToast.showToast(
                                         context,
