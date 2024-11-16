@@ -1,6 +1,8 @@
 import 'package:share_buy/enums/PayType.dart';
+import 'package:share_buy/models/attribute/attribute_custom_value_model.dart';
 import 'package:share_buy/models/cart/cart_item_model.dart';
 import 'package:share_buy/models/cart/cart_model.dart';
+import 'package:share_buy/models/product/product_model.dart';
 
 class CartState {
   bool isLoading;
@@ -14,6 +16,12 @@ class CartState {
   List<CartModel> carts;
   List<CartItemModel> selectedCartItems;
 
+  //Update cartItem
+  bool isUpdateCartItem;
+  int quantity;
+  List<CustomAttributeValue> selectedAttributeValues;
+  ProductModel product;
+
   CartState({
     this.isLoading = false,
     this.isSuccues = false,
@@ -24,6 +32,10 @@ class CartState {
     this.selectedCartItems = const [],
     this.payType = PayType.momo,
     this.payUrl = '',
+    this.quantity = 1,
+    this.selectedAttributeValues = const [],
+    required this.product,
+    this.isUpdateCartItem = false,
   });
 
   CartState copyWith({
@@ -36,6 +48,10 @@ class CartState {
     String? productDetailId,
     PayType? payType,
     String? payUrl,
+    int? quantity,
+    List<CustomAttributeValue>? selectedAttributeValues,
+    ProductModel? product,
+    bool? isUpdateCartItem,
   }) {
     return CartState(
       isLoading: isLoading ?? this.isLoading,
@@ -47,6 +63,11 @@ class CartState {
       selectedCartItems: selectedCartItems ?? this.selectedCartItems,
       payType: payType ?? this.payType,
       payUrl: payUrl ?? this.payUrl,
+      quantity: quantity ?? this.quantity,
+      selectedAttributeValues:
+          selectedAttributeValues ?? this.selectedAttributeValues,
+      product: product ?? this.product,
+      isUpdateCartItem: isUpdateCartItem ?? this.isUpdateCartItem,
     );
   }
 }

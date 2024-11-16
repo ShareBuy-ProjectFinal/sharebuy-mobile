@@ -11,17 +11,17 @@ import 'package:share_buy/blocs/product_bloc/product_event.dart';
 import 'package:share_buy/models/attribute/attribute_custom_model.dart';
 import 'package:share_buy/models/attribute/attribute_custom_value_model.dart';
 
-class CartItemAttribute extends StatefulWidget {
+class ItemAttribute extends StatefulWidget {
   final CustomAttribute attribute;
   final dynamic attributeValueId;
-  const CartItemAttribute(
+  const ItemAttribute(
       {super.key, required this.attribute, this.attributeValueId});
 
   @override
-  State<CartItemAttribute> createState() => _CartItemAttributeState();
+  State<ItemAttribute> createState() => _ItemAttributeState();
 }
 
-class _CartItemAttributeState extends State<CartItemAttribute> {
+class _ItemAttributeState extends State<ItemAttribute> {
   int _indexSelected = -1;
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class _CartItemAttributeState extends State<CartItemAttribute> {
             }
             return GestureDetector(
               onTap: () {
-                context.read<CartBloc>().add(EventProductSelectAttributeValue(
+                context.read<ProductBloc>().add(SelectAttributeValueEvent(
                     customAttributeValue: customAttributeValue));
                 setState(() {
                   _indexSelected == index

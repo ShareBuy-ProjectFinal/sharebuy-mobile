@@ -45,9 +45,11 @@ class CustomAttributeValue {
       CustomAttributeValue(
         id: json["_id"] ?? '',
         value: json["value"] ?? '',
-        customAttribute: json["custom_attribute_id"] == null
-            ? null
-            : CustomAttribute.fromJson(json["custom_attribute_id"]),
+        customAttribute: json["custom_attribute"] == null
+            ? json["custom_attribute_id"] == null
+                ? null
+                : CustomAttribute.fromJson(json["custom_attribute_id"])
+            : CustomAttribute.fromJson(json["custom_attribute"]),
       );
 
   Map<String, dynamic> toJson() => {

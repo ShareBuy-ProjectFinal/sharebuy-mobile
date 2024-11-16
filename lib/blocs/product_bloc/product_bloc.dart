@@ -17,6 +17,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<ProductLoadingEvent>(_loading);
     on<ResetProductEvent>(_reset);
     on<SelectAttributeValueEvent>(_selectAttributeValue);
+    on<SelectAttributeValuesEvent>(_selectAttributeValues);
     on<ChangeQuantityEvent>(_changeQuantity);
     on<AddCartItemEvent>(_addProductToCart);
     on<EventLoadingRecommendProduct>(_loadingRecommendProduct);
@@ -82,6 +83,15 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       }
     } catch (e) {
       log('Error when select attribute value: $e');
+    }
+  }
+
+  void _selectAttributeValues(SelectAttributeValuesEvent event, Emitter emit) {
+    try {
+      emit(
+          state.copyWith(selectedAttributeValues: event.customAttributeValues));
+    } catch (e) {
+      log('Error when select attribute values: $e');
     }
   }
 

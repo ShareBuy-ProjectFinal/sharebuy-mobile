@@ -17,6 +17,11 @@ class SelectAttributeValueEvent extends ProductEvent {
   SelectAttributeValueEvent({required this.customAttributeValue});
 }
 
+class SelectAttributeValuesEvent extends ProductEvent {
+  final List<CustomAttributeValue> customAttributeValues;
+  SelectAttributeValuesEvent({required this.customAttributeValues});
+}
+
 class ChangeQuantityEvent extends ProductEvent {
   final int quantity;
   ChangeQuantityEvent({required this.quantity});

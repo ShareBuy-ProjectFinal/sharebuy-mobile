@@ -13,6 +13,7 @@ import 'package:share_buy/widgets/cart/children/cart_item_attribute.dart';
 import 'package:share_buy/widgets/component/CustomCachedNetworkImage.dart';
 import 'package:share_buy/widgets/component/custom_button.dart';
 import 'package:share_buy/widgets/component/custom_button_action.dart';
+import 'package:share_buy/widgets/component/item_attribute.dart';
 
 class BottomSheetItem extends StatefulWidget {
   final String? productId; //productId
@@ -131,7 +132,7 @@ class _BottomSheetItemState extends State<BottomSheetItem> {
                       (element) =>
                           element.customAttribute!.id ==
                           product.customAttributes![index].id);
-                  return CartItemAttribute(
+                  return ItemAttribute(
                     attribute: product.customAttributes![index],
                     attributeValueId: indexFind == -1
                         ? ''
@@ -153,7 +154,7 @@ class _BottomSheetItemState extends State<BottomSheetItem> {
                 Row(
                   children: [
                     CustomButtonAction(
-                      isDisable: isDisable,
+                      isDisable: isDisable || state.quantity == 1,
                       icon: Icons.remove,
                       onTap: () {
                         if (state.quantity > 1) {
@@ -182,13 +183,14 @@ class _BottomSheetItemState extends State<BottomSheetItem> {
                             child: Text(
                               (state.quantity).toString(),
                               style: isDisable
-                                  ? AppTypography.primaryDarkBlueBoldDisable
-                                  : AppTypography.primaryDarkBlueBold,
+                                  ? AppTypography.mediumDarkBlueBoldDisable
+                                  : AppTypography.mediumDarkBlueBold,
                             ),
                           ),
                         )),
                     CustomButtonAction(
-                      isDisable: isDisable,
+                      isDisable:
+                          isDisable || state.quantity == product.quantity,
                       icon: Icons.add,
                       onTap: () {
                         if (state.quantity < product.quantity!) {

@@ -5,18 +5,27 @@ import 'package:share_buy/blocs/auth_bloc/auth_bloc.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_event.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_state.dart';
 import 'package:share_buy/enums/PayType.dart';
+import 'package:share_buy/models/attribute/attribute_custom_value_model.dart';
 import 'package:share_buy/models/cart/cart_model.dart';
 import 'package:share_buy/models/order/order_model.dart';
+import 'package:share_buy/models/product/product_model.dart';
+import 'package:share_buy/models/shop/shop_model.dart';
 import 'package:share_buy/repositories/cart_repository.dart';
+import 'package:share_buy/repositories/product_repository.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
-  CartBloc() : super(CartState()) {
+  CartBloc() : super(CartState(product: ProductModel(shop: ShopModel()))) {
     on<UpdateQuantityCartItemEvent>(_updateQuantityProductToCart);
     on<CartLoadingEvent>(_loading);
     on<ChangeAttributeCartItemEvent>(_changeAttributeCartItem);
     on<EventSelectItemCartCheckbox>(_selectCartItem);
     on<EventPurchaseCart>(_purchaseCart);
     on<EventReLoadScreen>(_loadScreen);
+    on<EventChangeQuantityProductSelected>(_changeQuantity);
+    on<EventLoadingProductSelected>(_loadingProductSelected);
+    on<EventProductSelectAttributeValue>(_selectAttributeValue);
+    on<EventProductSelectAttributeValues>(_selectAttributeValues);
+    on<EventResetProductSelected>(_resetProductSelected);
   }
 
   Future<void> _updateQuantityProductToCart(
@@ -34,7 +43,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
               .indexWhere((element) => element.id == event.cartItemId);
           state.carts[indexCart].cartItems![indexItem].quantity =
               event.quantity;
-          emit(state.copyWith(carts: state.carts));
+          emit(state.copyWith(
+              carts: state.carts,
+              isUpdateCartItem: event.isBottomSheet ?? false));
         }
       }
     } catch (e) {
@@ -135,5 +146,75 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   void _loadScreen(EventReLoadScreen event, Emitter emit) {
     emit(state.copyWith(isLoading: false));
+  }
+
+  void _changeQuantity(EventChangeQuantityProductSelected event, Emitter emit) {
+    log("Change quantity: ${event.quantity}");
+    emit(state.copyWith(quantity: event.quantity));
+  }
+
+  Future<void> _loadingProductSelected(
+      EventLoadingProductSelected event, Emitter emit) async {
+    try {
+      emit(state.copyWith(isLoading: true));
+      ProductModel product =
+          await ProductRepository().getById(productId: event.id);
+      emit(state.copyWith(
+          isLoading: false, product: product, isUpdateCartItem: false));
+    } catch (e) {
+      log('Error when get api home: $e');
+      emit(state.copyWith(isLoading: false));
+    }
+  }
+
+  void _selectAttributeValue(
+      EventProductSelectAttributeValue event, Emitter emit) {
+    try {
+      List<CustomAttributeValue> attributeValues =
+          state.selectedAttributeValues;
+      if (attributeValues.isEmpty) {
+        emit(state.copyWith(
+            selectedAttributeValues: [event.customAttributeValue],
+            quantity: 1));
+      } else {
+        int indexFind = attributeValues.indexWhere((element) =>
+            element.customAttribute!.id ==
+            event.customAttributeValue.customAttribute!.id);
+        if (indexFind == -1) {
+          emit(state.copyWith(selectedAttributeValues: [
+            ...state.selectedAttributeValues,
+            event.customAttributeValue
+          ], quantity: 1));
+        } else {
+          if (attributeValues[indexFind].id != event.customAttributeValue.id) {
+            attributeValues.add(event.customAttributeValue);
+          }
+          attributeValues.removeAt(indexFind);
+          emit(state.copyWith(
+              selectedAttributeValues: attributeValues, quantity: 1));
+        }
+      }
+    } catch (e) {
+      log('Error when select attribute value: $e');
+    }
+  }
+
+  void _selectAttributeValues(
+      EventProductSelectAttributeValues event, Emitter emit) {
+    try {
+      emit(
+          state.copyWith(selectedAttributeValues: event.customAttributeValues));
+    } catch (e) {
+      log('Error when select attribute values: $e');
+    }
+  }
+
+  void _resetProductSelected(EventResetProductSelected event, Emitter emit) {
+    emit(state.copyWith(
+        selectedAttributeValues: [],
+        quantity: 1,
+        productDetailId: '',
+        isUpdateCartItem: false,
+        product: ProductModel(shop: ShopModel())));
   }
 }
