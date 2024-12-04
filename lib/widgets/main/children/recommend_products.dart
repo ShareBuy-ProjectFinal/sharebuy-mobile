@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_buy/blocs/home_bloc/home_bloc.dart';
+import 'package:share_buy/blocs/home_bloc/home_event.dart';
 import 'package:share_buy/blocs/home_bloc/home_state.dart';
-import 'package:share_buy/models/product_model.dart';
 import 'package:share_buy/widgets/component/product_item.dart';
 
 class RecommendProducts extends StatefulWidget {
@@ -15,51 +15,20 @@ class RecommendProducts extends StatefulWidget {
 }
 
 class _RecommendProductsState extends State<RecommendProducts> {
-  List<ProductTestModel> products = [
-    ProductTestModel(
-        name: 'Giày',
-        imageUrl: 'assets/images/shose_1.png',
-        price: 299.43,
-        salePrice: 534.33,
-        saleOffPercent: 24),
-    ProductTestModel(
-        name: 'Giày',
-        imageUrl: 'assets/images/shose_2.png',
-        price: 299.43,
-        salePrice: 534.33,
-        saleOffPercent: 24),
-    ProductTestModel(
-        name: 'Túi xách',
-        imageUrl: 'assets/images/bag_1.png',
-        price: 299.43,
-        salePrice: 534.33,
-        saleOffPercent: 24),
-    ProductTestModel(
-        name: 'Túi xách',
-        imageUrl: 'assets/images/bag_2.png',
-        price: 299.43,
-        salePrice: 534.33,
-        saleOffPercent: 24),
-    ProductTestModel(
-        name: 'Giày',
-        imageUrl: 'assets/images/shose_1.png',
-        price: 299.43,
-        salePrice: 534.33,
-        saleOffPercent: 24),
-    ProductTestModel(
-        name: 'Giày',
-        imageUrl: 'assets/images/shose_2.png',
-        price: 299.43,
-        salePrice: 534.33,
-        saleOffPercent: 24),
-  ];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<HomeBloc>().add(EventLoadingRecommendUser());
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
       return state.isLoading
           ? const SizedBox()
           : AutoHeightGridView(
-              itemCount: state.products.length,
+              itemCount: state.productRecommendsUser.length,
               crossAxisCount: 2,
               mainAxisSpacing: 10.h,
               crossAxisSpacing: 10.w,
@@ -68,7 +37,7 @@ class _RecommendProductsState extends State<RecommendProducts> {
               shrinkWrap: true,
               builder: (context, index) {
                 return ProductItem(
-                    product: state.products[index],
+                    product: state.productRecommendsUser[index],
                     isShowIconRemove: false,
                     haveMargin: false);
               },

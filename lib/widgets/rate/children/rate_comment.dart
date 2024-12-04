@@ -1,12 +1,15 @@
 import 'package:animated_rating_stars/animated_rating_stars.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
 import 'package:share_buy/models/comment.dart';
+import 'package:share_buy/models/review/review_model.dart';
 
 class RateComment extends StatefulWidget {
   final Comment comment;
-  const RateComment({super.key, required this.comment});
+  final ReviewModel review;
+  const RateComment({super.key, required this.comment, required this.review});
 
   @override
   State<RateComment> createState() => _RateCommentState();
@@ -24,20 +27,22 @@ class _RateCommentState extends State<RateComment> {
           children: [
             CircleAvatar(
               radius: 30.r,
-              backgroundImage: const AssetImage('assets/images/avatar.png'),
+              backgroundImage: AssetImage(
+                  widget.review.user?.image ?? "assets/images/avatar.png"),
             ),
             SizedBox(
               width: 12.0.w,
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Lê Hữu Hiệp',
+                  " ${widget.review.user!.fullName}",
                   style: AppTypography.primaryDarkBlueBold,
                 ),
                 AnimatedRatingStars(
-                  initialRating: 4,
+                  initialRating: widget.review.rating!.toDouble(),
                   filledColor: Colors.amber,
                   emptyColor: Colors.grey,
                   filledIcon: Icons.star,
@@ -49,7 +54,7 @@ class _RateCommentState extends State<RateComment> {
                   customFilledIcon: Icons.star,
                   customHalfFilledIcon: Icons.star_half,
                   customEmptyIcon: Icons.star_border,
-                  starSize: 12.sp,
+                  starSize: 10.sp,
                   readOnly: true,
                 ),
               ],
@@ -57,10 +62,10 @@ class _RateCommentState extends State<RateComment> {
           ],
         ),
         SizedBox(
-          height: 12.h,
+          height: 6.h,
         ),
         Text(
-          'air max are always very comfortable fit, clean and just perfect in every way. just the box was too small and scrunched the sneakers up a little bit, not sure if the box was always this small but the 90s are and will always be one of my favorites.',
+          widget.review.reviewContent ?? "",
           style: AppTypography.hintTextStyle,
         ),
         SizedBox(
@@ -70,11 +75,18 @@ class _RateCommentState extends State<RateComment> {
           scrollDirection: Axis.horizontal,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: widget.comment.imageUrls.asMap().entries.map((element) {
+            children:
+                (widget.review.images ?? []).asMap().entries.map((element) {
               return Container(
-                margin: EdgeInsets.only(right: 20.w),
-                child: Image.asset(
-                  element.value,
+                margin: EdgeInsets.only(right: 10.w),
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 1,
+                      color: const Color.fromARGB(128, 158, 158, 158),
+                    ),
+                    borderRadius: BorderRadius.circular(2.r)),
+                child: CachedNetworkImage(
+                  imageUrl: element.value,
                   width: 72.w,
                   height: 72.h,
                 ),
@@ -89,9 +101,9 @@ class _RateCommentState extends State<RateComment> {
           'December 10, 2016',
           style: AppTypography.hintTextStyle,
         ),
-        SizedBox(
-          height: 12.h,
-        ),
+        // SizedBox(
+        //   height: 12.h,
+        // ),
       ],
     );
   }

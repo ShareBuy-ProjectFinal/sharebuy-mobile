@@ -6,9 +6,11 @@ import 'package:share_buy/blocs/product_bloc/product_state.dart';
 import 'package:share_buy/models/attribute/attribute_custom_value_model.dart';
 import 'package:share_buy/models/product/product_model.dart';
 import 'package:share_buy/models/product/product_recommend_model.dart';
+import 'package:share_buy/models/review/review_model.dart';
 import 'package:share_buy/models/shop/shop_model.dart';
 import 'package:share_buy/repositories/cart_repository.dart';
 import 'package:share_buy/repositories/product_repository.dart';
+import 'package:share_buy/repositories/review_repository.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   // ProductBloc(super.initialState);
@@ -21,17 +23,25 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<ChangeQuantityEvent>(_changeQuantity);
     on<AddCartItemEvent>(_addProductToCart);
     on<EventLoadingRecommendProduct>(_loadingRecommendProduct);
+    on<EventLoadingReviewProduct>(_loadingReviewProduct);
   }
 
   Future<void> _loading(ProductLoadingEvent event, Emitter emit) async {
     try {
       emit(state.copyWith(isLoading: true));
-      ProductModel product =
-          await ProductRepository().getById(productId: event.id);
-      // List<ProductRecommendModel> products =
-      //     await ProductRepository().getRecommendProduct(productId: event.id);
-      // emit(state.copyWith(isLoading: false, productRecommends: products));
-      emit(state.copyWith(isLoading: false, product: product));
+      // ProductModel product =
+      //     await ProductRepository().getById(productId: event.id);
+      // List<ReviewModel> reviews = await ReviewRepository()
+      //     .getReviewProduct(productId: event.id, page: 1, pageSize: 5);
+      final results = await Future.wait([
+        ProductRepository().getById(productId: event.id),
+        ReviewRepository()
+            .getReviewProduct(productId: event.id, page: 1, pageSize: 5)
+      ]);
+      emit(state.copyWith(
+          isLoading: false,
+          product: results[0] as ProductModel,
+          reviews: results[1] as List<ReviewModel>));
     } catch (e) {
       log('Error when get api home: $e');
       emit(state.copyWith(isLoading: false));
@@ -118,13 +128,31 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   Future<void> _loadingRecommendProduct(
       EventLoadingRecommendProduct event, Emitter emit) async {
     try {
-      // emit(state.copyWith(isLoading: true));
+      emit(state.copyWith(isLoading: true));
       List<ProductRecommendModel> products = await ProductRepository()
           .getRecommendProduct(productId: event.productId);
-      emit(state.copyWith(productRecommends: products));
+      emit(state.copyWith(productRecommends: products, isLoading: false));
     } catch (e) {
       log('Error when get api home: $e');
-      // emit(state.copyWith(isLoading: false));
+      emit(state.copyWith(isLoading: false));
+    }
+  }
+
+  Future<void> _loadingReviewProduct(
+      EventLoadingReviewProduct event, Emitter emit) async {
+    try {
+      emit(state.copyWith(isLoading: true));
+      List<ReviewModel> reviews = await ReviewRepository().getReviewProduct(
+          productId: state.product.id ?? "", page: 1, pageSize: 5);
+      double averageRating = reviews.fold(0.0, (previousValue, element) {
+            return previousValue + (element.rating ?? 0.0);
+          }) /
+          reviews.length;
+      state.product.averageRating = averageRating;
+      emit(state.copyWith(reviews: reviews, isLoading: false));
+    } catch (e) {
+      log('Error when get api home: $e');
+      emit(state.copyWith(isLoading: false));
     }
   }
 }

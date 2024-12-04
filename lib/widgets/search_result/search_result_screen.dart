@@ -57,7 +57,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                 return state.isLoading
                     ? const SizedBox()
                     : AutoHeightGridView(
-                        itemCount: state.products.length,
+                        itemCount: state.productRecommendsUser.length,
                         crossAxisCount: 2,
                         mainAxisSpacing: 10.h,
                         crossAxisSpacing: 10.w,
@@ -66,7 +66,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                         shrinkWrap: true,
                         builder: (context, index) {
                           return ProductItem(
-                              product: state.products[index],
+                              product: state.productRecommendsUser[index],
                               isShowIconRemove: false,
                               haveMargin: false);
                         },

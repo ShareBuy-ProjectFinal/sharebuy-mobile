@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
+import 'package:share_buy/blocs/home_bloc/home_bloc.dart';
 
 class ProductCategory extends StatefulWidget {
   const ProductCategory({super.key});
@@ -43,9 +47,14 @@ class _ProductCategoryState extends State<ProductCategory> {
               'Phân loại',
               style: AppTypography.primaryDarkBlueBold,
             ),
-            Text(
-              'Xem thêm',
-              style: AppTypography.mediumBlueBold,
+            GestureDetector(
+              onTap: () {
+                log('productRecommendsUser: ${context.read<HomeBloc>().state.productRecommendsUser[0].toJson()}');
+              },
+              child: Text(
+                'Xem thêm',
+                style: AppTypography.mediumBlueBold,
+              ),
             ),
           ],
         ),

@@ -65,7 +65,7 @@ class _CartSreenState extends State<CartSreen> {
         body: SafeArea(
             child: BlocBuilder<CartBloc, CartState>(builder: (context, state) {
           List<ProductRecommendModel> productsRecommend =
-              context.read<HomeBloc>().state.products;
+              context.read<HomeBloc>().state.productRecommendsUser;
           return state.isLoading
               ? CustomerLoading(templateItem: SkelatonScreen())
               : Container(

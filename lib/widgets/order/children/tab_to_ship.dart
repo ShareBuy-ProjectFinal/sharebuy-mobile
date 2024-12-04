@@ -44,7 +44,7 @@ class _TabToShipState extends State<TabToShip> {
       },
       child: BlocBuilder<OrderBloc, OrderState>(builder: (context, state) {
         List<ProductRecommendModel> productsRecommend =
-            context.read<HomeBloc>().state.products;
+            context.read<HomeBloc>().state.productRecommendsFlashSale;
         return Container(
           decoration: BoxDecoration(color: AppColors.backgroundGrey),
           child: ListView(

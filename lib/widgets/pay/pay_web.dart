@@ -47,7 +47,12 @@ class _PayWebState extends State<PayWeb> {
             // }
             if (request.url.startsWith("momo://app")) {
               await launchUrl(Uri.parse(request.url));
-              log("momo://app: ${request.url}");
+              log("open momo://app: ${request.url}");
+              return NavigationDecision.prevent;
+            }
+            if (request.url.startsWith("https://test-applinks.momo.vn/payment")) {
+              await launchUrl(Uri.parse(request.url));
+              log("open https://test-applinks.momo.vn/payment: ${request.url}");
               return NavigationDecision.prevent;
             }
             if (request.url.contains("message=Successful")) {

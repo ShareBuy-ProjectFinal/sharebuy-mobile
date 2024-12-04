@@ -103,7 +103,7 @@ class _SaleProgramDetailScreenState extends State<SaleProgramDetailScreen> {
                   return state.isLoading
                       ? const SizedBox()
                       : AutoHeightGridView(
-                          itemCount: state.products.length,
+                          itemCount: state.productRecommendsFlashSale.length,
                           crossAxisCount: 2,
                           mainAxisSpacing: 10.h,
                           crossAxisSpacing: 10.w,
@@ -113,7 +113,8 @@ class _SaleProgramDetailScreenState extends State<SaleProgramDetailScreen> {
                           builder: (context, index) {
                             // return SizedBox();
                             return ProductItem(
-                                product: state.products[index],
+                                product:
+                                    state.productRecommendsFlashSale[index],
                                 isShowIconRemove: false,
                                 haveMargin: false);
                           },

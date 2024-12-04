@@ -1,3 +1,5 @@
 abstract class HomeEvent {}
 
-class EventLoading extends HomeEvent {}
+class EventLoadingRecommendFlashSale extends HomeEvent {}
+
+class EventLoadingRecommendUser extends HomeEvent {}

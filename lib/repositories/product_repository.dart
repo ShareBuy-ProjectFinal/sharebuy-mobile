@@ -11,11 +11,14 @@ import 'package:share_buy/models/shop/shop_model.dart';
 
 class ProductRepository extends FetchClient {
   Future<List<ProductRecommendModel>> getProductRecommend(
-      {required String userId}) async {
+      {required String userId, int? page, int? pageSize}) async {
     try {
       final Response<dynamic> response = await super.getData(
-        // domainApp: 'http://103.209.32.148:8000',
         path: "/api/recommends/recommends/$userId",
+        queryParameters: {
+          'offset': (page ?? 1) - 1,
+          'limit': pageSize ?? 10,
+        },
       );
       if (response.statusCode == 200) {
         List<dynamic> data = response.data;

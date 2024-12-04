@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:share_buy/application/routes/navigator_name.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
 import 'package:share_buy/blocs/home_bloc/home_bloc.dart';
@@ -44,7 +45,7 @@ class _TabToPayState extends State<TabToPay> {
       },
       child: BlocBuilder<OrderBloc, OrderState>(builder: (context, state) {
         List<ProductRecommendModel> productsRecommend =
-            context.read<HomeBloc>().state.products;
+            context.read<HomeBloc>().state.productRecommendsFlashSale;
         return Container(
           decoration: const BoxDecoration(color: AppColors.backgroundGrey),
           child: ListView(
@@ -96,7 +97,13 @@ class _TabToPayState extends State<TabToPay> {
                                           horizontal: 10.w, vertical: 10.h),
                                       buttonText: 'Thanh toán',
                                       onTap: () {
-                                        log('Change payment method tab pay_to');
+                                        Navigator.pushNamed(context,
+                                            NavigatorName.PAY_WEB_SCREEN,
+                                            arguments: {
+                                              'url': state.ordersToPay[index]
+                                                  .paymentInfo!.payUrl
+                                            });
+                                        // log('Change payment method tab pay_to ${state.ordersToPay[index].toJson()}');
                                       },
                                       textColor: AppColors.white,
                                     ),

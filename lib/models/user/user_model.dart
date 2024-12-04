@@ -1,9 +1,10 @@
 import 'package:share_buy/models/address/address_model.dart';
+import 'package:share_buy/models/product/category_model.dart';
 
 class UserModel {
   String? id;
   String? state;
-  List<int>? categories;
+  List<CategoryModel>? categories;
   String? userName;
   String? fullName;
   String? email;
@@ -36,7 +37,8 @@ class UserModel {
         state: json["state"] ?? '',
         categories: json["categories"] == null
             ? []
-            : List<int>.from(json["categories"]!.map((x) => x)),
+            : List<CategoryModel>.from(
+                json["categories"].map((x) => CategoryModel.fromJson(x))),
         userName: json["user_name"] ?? '',
         fullName: json["full_name"] ?? '',
         email: json["email"] ?? '',

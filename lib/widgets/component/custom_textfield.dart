@@ -39,7 +39,8 @@ class _CustomTextfieldState extends State<CustomTextfield> {
             borderRadius: BorderRadius.all(Radius.circular(5.0.r)),
             borderSide:
                 const BorderSide(color: AppColors.borderTextfieldColor)),
-        contentPadding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 12.h),
+        contentPadding: EdgeInsets.symmetric(
+            horizontal: widget.iconUrl == null ? 16.w : 8.w, vertical: 12.h),
         border: InputBorder.none,
         hintText: widget.hintText,
         hintStyle: AppTypography.hintTextStyle,
@@ -54,7 +55,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
                   height: 12.h,
                 ),
               )
-            : const SizedBox(),
+            : null,
       ),
       textAlignVertical: TextAlignVertical.center,
     );

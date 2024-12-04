@@ -21,7 +21,7 @@ class _SaleProgramState extends State<SaleProgram> {
   @override
   void initState() {
     super.initState();
-    context.read<HomeBloc>().add(EventLoading());
+    context.read<HomeBloc>().add(EventLoadingRecommendFlashSale());
   }
 
   @override
@@ -66,9 +66,12 @@ class _SaleProgramState extends State<SaleProgram> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: state.products.asMap().entries.map((element) {
+                children: state.productRecommendsFlashSale
+                    .asMap()
+                    .entries
+                    .map((element) {
                   return ProductItem(
-                    product: state.products[element.key],
+                    product: state.productRecommendsFlashSale[element.key],
                     isShowIconRemove: false,
                     haveMargin: true,
                     isOnHorizontalList: true,

@@ -38,3 +38,7 @@ class EventLoadingRecommendProduct extends ProductEvent {
   final String productId;
   EventLoadingRecommendProduct({required this.productId});
 }
+
+class EventLoadingReviewProduct extends ProductEvent {
+  EventLoadingReviewProduct();
+}

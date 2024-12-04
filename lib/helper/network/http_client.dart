@@ -46,7 +46,7 @@ class FetchClient {
       Map<String, dynamic>? queryParameters}) async {
     if (await HelpFunction.hasInternet()) {
       try {
-        // logRequest();
+        logRequest();
         log((domainApp ?? domain) + path);
         Response<dynamic> result = await dio.get((domainApp ?? domain) + path,
             queryParameters: queryParameters, options: options());
