@@ -20,6 +20,7 @@ import 'package:share_buy/blocs/home_bloc/home_bloc.dart';
 import 'package:share_buy/blocs/order_bloc/order_bloc.dart';
 import 'package:share_buy/blocs/product_bloc/product_bloc.dart';
 import 'package:share_buy/blocs/review_bloc/review_bloc.dart';
+import 'package:share_buy/blocs/search_bloc/search_bloc.dart';
 import 'package:share_buy/widgets/home/home_screen.dart';
 import 'package:share_buy/widgets/login/login_screen.dart';
 import 'firebase_options.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<OrderBloc>(create: (context) => OrderBloc()),
         BlocProvider<AddressBloc>(create: (context) => AddressBloc()),
         BlocProvider<ReviewBloc>(create: (context) => ReviewBloc()),
+        BlocProvider<SearchBloc>(create: (context) => SearchBloc()),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),

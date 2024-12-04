@@ -10,12 +10,14 @@ class CustomTextfield extends StatefulWidget {
   final String hintText;
   final String? iconUrl;
   final TextEditingController controller;
-  const CustomTextfield(
+  Function(String)? onSubmitted;
+  CustomTextfield(
       {super.key,
       this.height,
       this.maxLines,
       required this.hintText,
       this.iconUrl,
+      this.onSubmitted,
       required this.controller});
 
   @override
@@ -26,6 +28,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      onSubmitted: widget.onSubmitted ?? (value) {},
       maxLines: widget.maxLines ?? 1,
       onTapOutside: (event) {
         HelpFunction.removeFocus(context);
