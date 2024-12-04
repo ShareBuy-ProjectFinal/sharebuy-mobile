@@ -181,7 +181,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 Row(
                                   children: [
                                     Text(
-                                      "${widget.product.payload?.price ?? ''}",
+                                      "${state.product.price ?? ''}",
                                       style: AppTypography.largeBlueBold,
                                     ),
                                     SizedBox(

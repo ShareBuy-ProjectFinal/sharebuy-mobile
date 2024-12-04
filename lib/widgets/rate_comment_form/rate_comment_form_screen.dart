@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:animated_rating_stars/animated_rating_stars.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:share_buy/application/theme/app_colors.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
 import 'package:share_buy/blocs/product_bloc/product_bloc.dart';
@@ -14,6 +16,7 @@ import 'package:share_buy/blocs/product_bloc/product_event.dart';
 import 'package:share_buy/blocs/review_bloc/review_bloc.dart';
 import 'package:share_buy/blocs/review_bloc/review_event.dart';
 import 'package:share_buy/blocs/review_bloc/review_state.dart';
+import 'package:share_buy/main.dart';
 import 'package:share_buy/utils/help_function.dart';
 import 'package:share_buy/widgets/component/custom_button.dart';
 import 'package:share_buy/widgets/component/custom_textfield.dart';
@@ -29,7 +32,7 @@ class RateCommentFormScreen extends StatefulWidget {
 class _RateCommentFormScreenState extends State<RateCommentFormScreen> {
   final TextEditingController _reviewController = TextEditingController();
 
-  final List<Uint8List> _images = [];
+  final List<File> _images = [];
 
   @override
   void initState() {
@@ -38,10 +41,10 @@ class _RateCommentFormScreenState extends State<RateCommentFormScreen> {
   }
 
   _selectedImage() async {
-    Uint8List? img = await HelpFunction.pickImage(ImageSource.gallery);
+    XFile? img = await HelpFunction.pickImage(ImageSource.gallery);
     if (img != null) {
       setState(() {
-        _images.add(img);
+        _images.add(File(img.path));
       });
     }
   }
@@ -50,9 +53,14 @@ class _RateCommentFormScreenState extends State<RateCommentFormScreen> {
   Widget build(BuildContext context) {
     return BlocListener<ReviewBloc, ReviewState>(
       listener: (BuildContext context, ReviewState state) {
-        if (state.isAddSuccess) {
-          context.read<ProductBloc>().add(EventLoadingReviewProduct());
-          Navigator.of(context).pop();
+        if (state.isLoading) {
+          context.loaderOverlay.show();
+        } else {
+          context.loaderOverlay.hide();
+          if (state.isAddSuccess) {
+            context.read<ProductBloc>().add(EventLoadingReviewProduct());
+            Navigator.of(context).pop();
+          }
         }
       },
       child: Scaffold(
@@ -184,7 +192,12 @@ class _RateCommentFormScreenState extends State<RateCommentFormScreen> {
                                             color:
                                                 AppColors.borderTextfieldColor),
                                       ),
-                                      child: Image.memory(
+                                      // child:
+                                      // Image.memory(
+                                      //   _images[index],
+                                      //   fit: BoxFit.cover,
+                                      // ),
+                                      child: Image.file(
                                         _images[index],
                                         fit: BoxFit.cover,
                                       ),
@@ -224,7 +237,7 @@ class _RateCommentFormScreenState extends State<RateCommentFormScreen> {
                       }
                       context
                           .read<ReviewBloc>()
-                          .add(EvendAddReview(_reviewController.text));
+                          .add(EvendAddReview(_reviewController.text, _images));
                     },
                     textColor: AppColors.white,
                   ),

@@ -95,11 +95,11 @@ class _ProductItemState extends State<ProductItem> {
               height: 12.h,
             ),
             Text(
-              "\$" "${widget.product.payload?.price ?? 0}",
+              "${widget.product.payload?.price ?? 0}",
               style: AppTypography.mediumBlueBold,
             ),
             SizedBox(
-              height: 12.h,
+              height: 5.h,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -107,14 +107,14 @@ class _ProductItemState extends State<ProductItem> {
                 Row(
                   children: [
                     Text(
-                      "\$" "${widget.product.payload?.oldPrice ?? 0}",
-                      style: AppTypography.hintTextStyle,
+                      "${widget.product.payload?.oldPrice ?? 0}",
+                      style: AppTypography.primaryLineThrough,
                     ),
                     SizedBox(
                       width: 12.w,
                     ),
                     Text(
-                      "${((widget.product.payload?.price ?? 0) / (widget.product.payload?.oldPrice ?? 0)).round() * 100}% Off",
+                      "${(100 - ((widget.product.payload?.price ?? 0) / (widget.product.payload?.oldPrice ?? 0)) * 100).toStringAsFixed(2)}% Off",
                       style: AppTypography.primaryRedBold,
                     ),
                   ],

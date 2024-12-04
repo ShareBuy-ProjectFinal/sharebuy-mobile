@@ -36,8 +36,13 @@ class _RateCommentState extends State<RateComment> {
                       style: AppTypography.primaryDarkBlueBold,
                     ),
                     GestureDetector(
-                      onTap: () => Navigator.of(context)
-                          .pushNamed(NavigatorName.RATE_COMMENT_FORM_SCREEN),
+                      onTap: () {
+                        context
+                            .read<ReviewBloc>()
+                            .add(EventResetReview(state.product.id ?? ''));
+                        Navigator.of(context)
+                            .pushNamed(NavigatorName.RATE_COMMENT_FORM_SCREEN);
+                      },
                       child: Text(
                         'Viết đánh giá',
                         style: AppTypography.mediumBlueBold,

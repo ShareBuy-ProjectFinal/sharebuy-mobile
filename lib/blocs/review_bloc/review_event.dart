@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:share_buy/models/review/review_model.dart';
 
 class ReviewEvent {}
@@ -17,6 +20,7 @@ class EventSelectRating extends ReviewEvent {
 
 class EvendAddReview extends ReviewEvent {
   final String contentReview;
+  final List<File> images;
 
-  EvendAddReview(this.contentReview);
+  EvendAddReview(this.contentReview, this.images);
 }

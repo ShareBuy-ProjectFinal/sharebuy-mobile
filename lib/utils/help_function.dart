@@ -27,7 +27,8 @@ class HelpFunction {
     final ImagePicker imagePicker = ImagePicker();
     XFile? file = await imagePicker.pickImage(source: source);
     if (file != null) {
-      return await file.readAsBytes();
+      // return await file.readAsBytes();
+      return file;
     }
   }
 

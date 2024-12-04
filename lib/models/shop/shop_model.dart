@@ -1,7 +1,9 @@
+import 'package:share_buy/models/product/category_model.dart';
+
 class ShopModel {
   String? id;
   String? state;
-  List<num>? categories;
+  List<CategoryModel>? categories;
   String? userName;
   String? fullName;
   String? email;
@@ -34,7 +36,8 @@ class ShopModel {
         state: json["state"] ?? '',
         categories: json["categories"] == null
             ? []
-            : List<int>.from(json["categories"]!.map((x) => x)),
+            : List<CategoryModel>.from(
+                json["categories"].map((x) => CategoryModel.fromJson(x))),
         userName: json["user_name"] ?? '',
         fullName: json["full_name"] ?? '',
         email: json["email"] ?? '',
@@ -56,7 +59,7 @@ class ShopModel {
         "state": state,
         "categories": categories == null
             ? []
-            : List<dynamic>.from(categories!.map((x) => x)),
+            : List<dynamic>.from(categories!.map((x) => x.toJson())),
         "user_name": userName,
         "full_name": fullName,
         "email": email,

@@ -5,6 +5,7 @@ import 'package:share_buy/blocs/review_bloc/review_event.dart';
 import 'package:share_buy/blocs/review_bloc/review_state.dart';
 import 'package:share_buy/models/review/review_model.dart';
 import 'package:share_buy/repositories/review_repository.dart';
+import 'package:share_buy/repositories/upload_repository.dart';
 
 class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
   ReviewBloc() : super(ReviewState()) {
@@ -30,9 +31,10 @@ class ReviewBloc extends Bloc<ReviewEvent, ReviewState> {
   Future<void> _addReview(EvendAddReview event, Emitter emit) async {
     try {
       emit(state.copyWith(isLoading: true));
-      ReviewModel review =
-          state.review?.copyWith(reviewContent: event.contentReview) ??
-              ReviewModel(reviewContent: event.contentReview);
+      List<String> urls = await UploadRepository().uploadFile(event.images);
+      ReviewModel review = state.review
+              ?.copyWith(reviewContent: event.contentReview, images: urls) ??
+          ReviewModel(reviewContent: event.contentReview);
 
       log('_addReview Add review: ${review.toJson()}');
 

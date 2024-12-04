@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:share_buy/application/routes/navigator_name.dart';
 import 'package:share_buy/application/theme/app_typography.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_bloc.dart';
 import 'package:share_buy/blocs/cart_bloc/cart_event.dart';
@@ -10,6 +11,7 @@ import 'package:share_buy/blocs/cart_bloc/cart_state.dart';
 import 'package:share_buy/models/attribute/attribute_custom_model.dart';
 import 'package:share_buy/models/cart/cart_item_model.dart';
 import 'package:share_buy/models/product/product_detail_model.dart';
+import 'package:share_buy/models/product/product_recommend_model.dart';
 import 'package:share_buy/utils/format.dart';
 import 'package:share_buy/widgets/cart/children/change_detail_item.dart';
 import 'package:share_buy/widgets/component/CustomCachedNetworkImage.dart';
@@ -39,7 +41,18 @@ class _CartItemState extends State<CartItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        log('onTap cart item');
+        ProductRecommendModel productRecommendModel = ProductRecommendModel(
+            payload: Payload(
+                productId: widget.cartItem?.productDetail.product?.id,
+                productName: widget.cartItem?.productDetail.name,
+                price: widget.cartItem?.productDetail.price,
+                image: widget.cartItem?.productDetail.image));
+        Navigator.of(context).pushNamed(NavigatorName.PRODUCT_DETAIL_SCREEN,
+            arguments: {
+              'product': productRecommendModel,
+              'nameScreen': NameScreen.CART_SCREEN
+            });
+        // log('onTap cart item');
       },
       child: Container(
         margin: EdgeInsets.only(bottom: 12.h),
