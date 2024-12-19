@@ -17,10 +17,11 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen>
-    with AutomaticKeepAliveClientMixin {
+// with AutomaticKeepAliveClientMixin
+{
   @override
   Widget build(BuildContext context) {
-    super.build(context);
+    // super.build(context);
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: 12.w,
@@ -72,6 +73,6 @@ class _MainScreenState extends State<MainScreen>
     );
   }
 
-  @override
-  bool get wantKeepAlive => true;
+  // @override
+  // bool get wantKeepAlive => true;
 }

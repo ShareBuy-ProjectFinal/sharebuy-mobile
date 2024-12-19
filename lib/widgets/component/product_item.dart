@@ -52,83 +52,80 @@ class _ProductItemState extends State<ProductItem> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5.r),
             border: Border.all(color: AppColors.borderTextfieldColor)),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CachedNetworkImage(
-              imageUrl: widget.product.payload?.image ?? "",
-              width: widget.isOnHorizontalList ? 133.w : double.infinity,
-              height: 133.h,
-            ),
-            SizedBox(
-              height: 12.h,
-            ),
-            SizedBox(
-              height: 115.h,
-              width: widget.isOnHorizontalList ? 133.w : double.infinity,
-              child: Text(
-                // ' widget.product.payload?.productName' ?? '',
-                widget.product.payload?.productName ?? '',
-                style: AppTypography.primaryDarkBlueBold,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 5,
+        child: Expanded(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CachedNetworkImage(
+                imageUrl: widget.product.payload?.image ?? "",
+                width: widget.isOnHorizontalList ? 133.w : double.infinity,
+                height: 133.h,
               ),
-            ),
-            AnimatedRatingStars(
-              initialRating: 4,
-              filledColor: Colors.amber,
-              emptyColor: Colors.grey,
-              filledIcon: Icons.star,
-              halfFilledIcon: Icons.star_half,
-              emptyIcon: Icons.star_border,
-              onChanged: (double rating) {},
-              displayRatingValue: true,
-              interactiveTooltips: true,
-              customFilledIcon: Icons.star,
-              customHalfFilledIcon: Icons.star_half,
-              customEmptyIcon: Icons.star_border,
-              starSize: 12.sp,
-              readOnly: true,
-            ),
-            SizedBox(
-              height: 12.h,
-            ),
-            Text(
-              "${widget.product.payload?.price ?? 0}",
-              style: AppTypography.mediumBlueBold,
-            ),
-            SizedBox(
-              height: 5.h,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      "${widget.product.payload?.oldPrice ?? 0}",
-                      style: AppTypography.primaryLineThrough,
-                    ),
-                    SizedBox(
-                      width: 12.w,
-                    ),
-                    Text(
-                      "${(100 - ((widget.product.payload?.price ?? 0) / (widget.product.payload?.oldPrice ?? 0)) * 100).toStringAsFixed(2)}% Off",
-                      style: AppTypography.primaryRedBold,
-                    ),
-                  ],
+              SizedBox(
+                height: 5.h,
+              ),
+              SizedBox(
+                height: 115.h,
+                width: widget.isOnHorizontalList ? 133.w : double.infinity,
+                child: Text(
+                  // ' widget.product.payload?.productName' ?? '',
+                  widget.product.payload?.productName ?? '',
+                  style: AppTypography.primaryDarkBlueBold,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 5,
                 ),
-                widget.isShowIconRemove
-                    ? Image.asset(
-                        'assets/icons/icon_remove.png',
-                        width: 24.w,
-                        height: 24.h,
-                      )
-                    : const SizedBox()
-              ],
-            ),
-          ],
+              ),
+              AnimatedRatingStars(
+                initialRating: 4,
+                filledColor: Colors.amber,
+                emptyColor: Colors.grey,
+                filledIcon: Icons.star,
+                halfFilledIcon: Icons.star_half,
+                emptyIcon: Icons.star_border,
+                onChanged: (double rating) {},
+                displayRatingValue: true,
+                interactiveTooltips: true,
+                customFilledIcon: Icons.star,
+                customHalfFilledIcon: Icons.star_half,
+                customEmptyIcon: Icons.star_border,
+                starSize: 12.sp,
+                readOnly: true,
+              ),
+              SizedBox(
+                height: 5.h,
+              ),
+              Text(
+                "${widget.product.payload?.price ?? 0}",
+                style: AppTypography.mediumBlueBold,
+              ),
+              SizedBox(
+                height: 5.h,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Text(
+                    "${widget.product.payload?.oldPrice ?? 0}",
+                    style: AppTypography.primaryLineThrough,
+                  ),
+                  // SizedBox(
+                  //   width: 5.w,
+                  // ),
+                  ((widget.product.payload?.price ?? 0) /
+                              (widget.product.payload?.oldPrice ?? 0)) >
+                          1
+                      ? const SizedBox()
+                      : Text(
+                          "${(100 - ((widget.product.payload?.price ?? 0) / (widget.product.payload?.oldPrice ?? 0)) * 100).toStringAsFixed(2)}% Off",
+                          style: AppTypography.primaryRedBold,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

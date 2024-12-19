@@ -41,13 +41,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     context
         .read<ProductBloc>()
         .add(ProductLoadingEvent(id: widget.product.payload!.productId!));
-    // .add(ProductLoadingEvent(id: '66fe1a4e473e570012e3caab'))
+    // .add(ProductLoadingEvent(id: '67599eff6e0af50011349dab'));
     // .add(ProductLoadingEvent(id: '66f99743a95a6154c8ed8777'));
 
     context.read<ProductBloc>().add(EventLoadingRecommendProduct(
         productId: widget.product.payload!.productId!));
     // .add(EventLoadingRecommendProduct(
-    //     productId: '66fe1a4e473e570012e3caab'));
+    // productId: '67599eff6e0af50011349dab'));
   }
 
   @override
